@@ -1,0 +1,37 @@
+{
+  "display": {
+    "background": "minecraft_earth_mod:textures/tropicalslimea.png",
+    "icon": {
+      "item": "minecraft:barrier"
+    },
+    "title": {
+      "translate": "advancements.cheater.title"
+    },
+    "description": {
+      "translate": "advancements.cheater.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "cheater": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft_earth_mod:furnace_golem_light",
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 1
+  }
+}

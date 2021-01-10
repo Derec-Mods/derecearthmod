@@ -1,0 +1,11 @@
+{
+  "bloww": {
+    "category": "player",
+    "sounds": [
+      {
+        "name": "minecraft_earth_mod:horn",
+        "stream": false
+      }
+    ]
+  }
+}

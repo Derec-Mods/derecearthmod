@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="Not specified"
+
+[[mods]]
+modId="minecraft_earth_mod"
+version="1.4.1.0"
+displayName="Minecraft Earth Mod"
+credits="Created using mod maker MCreator - https://mcreator.net/about"
+displayURL="https://mcreator.net"
+logoFile="logo.png"
+authors="noi01, MCreator"
+description='''
+Adds the unique and cool features from Minecraft Earth to normal Minecraft!
+'''
+
+[[dependencies.minecraft_earth_mod]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4]"
+    ordering="NONE"
+    side="BOTH"
+
+
+
+
