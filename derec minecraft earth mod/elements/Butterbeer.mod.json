@@ -1,0 +1,28 @@
+{
+  "_fv": 15,
+  "_type": "food",
+  "definition": {
+    "renderType": 0,
+    "texture": "buttercupdrink",
+    "customModelName": "Normal",
+    "name": "Not Butterbeer",
+    "rarity": "COMMON",
+    "specialInfo": [
+      "It's not butterbeer m'kay"
+    ],
+    "creativeTab": {
+      "value": "FOOD"
+    },
+    "stackSize": 1,
+    "nutritionalValue": 4,
+    "saturation": 0.6,
+    "eatingSpeed": 32,
+    "forDogs": false,
+    "isAlwaysEdible": true,
+    "animation": "drink",
+    "hasGlow": false,
+    "onEaten": {
+      "name": "EatButtercup"
+    }
+  }
+}

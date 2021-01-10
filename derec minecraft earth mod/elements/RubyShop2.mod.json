@@ -1,0 +1,97 @@
+{
+  "_fv": 15,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 176,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "text": "Buy Boost",
+          "color": {
+            "value": -6750208,
+            "falpha": 0.0
+          },
+          "name": "Buy Boost",
+          "x": 132,
+          "y": 66
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "(Tappable) 1 Ruby",
+          "onClick": {
+            "name": "BuyTappable"
+          },
+          "width": 90,
+          "height": 20,
+          "name": "(Tappable) 1 Ruby",
+          "x": 204,
+          "y": 84
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Buy Tappable",
+          "color": {
+            "value": -6750208,
+            "falpha": 0.0
+          },
+          "name": "Buy Tappable",
+          "x": 132,
+          "y": 84
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Previous",
+          "onClick": {
+            "name": "GotoPage1"
+          },
+          "width": 80,
+          "height": 20,
+          "name": "Previous",
+          "x": 132,
+          "y": 39
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Next",
+          "onClick": {
+            "name": "GotoPage3"
+          },
+          "width": 40,
+          "height": 20,
+          "name": "Next",
+          "x": 231,
+          "y": 39
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "(Boost) 1 Ruby",
+          "onClick": {
+            "name": "GiveAttackBoost"
+          },
+          "width": 72,
+          "height": 20,
+          "name": "(Boost) 1 Ruby",
+          "x": 204,
+          "y": 57
+        }
+      }
+    ]
+  }
+}

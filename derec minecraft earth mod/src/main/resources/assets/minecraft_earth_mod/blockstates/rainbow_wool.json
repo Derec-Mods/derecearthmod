@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft_earth_mod:block/rainbow_wool"
+    },
+    "facing=east": {
+      "model": "minecraft_earth_mod:block/rainbow_wool",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minecraft_earth_mod:block/rainbow_wool",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft_earth_mod:block/rainbow_wool",
+      "y": 270
+    }
+  }
+}

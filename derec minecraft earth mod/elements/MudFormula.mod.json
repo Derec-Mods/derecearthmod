@@ -1,0 +1,28 @@
+{
+  "_fv": 15,
+  "_type": "food",
+  "definition": {
+    "renderType": 0,
+    "texture": "mudformula",
+    "customModelName": "Normal",
+    "name": "Mud Formula",
+    "rarity": "COMMON",
+    "specialInfo": [
+      "Everything in this bottle is edible."
+    ],
+    "creativeTab": {
+      "value": "FOOD"
+    },
+    "stackSize": 1,
+    "nutritionalValue": 2,
+    "saturation": 0.1,
+    "eatingSpeed": 10,
+    "forDogs": false,
+    "isAlwaysEdible": true,
+    "animation": "drink",
+    "hasGlow": false,
+    "onEaten": {
+      "name": "YouAteTheMudFormula"
+    }
+  }
+}

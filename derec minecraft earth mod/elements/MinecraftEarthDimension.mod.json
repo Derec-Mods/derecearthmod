@@ -1,0 +1,58 @@
+{
+  "_fv": 15,
+  "_type": "dimension",
+  "definition": {
+    "biomesInDimension": [
+      {
+        "value": "CUSTOM:PlainsBuildPlate"
+      },
+      {
+        "value": "CUSTOM:MountainsBuildPlate"
+      },
+      {
+        "value": "CUSTOM:ForestBuildPlate"
+      },
+      {
+        "value": "CUSTOM:IcyBuildPlate"
+      },
+      {
+        "value": "CUSTOM:JungleBuildPlate"
+      }
+    ],
+    "worldGenType": "Normal world gen",
+    "mainFillerBlock": {
+      "value": "Blocks.STONE#0"
+    },
+    "fluidBlock": {
+      "value": "Blocks.FLOWING_WATER"
+    },
+    "airColor": {
+      "value": -4138753,
+      "falpha": 0.0
+    },
+    "canRespawnHere": true,
+    "hasFog": false,
+    "isDark": true,
+    "doesWaterVaporize": false,
+    "sleepResult": "ALLOW",
+    "hasSkyLight": true,
+    "imitateOverworldBehaviour": true,
+    "portalFrame": {
+      "value": "CUSTOM:ChestTappable"
+    },
+    "portalParticles": {
+      "value": "VILLAGER_HAPPY"
+    },
+    "portalLuminance": 10,
+    "portalSound": {
+      "value": "block.portal.ambient"
+    },
+    "igniterName": "Buildplate Key",
+    "igniterTab": {
+      "value": "TOOLS"
+    },
+    "texture": "buildplatekey",
+    "portalTexture": "weirdgrass",
+    "enablePortal": true
+  }
+}

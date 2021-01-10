@@ -1,0 +1,16 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:RainbowWool"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "name": "wool",
+    "namespace": "minecraft"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "_fv": 15,
+  "_type": "biome",
+  "definition": {
+    "name": "Icy Build Plate",
+    "groundBlock": {
+      "value": "Blocks.ICE"
+    },
+    "undergroundBlock": {
+      "value": "Blocks.PACKED_ICE"
+    },
+    "biomeCategory": "ICY",
+    "parent": {
+      "value": "CUSTOM:MountainsBuildPlate"
+    },
+    "rainingPossibility": 0.7,
+    "temperature": 0.1,
+    "baseHeight": 0.1,
+    "heightVariation": 0.1,
+    "biomeType": "ICY",
+    "spawnBiome": false,
+    "biomeWeight": 5,
+    "biomeDictionaryTypes": [
+      "SNOWY",
+      "RARE"
+    ],
+    "grassPerChunk": 1,
+    "seagrassPerChunk": 0,
+    "flowersPerChunk": 1,
+    "mushroomsPerChunk": 0,
+    "bigMushroomsChunk": 0,
+    "sandPatchesPerChunk": 0,
+    "gravelPatchesPerChunk": 0,
+    "reedsPerChunk": 0,
+    "cactiPerChunk": 0,
+    "treesPerChunk": 0,
+    "vanillaTreeType": "Mega spruce trees",
+    "treeType": 1,
+    "minHeight": 7,
+    "treeStem": {
+      "value": "Blocks.AIR"
+    },
+    "treeBranch": {
+      "value": "Blocks.AIR"
+    },
+    "treeVines": {
+      "value": "Blocks.AIR"
+    },
+    "treeFruits": {
+      "value": "Blocks.AIR"
+    },
+    "spawnStronghold": false,
+    "spawnMineshaft": false,
+    "spawnPillagerOutpost": false,
+    "villageType": "snowy",
+    "spawnWoodlandMansion": false,
+    "spawnJungleTemple": false,
+    "spawnDesertPyramid": false,
+    "spawnIgloo": true,
+    "spawnOceanMonument": false,
+    "spawnShipwreck": false,
+    "oceanRuinType": "NONE",
+    "defaultFeatures": [
+      "Caves",
+      "MonsterRooms",
+      "Structures",
+      "Ores",
+      "Lakes",
+      "Icebergs"
+    ],
+    "spawnEntries": [
+      {
+        "entity": {
+          "value": "CUSTOM:AshenCow"
+        },
+        "minGroup": 2,
+        "maxGroup": 3,
+        "weight": 15,
+        "spawnType": "creature"
+      },
+      {
+        "entity": {
+          "value": "CUSTOM:RockySheep"
+        },
+        "minGroup": 2,
+        "maxGroup": 3,
+        "weight": 15,
+        "spawnType": "creature"
+      },
+      {
+        "entity": {
+          "value": "CUSTOM:WoolyCow"
+        },
+        "minGroup": 2,
+        "maxGroup": 3,
+        "weight": 15,
+        "spawnType": "creature"
+      },
+      {
+        "entity": {
+          "value": "CUSTOM:HornedSheep"
+        },
+        "minGroup": 2,
+        "maxGroup": 4,
+        "weight": 15,
+        "spawnType": "creature"
+      },
+      {
+        "entity": {
+          "value": "CUSTOM:MelonGolem"
+        },
+        "minGroup": 3,
+        "maxGroup": 3,
+        "weight": 15,
+        "spawnType": "creature"
+      }
+    ]
+  }
+}

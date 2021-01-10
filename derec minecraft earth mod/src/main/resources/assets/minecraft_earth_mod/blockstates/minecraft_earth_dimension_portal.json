@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=z": {
+      "model": "minecraft_earth_mod:block/minecraft_earth_dimension_portal_ew"
+    },
+    "axis=x": {
+      "model": "minecraft_earth_mod:block/minecraft_earth_dimension_portal_ns"
+    }
+  }
+}

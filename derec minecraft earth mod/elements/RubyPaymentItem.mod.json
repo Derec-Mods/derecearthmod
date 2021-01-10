@@ -1,0 +1,16 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:Ruby"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "name": "beacon_payment_items",
+    "namespace": "minecraft"
+  }
+}
