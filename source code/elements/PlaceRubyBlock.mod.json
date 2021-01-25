@@ -1,0 +1,27 @@
+{
+  "_fv": 15,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "Red Like Roses",
+    "achievementDescription": "You placed a Ruby Block!",
+    "achievementIcon": {
+      "value": "CUSTOM:RubyBlock"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": true,
+    "hideIfNotCompleted": true,
+    "rewardLoot": [],
+    "rewardRecipes": [
+      "RubyBlockRecipe"
+    ],
+    "rewardFunction": "No function",
+    "rewardXP": 10,
+    "achievementType": "task",
+    "parent": {
+      "value": "CUSTOM:Rubies"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"block_placed\" x=\"49\" y=\"20\"><value name=\"block\"><block type=\"mcitem_allblocks\"><field name=\"value\">CUSTOM:RubyBlock</field></block></value><next><block type=\"advancement_trigger\" deletable=\"false\"/></next></block></xml>"
+  }
+}

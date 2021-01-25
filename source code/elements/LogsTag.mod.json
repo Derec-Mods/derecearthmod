@@ -1,0 +1,22 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Blocks",
+    "items": [],
+    "blocks": [
+      {
+        "value": "CUSTOM:SpruceTappable"
+      },
+      {
+        "value": "CUSTOM:OakTappable"
+      },
+      {
+        "value": "CUSTOM:BirchTappable"
+      }
+    ],
+    "functions": [],
+    "name": "logs",
+    "namespace": "minecraft"
+  }
+}

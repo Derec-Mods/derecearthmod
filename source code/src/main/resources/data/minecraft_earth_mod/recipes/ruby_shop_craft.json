@@ -1,0 +1,30 @@
+{
+  "group": "minecraft_earth_mod",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft_earth_mod:ruby_block"
+    },
+    "3": {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    "4": {
+      "item": "minecraft:dispenser"
+    },
+    "5": {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    "7": {
+      "item": "minecraft_earth_mod:ruby_block"
+    }
+  },
+  "result": {
+    "item": "minecraft_earth_mod:ruby_shop_block",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:blocks/stonetappablesides",
+    "up": "minecraft_earth_mod:blocks/stonetappabletop",
+    "north": "minecraft_earth_mod:blocks/stonetappablesides",
+    "east": "minecraft_earth_mod:blocks/stonetappablesides",
+    "south": "minecraft_earth_mod:blocks/stonetappablesides",
+    "west": "minecraft_earth_mod:blocks/stonetappablesides",
+    "particle": "minecraft_earth_mod:blocks/stonetappablesides"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "_fv": 15,
+  "_type": "command",
+  "definition": {
+    "commandName": "shop",
+    "permissionLevel": 3,
+    "onCommandExecuted": {
+      "name": "RubyShopCommandCommandExecuted"
+    }
+  }
+}

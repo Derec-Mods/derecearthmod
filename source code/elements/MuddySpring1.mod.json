@@ -1,0 +1,38 @@
+{
+  "_fv": 15,
+  "_type": "structure",
+  "definition": {
+    "structure": "mudfountain2",
+    "randomlyRotateStructure": true,
+    "surfaceDetectionType": "First motion blocking block",
+    "spawnProbability": 1000,
+    "minCountPerChunk": 1,
+    "maxCountPerChunk": 1,
+    "spawnLocation": "Ground",
+    "spawnHeightOffset": -1,
+    "spawnXOffset": 0,
+    "spawnZOffset": 0,
+    "spawnWorldTypes": [
+      "Surface"
+    ],
+    "restrictionBlocks": [],
+    "restrictionBiomes": [
+      {
+        "value": "plains"
+      },
+      {
+        "value": "forest"
+      },
+      {
+        "value": "swamp"
+      },
+      {
+        "value": "savanna"
+      },
+      {
+        "value": "badlands"
+      }
+    ],
+    "ignoreBlocks": "STRUCTURE_BLOCK"
+  }
+}

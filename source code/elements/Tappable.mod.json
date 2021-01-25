@@ -1,0 +1,31 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Blocks",
+    "items": [],
+    "blocks": [
+      {
+        "value": "CUSTOM:GrassTappable"
+      },
+      {
+        "value": "CUSTOM:ChestTappable"
+      },
+      {
+        "value": "CUSTOM:StoneTappable"
+      },
+      {
+        "value": "CUSTOM:BirchTappable"
+      },
+      {
+        "value": "CUSTOM:OakTappable"
+      },
+      {
+        "value": "CUSTOM:SpruceTappable"
+      }
+    ],
+    "functions": [],
+    "name": "tappable",
+    "namespace": "mod"
+  }
+}

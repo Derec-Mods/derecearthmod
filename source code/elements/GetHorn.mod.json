@@ -1,0 +1,25 @@
+{
+  "_fv": 15,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "Horned",
+    "achievementDescription": "(Don't spam the horn)",
+    "achievementIcon": {
+      "value": "CUSTOM:Horn"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": true,
+    "hideIfNotCompleted": false,
+    "rewardLoot": [],
+    "rewardRecipes": [],
+    "rewardFunction": "No function",
+    "rewardXP": 15,
+    "achievementType": "task",
+    "parent": {
+      "value": "adventure/kill_a_mob"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"item_in_inventory\" x=\"45\" y=\"12\"><value name=\"amount_l\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"amount_h\"><block type=\"math_number\"><field name=\"NUM\">64</field></block></value><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:Horn</field></block></value><next><block type=\"advancement_trigger\" deletable=\"false\"/></next></block></xml>"
+  }
+}

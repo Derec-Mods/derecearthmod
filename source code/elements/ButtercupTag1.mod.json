@@ -1,0 +1,19 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Blocks",
+    "items": [],
+    "blocks": [
+      {
+        "value": "CUSTOM:Buttercup"
+      },
+      {
+        "value": "CUSTOM:PinkDaisy"
+      }
+    ],
+    "functions": [],
+    "name": "flowers",
+    "namespace": "minecraft"
+  }
+}

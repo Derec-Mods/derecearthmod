@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft_earth_mod:block/carved_melon"
+    },
+    "facing=east": {
+      "model": "minecraft_earth_mod:block/carved_melon",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minecraft_earth_mod:block/carved_melon",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft_earth_mod:block/carved_melon",
+      "y": 270
+    }
+  }
+}

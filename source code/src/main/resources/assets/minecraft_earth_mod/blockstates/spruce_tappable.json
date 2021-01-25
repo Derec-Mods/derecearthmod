@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft_earth_mod:block/spruce_tappable"
+    },
+    "facing=east": {
+      "model": "minecraft_earth_mod:block/spruce_tappable",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minecraft_earth_mod:block/spruce_tappable",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft_earth_mod:block/spruce_tappable",
+      "y": 270
+    }
+  }
+}

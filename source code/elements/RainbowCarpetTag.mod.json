@@ -1,0 +1,16 @@
+{
+  "_fv": 15,
+  "_type": "tag",
+  "definition": {
+    "type": "Blocks",
+    "items": [],
+    "blocks": [
+      {
+        "value": "CUSTOM:RainbowCarpet"
+      }
+    ],
+    "functions": [],
+    "name": "carpets",
+    "namespace": "minecraft"
+  }
+}

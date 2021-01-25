@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft_earth_mod:custom/furnacegolemlight",
+  "textures": {
+    "all": "minecraft_earth_mod:blocks/furnacegolemlight",
+    "particle": "minecraft_earth_mod:blocks/furnacegolemlight",
+    "missing": "minecraft_earth_mod:blocks/furnacegolemlight"
+  }
+}
