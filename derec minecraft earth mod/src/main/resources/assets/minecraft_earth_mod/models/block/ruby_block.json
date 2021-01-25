@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "minecraft_earth_mod:blocks/ruby_block",
-    "particle": "minecraft_earth_mod:blocks/ruby_block"
-  }
-}

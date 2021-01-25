@@ -1,7 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "minecraft_earth_mod:blocks/pinkdaisy",
-    "particle": "minecraft_earth_mod:blocks/pinkdaisy"
-  }
-}
