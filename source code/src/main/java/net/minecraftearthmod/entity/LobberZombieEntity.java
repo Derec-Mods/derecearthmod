@@ -8,10 +8,7 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,7 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.World;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.BlockPos;
@@ -33,6 +30,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -43,10 +41,7 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.IRangedAttackMob;
@@ -72,8 +67,7 @@ public class LobberZombieEntity extends MinecraftEarthModModElements.ModElement 
 	public static final EntityType arrow = null;
 	public LobberZombieEntity(MinecraftEarthModModElements instance) {
 		super(instance, 189);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new ModelRegisterHandler());
-		MinecraftForge.EVENT_BUS.register(this);
+		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 	}
 
 	@Override
@@ -89,65 +83,29 @@ public class LobberZombieEntity extends MinecraftEarthModModElements.ModElement 
 				.size(0.5f, 0.5f)).build("entitybulletlobber_zombie").setRegistryName("entitybulletlobber_zombie"));
 	}
 
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		boolean biomeCriteria = false;
-		if (new ResourceLocation("plains").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("desert").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("mountains").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("forest").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("swamp").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("snowy_tundra").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("beach").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("desert_hills").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("jungle").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("savanna").equals(event.getName()))
-			biomeCriteria = true;
-		if (!biomeCriteria)
-			return;
-		event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(entity, 10, 1, 1));
-	}
-
 	@Override
 	public void init(FMLCommonSetupEvent event) {
-		DeferredWorkQueue.runLater(this::setupAttributes);
+		for (Biome biome : ForgeRegistries.BIOMES.getValues()) {
+			biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(entity, 10, 1, 1));
+		}
 		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				MonsterEntity::canMonsterSpawn);
 		DungeonHooks.addDungeonMob(entity, 180);
 	}
-	private static class ModelRegisterHandler {
-		@SubscribeEvent
-		@OnlyIn(Dist.CLIENT)
-		public void registerModels(ModelRegistryEvent event) {
-			RenderingRegistry.registerEntityRenderingHandler(entity, renderManager -> {
-				return new MobRenderer(renderManager, new Modellobberzombie(), 0.5f) {
-					@Override
-					public ResourceLocation getEntityTexture(Entity entity) {
-						return new ResourceLocation("minecraft_earth_mod:textures/lobberzombie.png");
-					}
-				};
-			});
-			RenderingRegistry.registerEntityRenderingHandler(arrow,
-					renderManager -> new SpriteRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		}
-	}
-	private void setupAttributes() {
-		AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-		ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2);
-		ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 20);
-		ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
-		ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
-		ammma = ammma.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.1);
-		GlobalEntityTypeAttributes.put(entity, ammma.create());
+
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void registerModels(ModelRegistryEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(entity, renderManager -> {
+			return new MobRenderer(renderManager, new Modellobberzombie(), 0.5f) {
+				@Override
+				public ResourceLocation getEntityTexture(Entity entity) {
+					return new ResourceLocation("minecraft_earth_mod:textures/lobberzombie.png");
+				}
+			};
+		});
+		RenderingRegistry.registerEntityRenderingHandler(arrow,
+				renderManager -> new SpriteRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
 	}
 	public static class CustomEntity extends MonsterEntity implements IRangedAttackMob {
 		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
@@ -170,7 +128,7 @@ public class LobberZombieEntity extends MinecraftEarthModModElements.ModElement 
 			super.registerGoals();
 			this.goalSelector.addGoal(1, new RestrictSunGoal(this));
 			this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, PlayerEntity.class, false, false));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, MuddyPigEntity.CustomEntity.class, false, false));
+			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, ServerPlayerEntity.class, false, false));
 			this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, false));
 			this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 1));
 			this.targetSelector.addGoal(6, new HurtByTargetGoal(this));
@@ -208,6 +166,20 @@ public class LobberZombieEntity extends MinecraftEarthModModElements.ModElement 
 		@Override
 		public net.minecraft.util.SoundEvent getDeathSound() {
 			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.death"));
+		}
+
+		@Override
+		protected void registerAttributes() {
+			super.registerAttributes();
+			if (this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED) != null)
+				this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3);
+			if (this.getAttribute(SharedMonsterAttributes.MAX_HEALTH) != null)
+				this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+			if (this.getAttribute(SharedMonsterAttributes.ARMOR) != null)
+				this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(0);
+			if (this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) == null)
+				this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+			this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5);
 		}
 
 		public void attackEntityWithRangedAttack(LivingEntity target, float flval) {

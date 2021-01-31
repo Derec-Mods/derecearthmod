@@ -18,6 +18,7 @@ import net.minecraftearthmod.procedures.SetTickProcedure;
 import net.minecraftearthmod.procedures.RemoveLightProcedure;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
+import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IBlockReader;
@@ -36,7 +37,6 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.loot.LootContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.BlockItemUseContext;
@@ -76,7 +76,7 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 	public static final TileEntityType<CustomTileEntity> tileEntityType = null;
 	public FurnaceGolemLightBlock(MinecraftEarthModModElements instance) {
 		super(instance, 24);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new TileEntityRegisterHandler());
+		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 	}
 
 	@Override
@@ -84,13 +84,12 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 		elements.blocks.add(() -> new CustomBlock());
 		elements.items.add(() -> new BlockItem(block, new Item.Properties().group(null)).setRegistryName(block.getRegistryName()));
 	}
-	private static class TileEntityRegisterHandler {
-		@SubscribeEvent
-		public void registerTileEntity(RegistryEvent.Register<TileEntityType<?>> event) {
-			event.getRegistry()
-					.register(TileEntityType.Builder.create(CustomTileEntity::new, block).build(null).setRegistryName("furnace_golem_light"));
-		}
+
+	@SubscribeEvent
+	public void registerTileEntity(RegistryEvent.Register<TileEntityType<?>> event) {
+		event.getRegistry().register(TileEntityType.Builder.create(CustomTileEntity::new, block).build(null).setRegistryName("furnace_golem_light"));
 	}
+
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void clientLoad(FMLClientSetupEvent event) {
@@ -98,8 +97,8 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 	}
 	public static class CustomBlock extends Block {
 		public CustomBlock() {
-			super(Block.Properties.create(Material.BARRIER).sound(SoundType.GROUND).hardnessAndResistance(-1, 3600000).setLightLevel(s -> 15)
-					.doesNotBlockMovement().notSolid().setOpaque((bs, br, bp) -> false));
+			super(Block.Properties.create(Material.BARRIER).sound(SoundType.GROUND).hardnessAndResistance(-1, 3600000).lightValue(15)
+					.doesNotBlockMovement().notSolid());
 			setRegistryName("furnace_golem_light");
 		}
 
@@ -108,6 +107,11 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 		public void addInformation(ItemStack itemstack, IBlockReader world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.addInformation(itemstack, world, list, flag);
 			list.add(new StringTextComponent("You should not have this"));
+		}
+
+		@Override
+		public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return false;
 		}
 
 		@OnlyIn(Dist.CLIENT)
@@ -149,7 +153,7 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 			int x = pos.getX();
 			int y = pos.getY();
 			int z = pos.getZ();
-			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, 10);
+			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, this.tickRate(world));
 			{
 				Map<String, Object> $_dependencies = new HashMap<>();
 				$_dependencies.put("x", x);
@@ -193,7 +197,7 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 				$_dependencies.put("world", world);
 				RemoveLightProcedure.executeProcedure($_dependencies);
 			}
-			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, 10);
+			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, this.tickRate(world));
 		}
 
 		@Override
@@ -292,8 +296,8 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 		}
 
 		@Override
-		public void read(BlockState blockState, CompoundNBT compound) {
-			super.read(blockState, compound);
+		public void read(CompoundNBT compound) {
+			super.read(compound);
 			if (!this.checkLootAndRead(compound)) {
 				this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 			}
@@ -321,7 +325,7 @@ public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElem
 
 		@Override
 		public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-			this.read(this.getBlockState(), pkt.getNbtCompound());
+			this.read(pkt.getNbtCompound());
 		}
 
 		@Override

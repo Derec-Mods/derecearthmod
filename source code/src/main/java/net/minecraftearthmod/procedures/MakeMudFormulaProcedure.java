@@ -66,19 +66,18 @@ public class MakeMudFormulaProcedure extends MinecraftEarthModModElements.ModEle
 		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == MudBlock.block.getDefaultState().getBlock())) {
 			if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
 					.getItem() == new ItemStack(Items.GLASS_BOTTLE, (int) (1)).getItem())) {
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (entity instanceof PlayerEntity) {
 					ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE, (int) (1));
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+					((PlayerEntity) entity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 				}
 				if (entity instanceof PlayerEntity) {
 					ItemStack _setstack = new ItemStack(MudFormulaItem.block, (int) (1));
@@ -92,13 +91,12 @@ public class MakeMudFormulaProcedure extends MinecraftEarthModModElements.ModEle
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
+		if (event.getHand() != entity.getActiveHand())
 			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
+		int i = event.getPos().getX();
+		int j = event.getPos().getY();
+		int k = event.getPos().getZ();
+		World world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", i);
 		dependencies.put("y", j);

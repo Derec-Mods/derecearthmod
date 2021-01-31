@@ -1,10 +1,8 @@
 
 package net.minecraftearthmod.world.biome;
 
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.common.BiomeDictionary;
 
 import net.minecraftearthmod.entity.SunsetCowEntity;
@@ -30,85 +28,75 @@ import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraft.world.gen.placement.NoiseDependant;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
-import net.minecraft.world.gen.feature.Features;
+import net.minecraft.world.gen.placement.FrequencyConfig;
+import net.minecraft.world.gen.feature.structure.VillageConfig;
+import net.minecraft.world.gen.feature.structure.MineshaftStructure;
+import net.minecraft.world.gen.feature.structure.MineshaftConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.biome.DefaultBiomeFeatures;
-import net.minecraft.world.biome.BiomeGenerationSettings;
-import net.minecraft.world.biome.BiomeAmbience;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.block.Blocks;
 
 @MinecraftEarthModModElements.ModElement.Tag
 public class PlainsBuildPlateBiome extends MinecraftEarthModModElements.ModElement {
-	public static Biome biome;
+	@ObjectHolder("minecraft_earth_mod:plains_build_plate")
+	public static final CustomBiome biome = null;
 	public PlainsBuildPlateBiome(MinecraftEarthModModElements instance) {
 		super(instance, 133);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new BiomeRegisterHandler());
 	}
-	private static class BiomeRegisterHandler {
-		@SubscribeEvent
-		public void registerBiomes(RegistryEvent.Register<Biome> event) {
-			if (biome == null) {
-				BiomeAmbience effects = new BiomeAmbience.Builder().setFogColor(12638463).setWaterColor(4159204).setWaterFogColor(329011)
-						.withSkyColor(7972607).withFoliageColor(10387789).withGrassColor(9470285).build();
-				BiomeGenerationSettings.Builder biomeGenerationSettings = new BiomeGenerationSettings.Builder()
-						.withSurfaceBuilder(SurfaceBuilder.DEFAULT.func_242929_a(new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(),
-								Blocks.DIRT.getDefaultState(), Blocks.DIRT.getDefaultState())));
-				DefaultBiomeFeatures.withCavesAndCanyons(biomeGenerationSettings);
-				DefaultBiomeFeatures.withMonsterRoom(biomeGenerationSettings);
-				DefaultBiomeFeatures.withOverworldOres(biomeGenerationSettings);
-				DefaultBiomeFeatures.withLavaAndWaterLakes(biomeGenerationSettings);
-				DefaultBiomeFeatures.withTallGrass(biomeGenerationSettings);
-				biomeGenerationSettings.withStructure(StructureFeatures.MINESHAFT);
-				biomeGenerationSettings.withStructure(StructureFeatures.VILLAGE_PLAINS);
-				biomeGenerationSettings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
-						Feature.RANDOM_PATCH.withConfiguration(Features.Configs.GRASS_PATCH_CONFIG).withPlacement(Features.Placements.PATCH_PLACEMENT)
-								.withPlacement(Placement.COUNT_NOISE.configure(new NoiseDependant(-0.8D, 5, 3))));
-				biomeGenerationSettings.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
-						Feature.FLOWER.withConfiguration(Features.Configs.NORMAL_FLOWER_CONFIG)
-								.withPlacement(Features.Placements.VEGETATION_PLACEMENT).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-								.func_242731_b(3));
-				MobSpawnInfo.Builder mobSpawnInfo = new MobSpawnInfo.Builder().isValidSpawnBiomeForPlayer();
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MuddyPigEntity.entity, 3, 2, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CluckshroomEntity.entity, 10, 2, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(FurnaceGolemEntity.entity, 3, 1, 1));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MelonGolemEntity.entity, 10, 1, 2));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MoobloomEntity.entity, 10, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AlbinoCowEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AmberChickenEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MidnightChickenEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(StormyChickenEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(SpottedPigEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(PieBaldPigEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(PalePigEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(AshenCowEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(SunsetCowEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(PinkFootedPigEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.CHICKEN, 15, 2, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.COW, 15, 3, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.PIG, 15, 3, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.SHEEP, 15, 3, 4));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CookieCowEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(PintoCowEntity.entity, 15, 2, 3));
-				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MoolipEntity.entity, 15, 2, 3));
-				biome = new Biome.Builder().precipitation(Biome.RainType.RAIN).category(Biome.Category.PLAINS).depth(0.1f).scale(0f).temperature(0.5f)
-						.downfall(0.5f).setEffects(effects).withMobSpawnSettings(mobSpawnInfo.copy())
-						.withGenerationSettings(biomeGenerationSettings.build()).build();
-				event.getRegistry().register(biome.setRegistryName("minecraft_earth_mod:plains_build_plate"));
-			}
-		}
+
+	@Override
+	public void initElements() {
+		elements.biomes.add(() -> new CustomBiome());
 	}
+
 	@Override
 	public void init(FMLCommonSetupEvent event) {
-		BiomeDictionary.addTypes(RegistryKey.getOrCreateKey(Registry.BIOME_KEY, WorldGenRegistries.BIOME.getKey(biome)), BiomeDictionary.Type.PLAINS);
+		BiomeDictionary.addTypes(biome, BiomeDictionary.Type.PLAINS);
+	}
+	static class CustomBiome extends Biome {
+		public CustomBiome() {
+			super(new Biome.Builder().downfall(0.5f).depth(0.1f).scale(0f).temperature(0.5f).precipitation(Biome.RainType.RAIN)
+					.category(Biome.Category.PLAINS).waterColor(4159204).waterFogColor(329011)
+					.surfaceBuilder(SurfaceBuilder.DEFAULT, new SurfaceBuilderConfig(Blocks.GRASS_BLOCK.getDefaultState(),
+							Blocks.DIRT.getDefaultState(), Blocks.DIRT.getDefaultState())));
+			setRegistryName("plains_build_plate");
+			DefaultBiomeFeatures.addCarvers(this);
+			DefaultBiomeFeatures.addMonsterRooms(this);
+			DefaultBiomeFeatures.addOres(this);
+			DefaultBiomeFeatures.addLakes(this);
+			DefaultBiomeFeatures.addPlainsTallGrass(this);
+			this.addStructure(Feature.MINESHAFT.withConfiguration(new MineshaftConfig(0.004D, MineshaftStructure.Type.NORMAL)));
+			this.addStructure(Feature.VILLAGE.withConfiguration(new VillageConfig("village/plains/town_centers", 6)));
+			addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.FLOWER.withConfiguration(DefaultBiomeFeatures.DEFAULT_FLOWER_CONFIG)
+					.withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(new FrequencyConfig(3))));
+			addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH.withConfiguration(DefaultBiomeFeatures.GRASS_CONFIG)
+					.withPlacement(Placement.COUNT_HEIGHTMAP_DOUBLE.configure(new FrequencyConfig(3))));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MuddyPigEntity.entity, 3, 2, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(CluckshroomEntity.entity, 10, 2, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(FurnaceGolemEntity.entity, 3, 1, 1));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MelonGolemEntity.entity, 10, 1, 2));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MoobloomEntity.entity, 10, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(AlbinoCowEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(AmberChickenEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MidnightChickenEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(StormyChickenEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(SpottedPigEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(PieBaldPigEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(PalePigEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(AshenCowEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(SunsetCowEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(PinkFootedPigEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.CHICKEN, 15, 2, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.COW, 15, 3, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.PIG, 15, 3, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(EntityType.SHEEP, 15, 3, 4));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(CookieCowEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(PintoCowEntity.entity, 15, 2, 3));
+			this.addSpawn(EntityClassification.CREATURE, new Biome.SpawnListEntry(MoolipEntity.entity, 15, 2, 3));
+		}
 	}
 }

@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Direction;
-import net.minecraft.state.Property;
+import net.minecraft.state.IProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.item.Items;
@@ -79,12 +79,12 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 						_ist.setDamage(0);
 					}
 				}
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
@@ -92,9 +92,9 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 					BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
 					BlockState _bs = CarvedMelonBlock.block.getDefaultState();
 					BlockState _bso = world.getBlockState(_bp);
-					for (Map.Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
-						Property _property = _bs.getBlock().getStateContainer().getProperty(entry.getKey().getName());
-						if (_property != null && _bs.get(_property) != null)
+					for (Map.Entry<IProperty<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
+						IProperty _property = _bs.getBlock().getStateContainer().getProperty(entry.getKey().getName());
+						if (_property != null && _bs.has(_property))
 							try {
 								_bs = _bs.with(_property, (Comparable) entry.getValue());
 							} catch (Exception e) {
@@ -116,8 +116,8 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 					}
 				} catch (Exception e) {
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.MELON_SEEDS, (int) (1)));
+				if (!world.getWorld().isRemote) {
+					ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Items.MELON_SEEDS, (int) (1)));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
@@ -128,13 +128,12 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 	@SubscribeEvent
 	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
+		if (event.getHand() != entity.getActiveHand())
 			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
+		int i = event.getPos().getX();
+		int j = event.getPos().getY();
+		int k = event.getPos().getZ();
+		World world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", i);
 		dependencies.put("y", j);

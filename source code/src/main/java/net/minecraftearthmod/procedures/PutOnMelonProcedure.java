@@ -8,7 +8,7 @@ import net.minecraftearthmod.block.CarvedMelonBlock;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraft.item.ItemStack;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -50,8 +50,7 @@ public class PutOnMelonProcedure extends MinecraftEarthModModElements.ModElement
 				}
 				if (entity instanceof PlayerEntity) {
 					ItemStack _stktoremove = new ItemStack(CarvedMelonBlock.block, (int) (1));
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+					((PlayerEntity) entity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 				}
 			}
 		}
@@ -60,13 +59,12 @@ public class PutOnMelonProcedure extends MinecraftEarthModModElements.ModElement
 	@SubscribeEvent
 	public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
 		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
+		if (event.getHand() != entity.getActiveHand())
 			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
+		int i = event.getPos().getX();
+		int j = event.getPos().getY();
+		int k = event.getPos().getZ();
+		World world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", i);
 		dependencies.put("y", j);

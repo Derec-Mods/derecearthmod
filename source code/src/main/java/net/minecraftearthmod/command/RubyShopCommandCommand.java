@@ -1,10 +1,8 @@
 
 package net.minecraftearthmod.command;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.procedures.RubyShopCommandCommandExecutedProcedure;
 import net.minecraftearthmod.MinecraftEarthModModElements;
@@ -26,12 +24,11 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 public class RubyShopCommandCommand extends MinecraftEarthModModElements.ModElement {
 	public RubyShopCommandCommand(MinecraftEarthModModElements instance) {
 		super(instance, 61);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SubscribeEvent
-	public void registerCommands(RegisterCommandsEvent event) {
-		event.getDispatcher().register(customCommand());
+	@Override
+	public void serverLoad(FMLServerStartingEvent event) {
+		event.getCommandDispatcher().register(customCommand());
 	}
 
 	private LiteralArgumentBuilder<CommandSource> customCommand() {

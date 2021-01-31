@@ -8,7 +8,6 @@ import net.minecraftearthmod.block.RainbowWoolBlock;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundCategory;
@@ -83,42 +82,42 @@ public class ShearWoolyCowProcedure extends MinecraftEarthModModElements.ModElem
 						}
 					}
 					entity.getPersistentData().putDouble("regrow", 0);
-					if (world instanceof World && !world.isRemote()) {
-						((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+					if (!world.getWorld().isRemote) {
+						world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1);
 					} else {
-						((World) world).playSound(x, y, z,
+						world.getWorld().playSound(x, y, z,
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+					if (!world.getWorld().isRemote) {
+						ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 				}
 			} else {
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
@@ -140,42 +139,42 @@ public class ShearWoolyCowProcedure extends MinecraftEarthModModElements.ModElem
 						}
 					}
 					entity.getPersistentData().putDouble("regrow", 0);
-					if (world instanceof World && !world.isRemote()) {
-						((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+					if (!world.getWorld().isRemote) {
+						world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1);
 					} else {
-						((World) world).playSound(x, y, z,
+						world.getWorld().playSound(x, y, z,
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
+					if (!world.getWorld().isRemote) {
+						ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(RainbowWoolBlock.block, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 				}
 			} else {
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
@@ -197,42 +196,42 @@ public class ShearWoolyCowProcedure extends MinecraftEarthModModElements.ModElem
 						}
 					}
 					entity.getPersistentData().putDouble("regrow", 0);
-					if (world instanceof World && !world.isRemote()) {
-						((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+					if (!world.getWorld().isRemote) {
+						world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1);
 					} else {
-						((World) world).playSound(x, y, z,
+						world.getWorld().playSound(x, y, z,
 								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
 								SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
+					if (!world.getWorld().isRemote) {
+						ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 					if (((Math.random() * 100) <= 50)) {
-						if (world instanceof World && !world.isRemote()) {
-							ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
+						if (!world.getWorld().isRemote) {
+							ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.GRAY_WOOL, (int) (1)));
 							entityToSpawn.setPickupDelay((int) 10);
 							world.addEntity(entityToSpawn);
 						}
 					}
 				}
 			} else {
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.ambient")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}

@@ -9,7 +9,6 @@ import net.minecraftearthmod.block.CarvedMelonBlock;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
@@ -56,7 +55,7 @@ public class CreateMelonGolemProcedure extends MinecraftEarthModModElements.ModE
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.MELON.getDefaultState().getBlock())
-				|| ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == CarvedMelonBlock.block.getDefaultState()
+				&& ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == CarvedMelonBlock.block.getDefaultState()
 						.getBlock()))) {
 			if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.SNOW_BLOCK.getDefaultState().getBlock())) {
 				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 2), (int) z))).getBlock() == Blocks.SNOW_BLOCK.getDefaultState()
@@ -64,13 +63,12 @@ public class CreateMelonGolemProcedure extends MinecraftEarthModModElements.ModE
 					world.destroyBlock(new BlockPos((int) x, (int) y, (int) z), false);
 					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) z), false);
 					world.destroyBlock(new BlockPos((int) x, (int) (y - 2), (int) z), false);
-					if (world instanceof ServerWorld) {
-						Entity entityToSpawn = new MelonGolemEntity.CustomEntity(MelonGolemEntity.entity, (World) world);
+					if (world instanceof World && !world.getWorld().isRemote) {
+						Entity entityToSpawn = new MelonGolemEntity.CustomEntity(MelonGolemEntity.entity, world.getWorld());
 						entityToSpawn.setLocationAndAngles(x, y, z, world.getRandom().nextFloat() * 360F, 0);
 						if (entityToSpawn instanceof MobEntity)
-							((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world,
-									world.getDifficultyForLocation(entityToSpawn.getPosition()), SpawnReason.MOB_SUMMONED, (ILivingEntityData) null,
-									(CompoundNBT) null);
+							((MobEntity) entityToSpawn).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entityToSpawn)),
+									SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
 						world.addEntity(entityToSpawn);
 					}
 				}
@@ -81,7 +79,6 @@ public class CreateMelonGolemProcedure extends MinecraftEarthModModElements.ModE
 	@SubscribeEvent
 	public void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
 		Entity entity = event.getEntity();
-		IWorld world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", event.getPos().getX());
 		dependencies.put("y", event.getPos().getY());
@@ -89,7 +86,7 @@ public class CreateMelonGolemProcedure extends MinecraftEarthModModElements.ModE
 		dependencies.put("px", entity.getPosX());
 		dependencies.put("py", entity.getPosY());
 		dependencies.put("pz", entity.getPosZ());
-		dependencies.put("world", world);
+		dependencies.put("world", event.getWorld().getWorld());
 		dependencies.put("entity", entity);
 		dependencies.put("event", event);
 		this.executeProcedure(dependencies);

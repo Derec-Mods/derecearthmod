@@ -9,7 +9,6 @@ import net.minecraftearthmod.entity.CluckshroomEntity;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
@@ -69,37 +68,34 @@ public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModE
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((entity instanceof CluckshroomEntity.CustomEntity)) {
-			if (world instanceof World && !world.isRemote()) {
-				((World) world)
-						.playSound(null, new BlockPos((int) x, (int) y, (int) z),
-								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
-										.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
-								SoundCategory.NEUTRAL, (float) 1, (float) 1);
+			if (!world.getWorld().isRemote) {
+				world.playSound(null, new BlockPos((int) x, (int) y, (int) z), (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
+						.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")), SoundCategory.NEUTRAL, (float) 1, (float) 1);
 			} else {
-				((World) world).playSound(x, y, z,
+				world.getWorld().playSound(x, y, z,
 						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
 								.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}
-			if (!entity.world.isRemote())
+			if (!entity.world.isRemote)
 				entity.remove();
-			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
+			if (!world.getWorld().isRemote) {
+				ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
-			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
+			if (!world.getWorld().isRemote) {
+				ItemEntity entityToSpawn = new ItemEntity(world.getWorld(), x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
-			if (world instanceof ServerWorld) {
-				Entity entityToSpawn = new ChickenEntity(EntityType.CHICKEN, (World) world);
+			if (world instanceof World && !world.getWorld().isRemote) {
+				Entity entityToSpawn = new ChickenEntity(EntityType.CHICKEN, world.getWorld());
 				entityToSpawn.setLocationAndAngles(x, y, z, (float) 0, (float) 0);
 				entityToSpawn.setRenderYawOffset((float) 0);
 				entityToSpawn.setMotion(0, 0, 0);
 				if (entityToSpawn instanceof MobEntity)
-					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+					((MobEntity) entityToSpawn).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entityToSpawn)),
 							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
 				world.addEntity(entityToSpawn);
 			}
@@ -110,13 +106,12 @@ public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModE
 	public void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
 		Entity entity = event.getTarget();
 		PlayerEntity sourceentity = event.getPlayer();
-		if (event.getHand() != sourceentity.getActiveHand()) {
+		if (event.getHand() != sourceentity.getActiveHand())
 			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
+		int i = event.getPos().getX();
+		int j = event.getPos().getY();
+		int k = event.getPos().getZ();
+		World world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", i);
 		dependencies.put("y", j);

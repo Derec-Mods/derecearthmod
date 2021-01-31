@@ -1,12 +1,13 @@
 
 package net.minecraftearthmod.world.structure;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
+import net.minecraftearthmod.world.dimension.MinecraftEarthDimensionDimension;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.feature.template.Template;
@@ -18,13 +19,12 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.World;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.Mirror;
 
 import java.util.Random;
@@ -33,22 +33,20 @@ import java.util.Random;
 public class TappableDungeon1Structure extends MinecraftEarthModModElements.ModElement {
 	public TappableDungeon1Structure(MinecraftEarthModModElements instance) {
 		super(instance, 160);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		Feature<NoFeatureConfig> feature = new Feature<NoFeatureConfig>(NoFeatureConfig.field_236558_a_) {
+	@Override
+	public void init(FMLCommonSetupEvent event) {
+		Feature<NoFeatureConfig> feature = new Feature<NoFeatureConfig>(NoFeatureConfig::deserialize) {
 			@Override
-			public boolean generate(ISeedReader world, ChunkGenerator generator, Random random, BlockPos pos, NoFeatureConfig config) {
+			public boolean place(IWorld world, ChunkGenerator generator, Random random, BlockPos pos, NoFeatureConfig config) {
 				int ci = (pos.getX() >> 4) << 4;
 				int ck = (pos.getZ() >> 4) << 4;
-				RegistryKey<World> dimensionType = world.getWorld().getDimensionKey();
+				DimensionType dimensionType = world.getDimension().getType();
 				boolean dimensionCriteria = false;
-				if (dimensionType == World.OVERWORLD)
+				if (dimensionType == DimensionType.OVERWORLD)
 					dimensionCriteria = true;
-				if (dimensionType == RegistryKey.getOrCreateKey(Registry.WORLD_KEY,
-						new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")))
+				if (dimensionType == MinecraftEarthDimensionDimension.type)
 					dimensionCriteria = true;
 				if (!dimensionCriteria)
 					return false;
@@ -65,18 +63,20 @@ public class TappableDungeon1Structure extends MinecraftEarthModModElements.ModE
 						int x = spawnTo.getX();
 						int y = spawnTo.getY();
 						int z = spawnTo.getZ();
-						Template template = world.getWorld().getStructureTemplateManager()
+						Template template = ((ServerWorld) world.getWorld()).getSaveHandler().getStructureTemplateManager()
 								.getTemplateDefaulted(new ResourceLocation("minecraft_earth_mod", "tappabledungeon1"));
 						if (template == null)
 							return false;
-						template.func_237144_a_(world, spawnTo, new PlacementSettings().setRotation(rotation).setRandom(random).setMirror(mirror)
-								.addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK).setChunk(null).setIgnoreEntities(false), random);
+						template.addBlocksToWorld(world, spawnTo, new PlacementSettings().setRotation(rotation).setRandom(random).setMirror(mirror)
+								.addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_BLOCK).setChunk(null).setIgnoreEntities(false));
 					}
 				}
 				return true;
 			}
 		};
-		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_STRUCTURES).add(() -> feature
-				.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+		for (Biome biome : ForgeRegistries.BIOMES.getValues()) {
+			biome.addFeature(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, feature.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+					.withPlacement(Placement.NOPE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+		}
 	}
 }

@@ -7,7 +7,6 @@ import net.minecraftearthmod.item.ButterbeerItem;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.SoundCategory;
@@ -61,15 +60,14 @@ public class MilkMooBloomProcedure extends MinecraftEarthModModElements.ModEleme
 				.getItem() == new ItemStack(Items.GLASS_BOTTLE, (int) (1)).getItem())) {
 			if (sourceentity instanceof PlayerEntity) {
 				ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE, (int) (1));
-				((PlayerEntity) sourceentity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-						((PlayerEntity) sourceentity).container.func_234641_j_());
+				((PlayerEntity) sourceentity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 			}
-			if (world instanceof World && !world.isRemote()) {
-				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+			if (!world.getWorld().isRemote) {
+				world.playSound(null, new BlockPos((int) x, (int) y, (int) z),
 						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
 						SoundCategory.NEUTRAL, (float) 1, (float) 1);
 			} else {
-				((World) world).playSound(x, y, z,
+				world.getWorld().playSound(x, y, z,
 						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}

@@ -1,16 +1,9 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftforge.registries.ForgeRegistries;
-
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.particles.ParticleTypes;
@@ -59,37 +52,15 @@ public class SitDownWolfProcedure extends MinecraftEarthModModElements.ModElemen
 		IWorld world = (IWorld) dependencies.get("world");
 		if (((entity instanceof TameableEntity) ? ((TameableEntity) entity).isTamed() : false)) {
 			if ((((entity.getPersistentData().getString("sit"))).equals("standing"))) {
+				world.addParticle(ParticleTypes.SMOKE, x, y, z, 0, 1, 0);
 				entity.getPersistentData().putString("sit", "sitting");
 				if (entity instanceof LivingEntity)
 					((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int) 696, (int) 100, (false), (false)));
 				entity.setSneaking((true));
-				if (world instanceof ServerWorld) {
-					((ServerWorld) world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, x, y, z, (int) 3, 1, 1, 1, 0);
-				}
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.whine")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1);
-				} else {
-					((World) world).playSound(x, y, z,
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.whine")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
-				}
 			} else if ((((entity.getPersistentData().getString("sit"))).equals("sitting"))) {
+				world.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, 0, 1, 0);
 				entity.getPersistentData().putString("sit", "standing");
 				entity.setSneaking((false));
-				if (world instanceof ServerWorld) {
-					((ServerWorld) world).spawnParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, (int) 3, 1, 1, 1, 0);
-				}
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1);
-				} else {
-					((World) world).playSound(x, y, z,
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
-				}
 			}
 		}
 	}

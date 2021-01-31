@@ -5,9 +5,9 @@ import net.minecraftearthmod.entity.MobOfMeEntity;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,14 +57,13 @@ public class SpawnMobofMeProcedure extends MinecraftEarthModModElements.ModEleme
 		IWorld world = (IWorld) dependencies.get("world");
 		if (entity instanceof PlayerEntity) {
 			ItemStack _stktoremove = new ItemStack(MobofMeItemItem.block, (int) (1));
-			((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-					((PlayerEntity) entity).container.func_234641_j_());
+			((PlayerEntity) entity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 		}
-		if (world instanceof ServerWorld) {
-			Entity entityToSpawn = new MobOfMeEntity.CustomEntity(MobOfMeEntity.entity, (World) world);
+		if (world instanceof World && !world.getWorld().isRemote) {
+			Entity entityToSpawn = new MobOfMeEntity.CustomEntity(MobOfMeEntity.entity, world.getWorld());
 			entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
 			if (entityToSpawn instanceof MobEntity)
-				((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+				((MobEntity) entityToSpawn).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entityToSpawn)),
 						SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
 			world.addEntity(entityToSpawn);
 		}

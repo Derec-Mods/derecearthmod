@@ -10,7 +10,6 @@ import net.minecraftearthmod.entity.MuddyPigEntity;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
@@ -76,30 +75,26 @@ public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModEl
 		if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
 				.getItem() == new ItemStack(MudFormulaItem.block, (int) (1)).getItem())) {
 			if ((entity instanceof PigEntity)) {
-				if (world instanceof World && !world.isRemote()) {
-					((World) world)
-							.playSound(null, new BlockPos((int) x, (int) y, (int) z),
-									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
-											.getValue(new ResourceLocation("entity.zombie_villager.cure")),
-									SoundCategory.NEUTRAL, (float) 1, (float) 1);
+				if (!world.getWorld().isRemote) {
+					world.playSound(null, new BlockPos((int) x, (int) y, (int) z), (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
+							.getValue(new ResourceLocation("entity.zombie_villager.cure")), SoundCategory.NEUTRAL, (float) 1, (float) 1);
 				} else {
-					((World) world).playSound(x, y, z,
+					world.getWorld().playSound(x, y, z,
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
 									.getValue(new ResourceLocation("entity.zombie_villager.cure")),
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (sourceentity instanceof PlayerEntity) {
 					ItemStack _stktoremove = new ItemStack(MudFormulaItem.block, (int) (1));
-					((PlayerEntity) sourceentity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) sourceentity).container.func_234641_j_());
+					((PlayerEntity) sourceentity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 				}
-				if (!entity.world.isRemote())
+				if (!entity.world.isRemote)
 					entity.remove();
-				if (world instanceof ServerWorld) {
-					Entity entityToSpawn = new MuddyPigEntity.CustomEntity(MuddyPigEntity.entity, (World) world);
+				if (world instanceof World && !world.getWorld().isRemote) {
+					Entity entityToSpawn = new MuddyPigEntity.CustomEntity(MuddyPigEntity.entity, world.getWorld());
 					entityToSpawn.setLocationAndAngles(x, y, z, world.getRandom().nextFloat() * 360F, 0);
 					if (entityToSpawn instanceof MobEntity)
-						((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+						((MobEntity) entityToSpawn).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entityToSpawn)),
 								SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
 					world.addEntity(entityToSpawn);
 				}
@@ -111,13 +106,12 @@ public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModEl
 	public void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
 		Entity entity = event.getTarget();
 		PlayerEntity sourceentity = event.getPlayer();
-		if (event.getHand() != sourceentity.getActiveHand()) {
+		if (event.getHand() != sourceentity.getActiveHand())
 			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
+		int i = event.getPos().getX();
+		int j = event.getPos().getY();
+		int k = event.getPos().getZ();
+		World world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", i);
 		dependencies.put("y", j);

@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.tileentity.TileEntity;
@@ -53,7 +52,7 @@ public class RemoveLightProcedure extends MinecraftEarthModModElements.ModElemen
 		}.getValue(new BlockPos((int) x, (int) y, (int) z), "timer")) >= 3)) {
 			world.setBlockState(new BlockPos((int) x, (int) y, (int) z), Blocks.AIR.getDefaultState(), 3);
 		} else {
-			if (!world.isRemote()) {
+			if (!world.getWorld().isRemote) {
 				BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
 				TileEntity _tileEntity = world.getTileEntity(_bp);
 				BlockState _bs = world.getBlockState(_bp);
@@ -66,8 +65,7 @@ public class RemoveLightProcedure extends MinecraftEarthModModElements.ModElemen
 							return -1;
 						}
 					}.getValue(new BlockPos((int) x, (int) y, (int) z), "timer")) + 1));
-				if (world instanceof World)
-					((World) world).notifyBlockUpdate(_bp, _bs, _bs, 3);
+				world.getWorld().notifyBlockUpdate(_bp, _bs, _bs, 3);
 			}
 		}
 	}

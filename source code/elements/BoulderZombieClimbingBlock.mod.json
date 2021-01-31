@@ -10,7 +10,7 @@
     "textureBack": "furnacegolemlight",
     "renderType": 11,
     "customModelName": "Single texture",
-    "rotationMode": 3,
+    "rotationMode": 1,
     "emissiveRendering": false,
     "displayFluidOverlay": false,
     "itemTexture": "missingtexture",
@@ -23,7 +23,7 @@
     "mz": 0.0,
     "Mx": 0.9,
     "My": 1.0,
-    "Mz": 0.9,
+    "Mz": 0.1,
     "name": "Boulder Zombie Climbing Block",
     "specialInfo": [],
     "hardness": 1000.0,
@@ -31,7 +31,7 @@
     "hasGravity": false,
     "isWaterloggable": false,
     "creativeTab": {
-      "value": "No creative tab entry"
+      "value": "CUSTOM:TappablesTab"
     },
     "destroyTool": "Not specified",
     "customDrop": {
@@ -42,9 +42,9 @@
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
     "canProvidePower": false,
-    "lightOpacity": 0,
+    "lightOpacity": 255,
     "material": {
-      "value": "STRUCTURE_VOID"
+      "value": "ROCK"
     },
     "tickRate": 10,
     "tickRandomly": true,
@@ -57,12 +57,12 @@
     "aiPathNodeType": "DEFAULT",
     "flammability": 0,
     "fireSpreadSpeed": 0,
-    "isLadder": false,
+    "isLadder": true,
     "slipperiness": 0.6,
     "reactionToPushing": "NORMAL",
     "isNotColidable": true,
     "soundOnStep": {
-      "value": "GROUND"
+      "value": "SCAFFOLDING"
     },
     "luminance": 0,
     "unbreakable": true,

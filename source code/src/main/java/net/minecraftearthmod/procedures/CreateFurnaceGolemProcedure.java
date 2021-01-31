@@ -8,7 +8,6 @@ import net.minecraftearthmod.entity.FurnaceGolemEntity;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 import net.minecraft.util.math.BlockPos;
@@ -68,37 +67,12 @@ public class CreateFurnaceGolemProcedure extends MinecraftEarthModModElements.Mo
 					world.destroyBlock(new BlockPos((int) x, (int) (y - 2), (int) z), false);
 					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) (z + 1)), false);
 					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) (z - 1)), false);
-					if (world instanceof ServerWorld) {
-						Entity entityToSpawn = new FurnaceGolemEntity.CustomEntity(FurnaceGolemEntity.entity, (World) world);
+					if (world instanceof World && !world.getWorld().isRemote) {
+						Entity entityToSpawn = new FurnaceGolemEntity.CustomEntity(FurnaceGolemEntity.entity, world.getWorld());
 						entityToSpawn.setLocationAndAngles(x, y, z, world.getRandom().nextFloat() * 360F, 0);
 						if (entityToSpawn instanceof MobEntity)
-							((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world,
-									world.getDifficultyForLocation(entityToSpawn.getPosition()), SpawnReason.MOB_SUMMONED, (ILivingEntityData) null,
-									(CompoundNBT) null);
-						world.addEntity(entityToSpawn);
-					}
-				}
-			}
-			if (((((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.BLAST_FURNACE.getDefaultState()
-					.getBlock())
-					&& ((world.getBlockState(new BlockPos((int) (x + 1), (int) (y - 1), (int) z))).getBlock() == Blocks.IRON_BLOCK.getDefaultState()
-							.getBlock()))
-					&& ((world.getBlockState(new BlockPos((int) (x - 1), (int) (y - 1), (int) z))).getBlock() == Blocks.IRON_BLOCK.getDefaultState()
-							.getBlock()))) {
-				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 2), (int) z))).getBlock() == Blocks.IRON_BLOCK.getDefaultState()
-						.getBlock())) {
-					world.destroyBlock(new BlockPos((int) x, (int) y, (int) z), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) z), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 2), (int) z), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) (z + 1)), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) (z - 1)), false);
-					if (world instanceof ServerWorld) {
-						Entity entityToSpawn = new FurnaceGolemEntity.CustomEntity(FurnaceGolemEntity.entity, (World) world);
-						entityToSpawn.setLocationAndAngles(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-						if (entityToSpawn instanceof MobEntity)
-							((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world,
-									world.getDifficultyForLocation(entityToSpawn.getPosition()), SpawnReason.MOB_SUMMONED, (ILivingEntityData) null,
-									(CompoundNBT) null);
+							((MobEntity) entityToSpawn).onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entityToSpawn)),
+									SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
 						world.addEntity(entityToSpawn);
 					}
 				}
@@ -109,7 +83,6 @@ public class CreateFurnaceGolemProcedure extends MinecraftEarthModModElements.Mo
 	@SubscribeEvent
 	public void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
 		Entity entity = event.getEntity();
-		IWorld world = event.getWorld();
 		Map<String, Object> dependencies = new HashMap<>();
 		dependencies.put("x", event.getPos().getX());
 		dependencies.put("y", event.getPos().getY());
@@ -117,7 +90,7 @@ public class CreateFurnaceGolemProcedure extends MinecraftEarthModModElements.Mo
 		dependencies.put("px", entity.getPosX());
 		dependencies.put("py", entity.getPosY());
 		dependencies.put("pz", entity.getPosZ());
-		dependencies.put("world", world);
+		dependencies.put("world", event.getWorld().getWorld());
 		dependencies.put("entity", entity);
 		dependencies.put("event", event);
 		this.executeProcedure(dependencies);

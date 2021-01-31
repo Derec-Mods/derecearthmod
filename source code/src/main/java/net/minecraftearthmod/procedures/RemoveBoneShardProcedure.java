@@ -33,8 +33,7 @@ public class RemoveBoneShardProcedure extends MinecraftEarthModModElements.ModEl
 			((PlayerEntity) entity).getCooldownTracker().setCooldown(((itemstack)).getItem(), (int) 20);
 		if (entity instanceof PlayerEntity) {
 			ItemStack _stktoremove = new ItemStack(BoneshardItem.block, (int) (1));
-			((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-					((PlayerEntity) entity).container.func_234641_j_());
+			((PlayerEntity) entity).inventory.clearMatchingItems(p -> _stktoremove.getItem() == p.getItem(), (int) 1);
 		}
 	}
 }

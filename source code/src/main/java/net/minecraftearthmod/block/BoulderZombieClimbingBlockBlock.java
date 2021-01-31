@@ -6,24 +6,27 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.minecraftearthmod.itemgroup.TappablesTabItemGroup;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Direction;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.loot.LootContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.BlockItem;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.block.material.MaterialColor;
@@ -48,7 +51,8 @@ public class BoulderZombieClimbingBlockBlock extends MinecraftEarthModModElement
 	@Override
 	public void initElements() {
 		elements.blocks.add(() -> new CustomBlock());
-		elements.items.add(() -> new BlockItem(block, new Item.Properties().group(null)).setRegistryName(block.getRegistryName()));
+		elements.items
+				.add(() -> new BlockItem(block, new Item.Properties().group(TappablesTabItemGroup.tab)).setRegistryName(block.getRegistryName()));
 	}
 
 	@Override
@@ -59,32 +63,32 @@ public class BoulderZombieClimbingBlockBlock extends MinecraftEarthModModElement
 	public static class CustomBlock extends Block {
 		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 		public CustomBlock() {
-			super(Block.Properties.create(Material.STRUCTURE_VOID).sound(SoundType.GROUND).hardnessAndResistance(-1, 3600000).setLightLevel(s -> 0)
-					.doesNotBlockMovement().notSolid().tickRandomly().setOpaque((bs, br, bp) -> false));
+			super(Block.Properties.create(Material.ROCK).sound(SoundType.SCAFFOLDING).hardnessAndResistance(-1, 3600000).lightValue(0)
+					.doesNotBlockMovement().notSolid().tickRandomly());
 			this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 			setRegistryName("boulder_zombie_climbing_block");
 		}
 
 		@Override
-		public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-			return true;
+		public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return false;
 		}
 
 		@Override
 		public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-			Vector3d offset = state.getOffset(world, pos);
+			Vec3d offset = state.getOffset(world, pos);
 			switch ((Direction) state.get(FACING)) {
 				case UP :
 				case DOWN :
 				case SOUTH :
 				default :
-					return VoxelShapes.create(1D, 0D, 1D, 0.1D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.create(1D, 0D, 1D, 0.1D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
 				case NORTH :
-					return VoxelShapes.create(0D, 0D, 0D, 0.9D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.create(0D, 0D, 0D, 0.9D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
 				case WEST :
-					return VoxelShapes.create(0D, 0D, 1D, 0.9D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.create(0D, 0D, 1D, 0.1D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
 				case EAST :
-					return VoxelShapes.create(1D, 0D, 0D, 0.1D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.create(1D, 0D, 0D, 0.9D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
 			}
 		}
 
@@ -104,9 +108,7 @@ public class BoulderZombieClimbingBlockBlock extends MinecraftEarthModModElement
 		@Override
 		public BlockState getStateForPlacement(BlockItemUseContext context) {
 			;
-			if (context.getFace() == Direction.UP || context.getFace() == Direction.DOWN)
-				return this.getDefaultState().with(FACING, Direction.NORTH);
-			return this.getDefaultState().with(FACING, context.getFace());
+			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 		}
 
 		@Override
@@ -115,8 +117,13 @@ public class BoulderZombieClimbingBlockBlock extends MinecraftEarthModModElement
 		}
 
 		@Override
-		public MaterialColor getMaterialColor() {
+		public MaterialColor getMaterialColor(BlockState state, IBlockReader blockAccess, BlockPos pos) {
 			return MaterialColor.AIR;
+		}
+
+		@Override
+		public boolean isLadder(BlockState state, IWorldReader world, BlockPos pos, LivingEntity entity) {
+			return true;
 		}
 
 		@Override

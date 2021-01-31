@@ -22,7 +22,6 @@ import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
@@ -44,8 +43,6 @@ import net.minecraft.client.Minecraft;
 import java.util.function.Supplier;
 import java.util.Map;
 import java.util.HashMap;
-
-import com.mojang.blaze3d.matrix.MatrixStack;
 
 @MinecraftEarthModModElements.ModElement.Tag
 public class RubyShopGui extends MinecraftEarthModModElements.ModElement {
@@ -287,7 +284,7 @@ public class RubyShopGui extends MinecraftEarthModModElements.ModElement {
 		}
 
 		private void slotChanged(int slotid, int ctype, int meta) {
-			if (this.world != null && this.world.isRemote()) {
+			if (this.world != null && this.world.isRemote) {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new GUISlotChangedMessage(slotid, x, y, z, ctype, meta));
 				handleSlotAction(entity, slotid, ctype, meta, x, y, z);
 			}
@@ -311,25 +308,25 @@ public class RubyShopGui extends MinecraftEarthModModElements.ModElement {
 		}
 		private static final ResourceLocation texture = new ResourceLocation("minecraft_earth_mod:textures/ruby_shop.png");
 		@Override
-		public void render(MatrixStack ms, int mouseX, int mouseY, float partialTicks) {
-			this.renderBackground(ms);
-			super.render(ms, mouseX, mouseY, partialTicks);
-			this.renderHoveredTooltip(ms, mouseX, mouseY);
+		public void render(int mouseX, int mouseY, float partialTicks) {
+			this.renderBackground();
+			super.render(mouseX, mouseY, partialTicks);
+			this.renderHoveredToolTip(mouseX, mouseY);
 		}
 
 		@Override
-		protected void drawGuiContainerBackgroundLayer(MatrixStack ms, float par1, int par2, int par3) {
+		protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
 			GL11.glColor4f(1, 1, 1, 1);
 			Minecraft.getInstance().getTextureManager().bindTexture(texture);
 			int k = (this.width - this.xSize) / 2;
 			int l = (this.height - this.ySize) / 2;
-			this.blit(ms, k, l, 0, 0, this.xSize, this.ySize, this.xSize, this.ySize);
+			this.blit(k, l, 0, 0, this.xSize, this.ySize, this.xSize, this.ySize);
 			Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation("minecraft_earth_mod:textures/rubyblock.png"));
-			this.blit(ms, this.guiLeft + 178, this.guiTop + -33, 0, 0, 256, 256, 256, 256);
+			this.blit(this.guiLeft + 178, this.guiTop + -33, 0, 0, 256, 256, 256, 256);
 			Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation("minecraft_earth_mod:textures/ruby.png"));
-			this.blit(ms, this.guiLeft + 6, this.guiTop + 11, 0, 0, 256, 256, 256, 256);
+			this.blit(this.guiLeft + 6, this.guiTop + 11, 0, 0, 256, 256, 256, 256);
 			Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation("minecraft_earth_mod:textures/ruby.png"));
-			this.blit(ms, this.guiLeft + 159, this.guiTop + 11, 0, 0, 256, 256, 256, 256);
+			this.blit(this.guiLeft + 159, this.guiTop + 11, 0, 0, 256, 256, 256, 256);
 		}
 
 		@Override
@@ -347,14 +344,14 @@ public class RubyShopGui extends MinecraftEarthModModElements.ModElement {
 		}
 
 		@Override
-		protected void drawGuiContainerForegroundLayer(MatrixStack ms, int mouseX, int mouseY) {
-			this.font.drawString(ms, "Welcome to the Ruby Shop!", 24, 11, -3407872);
-			this.font.drawString(ms, "Random Plant", 6, 38, -6750208);
+		protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+			this.font.drawString("Welcome to the Ruby Shop!", 24, 11, -3407872);
+			this.font.drawString("Random Plant", 6, 38, -6750208);
 		}
 
 		@Override
-		public void onClose() {
-			super.onClose();
+		public void removed() {
+			super.removed();
 			Minecraft.getInstance().keyboardListener.enableRepeatEvents(false);
 		}
 
@@ -362,11 +359,11 @@ public class RubyShopGui extends MinecraftEarthModModElements.ModElement {
 		public void init(Minecraft minecraft, int width, int height) {
 			super.init(minecraft, width, height);
 			minecraft.keyboardListener.enableRepeatEvents(true);
-			this.addButton(new Button(this.guiLeft + 78, this.guiTop + 29, 90, 20, new StringTextComponent("Buy Random Plant"), e -> {
+			this.addButton(new Button(this.guiLeft + 78, this.guiTop + 29, 90, 20, "Buy Random Plant", e -> {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new ButtonPressedMessage(0, x, y, z));
 				handleButtonAction(entity, 0, x, y, z);
 			}));
-			this.addButton(new Button(this.guiLeft + 43, this.guiTop + 58, 90, 20, new StringTextComponent("Next Page"), e -> {
+			this.addButton(new Button(this.guiLeft + 43, this.guiTop + 58, 90, 20, "Next Page", e -> {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new ButtonPressedMessage(1, x, y, z));
 				handleButtonAction(entity, 1, x, y, z);
 			}));

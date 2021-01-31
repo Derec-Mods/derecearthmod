@@ -155,7 +155,7 @@ public class BoneshardItem extends MinecraftEarthModModElements.ModElement {
 			double y = this.getPosY();
 			double z = this.getPosZ();
 			World world = this.world;
-			Entity entity = this.func_234616_v_();
+			Entity entity = this.getShooter();
 			if (this.inGround) {
 				this.remove();
 			}
