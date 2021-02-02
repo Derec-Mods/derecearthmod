@@ -1,0 +1,11 @@
+{
+  "_fv": 15,
+  "_type": "gamerule",
+  "definition": {
+    "type": "Logic",
+    "description": "Toggle Experimental Features in the Minecraft Earth Mod",
+    "category": "SPAWNING",
+    "defaultValueLogic": false,
+    "defaultValueNumber": 0
+  }
+}

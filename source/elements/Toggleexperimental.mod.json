@@ -1,0 +1,11 @@
+{
+  "_fv": 15,
+  "_type": "command",
+  "definition": {
+    "commandName": "toggleexperimental",
+    "permissionLevel": 1,
+    "onCommandExecuted": {
+      "name": "ToggleExperimentalMode"
+    }
+  }
+}

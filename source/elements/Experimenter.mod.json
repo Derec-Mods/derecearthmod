@@ -1,0 +1,25 @@
+{
+  "_fv": 15,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "Experimenter",
+    "achievementDescription": "Congrats on trying new things!",
+    "achievementIcon": {
+      "value": "Items.KNOWLEDGE_BOOK"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": true,
+    "hideIfNotCompleted": true,
+    "rewardLoot": [],
+    "rewardRecipes": [],
+    "rewardFunction": "No function",
+    "rewardXP": 1,
+    "achievementType": "task",
+    "parent": {
+      "value": "CUSTOM:MinecraftEarthAdvancement"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"custom_trigger\" x=\"68\" y=\"179\"><next><block type=\"advancement_trigger\" deletable=\"false\"></block></next></block></xml>"
+  }
+}

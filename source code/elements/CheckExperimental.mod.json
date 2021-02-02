@@ -1,7 +1,0 @@
-{
-  "_fv": 10,
-  "_type": "procedure",
-  "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"-301\" y=\"93\"><field name=\"trigger\">mod_load</field><next><block type=\"file_createfolder\"><field name=\"var\">fold</field><value name=\"name\"><block type=\"text\"><field name=\"TEXT\">derecearthmobsconfig</field></block></value><value name=\"location\"><block type=\"get_user_directory\"/></value><next><block type=\"file_definefile\"><field name=\"var\">derecconfig</field><value name=\"name\"><block type=\"text\"><field name=\"TEXT\">config.txt</field></block></value><value name=\"location\"><block type=\"text_join\"><mutation items=\"2\"/><value name=\"ADD0\"><block type=\"get_user_directory\"/></value><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">//derecearthmobsconfig</field></block></value></block></value><next><block type=\"file_createfile\"><field name=\"var\">derecconfig</field><next><block type=\"file_startwriting\"><field name=\"var\">derecconfig</field><next><block type=\"file_stopwriting\"><field name=\"var\">derecconfig</field><value name=\"text\"><block type=\"text\"><field name=\"TEXT\">experimentalfeatures=false</field></block></value></block></next></block></next></block></next></block></next></block></next></block></xml>"
-  }
-}

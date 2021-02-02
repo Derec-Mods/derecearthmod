@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft_earth_mod:minecraft_earth_dimension"
+    },
+    "title": {
+      "translate": "advancements.minecraft_earth_advancement.title",
+      "color": "cyan",
+      "italic": false
+    },
+    "description": {
+      "translate": "advancements.minecraft_earth_advancement.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "minecraft_earth_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 1
+  },
+  "parent": "minecraft:story/root"
+}
