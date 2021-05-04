@@ -4,7 +4,7 @@ package net.minecraftearthmod.itemgroup;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
-import net.minecraftearthmod.item.RubyItem;
+import net.minecraftearthmod.item.HornItem;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ public class DerecEarthMobsSpawnEggsItemGroup extends MinecraftEarthModModElemen
 			@OnlyIn(Dist.CLIENT)
 			@Override
 			public ItemStack createIcon() {
-				return new ItemStack(RubyItem.block, (int) (1));
+				return new ItemStack(HornItem.block, (int) (1));
 			}
 
 			@OnlyIn(Dist.CLIENT)

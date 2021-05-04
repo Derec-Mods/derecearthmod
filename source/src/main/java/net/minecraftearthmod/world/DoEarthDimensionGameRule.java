@@ -9,11 +9,11 @@ import net.minecraft.world.GameRules;
 import java.lang.reflect.Method;
 
 @MinecraftEarthModModElements.ModElement.Tag
-public class WaterproofGolemsGameRule extends MinecraftEarthModModElements.ModElement {
-	public static final GameRules.RuleKey<GameRules.BooleanValue> gamerule = GameRules.register("waterproofGolems", GameRules.Category.PLAYER,
-			create(false));
-	public WaterproofGolemsGameRule(MinecraftEarthModModElements instance) {
-		super(instance, 203);
+public class DoEarthDimensionGameRule extends MinecraftEarthModModElements.ModElement {
+	public static final GameRules.RuleKey<GameRules.BooleanValue> gamerule = GameRules.register("doEarthDimension", GameRules.Category.MISC,
+			create(true));
+	public DoEarthDimensionGameRule(MinecraftEarthModModElements instance) {
+		super(instance, 205);
 	}
 
 	public static GameRules.RuleType<GameRules.BooleanValue> create(boolean defaultValue) {

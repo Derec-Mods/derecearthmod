@@ -43,9 +43,9 @@
     "portalParticles": {
       "value": "VILLAGER_HAPPY"
     },
-    "portalLuminance": 10,
+    "portalLuminance": 15,
     "portalSound": {
-      "value": "block.portal.ambient"
+      "value": "block.wet_grass.step"
     },
     "igniterName": "Buildplate Key",
     "igniterTab": {
@@ -53,6 +53,12 @@
     },
     "texture": "buildplatekey",
     "portalTexture": "weirdgrass",
-    "enablePortal": true
+    "enablePortal": true,
+    "portalMakeCondition": {
+      "name": "CheckEarthDimensionGamerule"
+    },
+    "portalUseCondition": {
+      "name": "CheckEarthDimensionGamerule"
+    }
   }
 }

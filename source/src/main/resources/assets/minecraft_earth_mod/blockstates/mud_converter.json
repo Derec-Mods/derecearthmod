@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "minecraft_earth_mod:block/mud_converter"
+    },
+    "facing=east": {
+      "model": "minecraft_earth_mod:block/mud_converter",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "minecraft_earth_mod:block/mud_converter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "minecraft_earth_mod:block/mud_converter",
+      "y": 270
+    }
+  }
+}

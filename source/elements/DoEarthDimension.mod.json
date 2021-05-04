@@ -1,0 +1,11 @@
+{
+  "_fv": 15,
+  "_type": "gamerule",
+  "definition": {
+    "type": "Logic",
+    "description": "Enable/Disable the Minecraft Earth Dimension! Disabling this will not allow you to find a new world with tons of cool mobs though :(",
+    "category": "MISC",
+    "defaultValueLogic": true,
+    "defaultValueNumber": 0
+  }
+}

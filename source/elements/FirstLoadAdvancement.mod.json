@@ -2,6 +2,6 @@
   "_fv": 15,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">player_ticks</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_negate\"><value name=\"BOOL\"><block type=\"entity_has_achievement\"><field name=\"achievement\">CUSTOM:MinecraftEarthAdvancement</field><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></value></block></value><statement name=\"DO0\"><block type=\"entity_add_achievement\"><field name=\"achievement\">CUSTOM:MinecraftEarthAdvancement</field><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></statement></block></next></block></xml>"
+    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">mod_load</field><next><block type=\"variables_set_logic\"><field name=\"VAR\">global:RunningEarthMod</field><value name=\"VAL\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></next></block></xml>"
   }
 }

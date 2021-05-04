@@ -5,7 +5,7 @@
     "type": "Logic",
     "description": "Do Furnace Golems take damage in water?",
     "category": "PLAYER",
-    "defaultValueLogic": true,
+    "defaultValueLogic": false,
     "defaultValueNumber": 0
   }
 }

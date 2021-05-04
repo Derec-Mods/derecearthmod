@@ -16,12 +16,7 @@
   },
   "criteria": {
     "get_mud": {
-      "trigger": "minecraft:placed_block",
-      "conditions": {
-        "item": {
-          "item": "minecraft_earth_mod:mud"
-        }
-      }
+      "trigger": "minecraft:impossible"
     }
   },
   "rewards": {

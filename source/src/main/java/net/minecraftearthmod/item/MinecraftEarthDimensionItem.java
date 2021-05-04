@@ -4,6 +4,7 @@ package net.minecraftearthmod.item;
 import net.minecraftforge.registries.ObjectHolder;
 
 import net.minecraftearthmod.world.dimension.MinecraftEarthDimensionDimension;
+import net.minecraftearthmod.procedures.CheckEarthDimensionGameruleProcedure;
 
 import net.minecraft.world.World;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.entity.player.PlayerEntity;
+
+import com.google.common.collect.ImmutableMap;
 
 public class MinecraftEarthDimensionItem extends Item {
 	@ObjectHolder("minecraft_earth_mod:minecraft_earth_dimension")
@@ -33,7 +36,7 @@ public class MinecraftEarthDimensionItem extends Item {
 			int x = pos.getX();
 			int y = pos.getY();
 			int z = pos.getZ();
-			if (world.isAirBlock(pos) && true)
+			if (world.isAirBlock(pos) && CheckEarthDimensionGameruleProcedure.executeProcedure(ImmutableMap.of("world", world)))
 				MinecraftEarthDimensionDimension.portal.portalSpawn(world, pos);
 			itemstack.damageItem(1, entity, c -> c.sendBreakAnimation(context.getHand()));
 			return ActionResultType.SUCCESS;

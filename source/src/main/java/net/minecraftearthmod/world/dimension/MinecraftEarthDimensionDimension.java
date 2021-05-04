@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.minecraftearthmod.procedures.CheckEarthDimensionGameruleProcedure;
 import net.minecraftearthmod.item.MinecraftEarthDimensionItem;
 import net.minecraftearthmod.block.ChestTappableBlock;
 import net.minecraftearthmod.MinecraftEarthModModElements;
@@ -70,6 +71,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 
 import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableMap;
 
 @MinecraftEarthModModElements.ModElement.Tag
 public class MinecraftEarthDimensionDimension extends MinecraftEarthModModElements.ModElement {
@@ -140,7 +142,7 @@ public class MinecraftEarthDimensionDimension extends MinecraftEarthModModElemen
 	public static class CustomPortalBlock extends NetherPortalBlock {
 		public CustomPortalBlock() {
 			super(Block.Properties.create(Material.PORTAL).doesNotBlockMovement().tickRandomly().hardnessAndResistance(-1.0F).sound(SoundType.GLASS)
-					.setLightLevel(s -> 10).noDrops());
+					.setLightLevel(s -> 15).noDrops());
 			setRegistryName("minecraft_earth_dimension_portal");
 		}
 
@@ -194,13 +196,14 @@ public class MinecraftEarthDimensionDimension extends MinecraftEarthModModElemen
 			}
 			if (random.nextInt(110) == 0)
 				world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(("block.portal.ambient"))),
+						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(("block.wet_grass.step"))),
 						SoundCategory.BLOCKS, 0.5f, random.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		@Override
 		public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-			if (!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss() && !entity.world.isRemote && true) {
+			if (!entity.isPassenger() && !entity.isBeingRidden() && entity.isNonBoss() && !entity.world.isRemote
+					&& CheckEarthDimensionGameruleProcedure.executeProcedure(ImmutableMap.of("world", world))) {
 				if (entity.func_242280_ah()) {
 					entity.func_242279_ag();
 				} else if (entity.world.getDimensionKey() != RegistryKey.getOrCreateKey(Registry.WORLD_KEY,

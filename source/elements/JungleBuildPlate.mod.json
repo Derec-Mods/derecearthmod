@@ -9,8 +9,27 @@
     "undergroundBlock": {
       "value": "Blocks.STONE#0"
     },
+    "grassColor": {
+      "value": -10777806,
+      "falpha": 0.0
+    },
+    "ambientSound": {
+      "value": ""
+    },
+    "additionsSound": {
+      "value": ""
+    },
+    "music": {
+      "value": ""
+    },
+    "moodSound": {
+      "value": ""
+    },
     "moodSoundDelay": 0,
     "spawnParticles": false,
+    "particleToSpawn": {
+      "value": "EXPLOSION_NORMAL"
+    },
     "particlesProbability": 0.0,
     "biomeCategory": "JUNGLE",
     "parent": {
@@ -35,7 +54,7 @@
     "gravelPatchesPerChunk": 0,
     "reedsPerChunk": 0,
     "cactiPerChunk": 0,
-    "treesPerChunk": 0,
+    "treesPerChunk": 1,
     "vanillaTreeType": "Default",
     "treeType": 1,
     "minHeight": 1,
@@ -65,15 +84,9 @@
     "oceanRuinType": "NONE",
     "defaultFeatures": [
       "Caves",
-      "MonsterRooms",
-      "Structures",
-      "Ores",
-      "Lakes",
-      "Bamboo",
-      "BambooJungleVegetation",
       "JungleGrass",
-      "JunglePlants",
-      "JungleTreeForest"
+      "JungleTreeForest",
+      "Bamboo"
     ],
     "spawnEntries": [
       {

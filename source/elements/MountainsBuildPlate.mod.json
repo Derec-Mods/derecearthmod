@@ -9,8 +9,31 @@
     "undergroundBlock": {
       "value": "Blocks.DIRT#0"
     },
+    "grassColor": {
+      "value": -7686519,
+      "falpha": 0.0
+    },
+    "foliageColor": {
+      "value": -7686519,
+      "falpha": 0.0
+    },
+    "ambientSound": {
+      "value": ""
+    },
+    "additionsSound": {
+      "value": ""
+    },
+    "music": {
+      "value": ""
+    },
+    "moodSound": {
+      "value": ""
+    },
     "moodSoundDelay": 0,
     "spawnParticles": false,
+    "particleToSpawn": {
+      "value": "EXPLOSION_NORMAL"
+    },
     "particlesProbability": 0.0,
     "biomeCategory": "EXTREME_HILLS",
     "parent": {

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:blocks/mudconverter_2",
+    "up": "minecraft_earth_mod:blocks/mudconverter_1",
+    "north": "minecraft_earth_mod:blocks/mudconverter_4",
+    "east": "minecraft_earth_mod:blocks/mudconverter_3",
+    "south": "minecraft_earth_mod:blocks/mudconverter_3",
+    "west": "minecraft_earth_mod:blocks/mudconverter_3",
+    "particle": "minecraft_earth_mod:blocks/mudconverter_2"
+  }
+}

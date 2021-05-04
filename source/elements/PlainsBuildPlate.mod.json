@@ -2,15 +2,38 @@
   "_fv": 15,
   "_type": "biome",
   "definition": {
-    "name": "Plains Build Plate",
+    "name": "Plains Buildplate",
     "groundBlock": {
       "value": "Blocks.GRASS"
     },
     "undergroundBlock": {
       "value": "Blocks.DIRT#0"
     },
+    "grassColor": {
+      "value": -10777806,
+      "falpha": 0.0
+    },
+    "foliageColor": {
+      "value": -10777806,
+      "falpha": 0.0
+    },
+    "ambientSound": {
+      "value": ""
+    },
+    "additionsSound": {
+      "value": ""
+    },
+    "music": {
+      "value": ""
+    },
+    "moodSound": {
+      "value": ""
+    },
     "moodSoundDelay": 0,
     "spawnParticles": false,
+    "particleToSpawn": {
+      "value": "EXPLOSION_NORMAL"
+    },
     "particlesProbability": 0.0,
     "biomeCategory": "PLAINS",
     "parent": {
