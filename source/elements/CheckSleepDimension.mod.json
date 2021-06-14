@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "procedure",
   "definition": {
     "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"-268\" y=\"85\"><field name=\"trigger\">player_in_bed</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"math_binary_ops\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"entity_dimension_id\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></value><value name=\"B\"><block type=\"get_dimensionid\"><field name=\"dimension\">CUSTOM:MinecraftEarthDimension</field></block></value></block></value><statement name=\"DO0\"><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_negate\"><value name=\"BOOL\"><block type=\"world_data_isday\"/></value></block></value><statement name=\"DO0\"><block type=\"set_time\"><value name=\"time\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></statement></block></statement></block></next></block></xml>"

@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "mob",
   "definition": {
     "mobName": "Bone Spider",
@@ -49,8 +49,8 @@
     "attackStrength": 3,
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
-    "movementSpeed": 0.3,
-    "armorBaseValue": 0.1,
+    "movementSpeed": 0.19999999999999998,
+    "armorBaseValue": 1.0,
     "trackingRange": 64,
     "health": 32,
     "xpAmount": 12,
@@ -71,6 +71,11 @@
     "immuneToLightning": false,
     "immuneToPotions": false,
     "immuneToPlayer": false,
+    "immuneToExplosion": false,
+    "immuneToTrident": false,
+    "immuneToAnvil": false,
+    "immuneToWither": false,
+    "immuneToDragonBreath": false,
     "mobDrop": {
       "value": ""
     },
@@ -106,7 +111,10 @@
     "rangedItemType": "Boneshard",
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
-    "spawningProbability": 1,
+    "spawningCondition": {
+      "name": "CheckHostileMobSpawns"
+    },
+    "spawningProbability": 5,
     "mobSpawningType": "monster",
     "minNumberOfMobsPerGroup": 1,
     "maxNumberOfMobsPerGroup": 1,

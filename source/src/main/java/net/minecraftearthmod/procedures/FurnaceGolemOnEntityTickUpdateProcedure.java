@@ -71,7 +71,7 @@ public class FurnaceGolemOnEntityTickUpdateProcedure extends MinecraftEarthModMo
 		}
 		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock())
 				|| ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock()))) {
-			if ((!((world instanceof World) ? ((World) world).getGameRules().getBoolean(WaterproofGolemsGameRule.gamerule) : false))) {
+			if ((!(world.getWorldInfo().getGameRulesInstance().getBoolean(WaterproofGolemsGameRule.gamerule)))) {
 				entity.attackEntityFrom(DamageSource.GENERIC, (float) 0.5);
 			}
 		}

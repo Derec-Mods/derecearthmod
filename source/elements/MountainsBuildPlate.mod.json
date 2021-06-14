@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "biome",
   "definition": {
     "name": "Mountains Build Plate",
@@ -93,7 +93,8 @@
       "Structures",
       "Ores",
       "Lakes",
-      "ScatteredOakAndSpruceTrees"
+      "ScatteredOakAndSpruceTrees",
+      "FrozenTopLayer"
     ],
     "spawnEntries": [
       {

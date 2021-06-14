@@ -1,8 +1,9 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "gamerule",
   "definition": {
     "type": "Logic",
+    "displayName": "Do Furnace Golems take damage in water?",
     "description": "Do Furnace Golems take damage in water?",
     "category": "PLAYER",
     "defaultValueLogic": false,

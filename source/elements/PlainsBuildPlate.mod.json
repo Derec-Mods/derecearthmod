@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "biome",
   "definition": {
     "name": "Plains Buildplate",
@@ -93,7 +93,8 @@
       "Ores",
       "Lakes",
       "PlainsTallGrass",
-      "ScatteredOakTrees"
+      "ScatteredOakTrees",
+      "FrozenTopLayer"
     ],
     "spawnEntries": [
       {

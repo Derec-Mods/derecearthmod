@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "block",
   "definition": {
     "texture": "furnacegolemlight",
@@ -20,12 +20,18 @@
     "hasTransparency": true,
     "connectedSides": false,
     "transparencyType": "CUTOUT",
-    "mx": 0.0,
-    "my": 0.0,
-    "mz": 0.0,
-    "Mx": 0.9,
-    "My": 1.0,
-    "Mz": 0.9,
+    "disableOffset": false,
+    "boundingBoxes": [
+      {
+        "mx": 0.0,
+        "my": 0.0,
+        "mz": 0.0,
+        "Mx": 14.4,
+        "My": 16.0,
+        "Mz": 14.4,
+        "subtract": false
+      }
+    ],
     "name": "Boulder Zombie Climbing Block",
     "specialInfo": [],
     "hardness": 1000.0,
@@ -61,6 +67,8 @@
     "fireSpreadSpeed": 0,
     "isLadder": false,
     "slipperiness": 0.6,
+    "speedFactor": 1.0,
+    "jumpFactor": 1.0,
     "reactionToPushing": "NORMAL",
     "isNotColidable": true,
     "soundOnStep": {

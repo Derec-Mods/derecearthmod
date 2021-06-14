@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "plant",
   "definition": {
     "renderType": 12,
@@ -15,6 +15,9 @@
     "growapableSpawnType": "Plains",
     "growapableMaxHeight": 3,
     "doublePlantGenerationType": "Flower",
+    "customBoundingBox": false,
+    "disableOffset": false,
+    "boundingBoxes": [],
     "name": "Pink Daisy",
     "specialInfo": [],
     "creativeTab": {
@@ -44,6 +47,9 @@
     "aiPathNodeType": "DEFAULT",
     "flammability": 100,
     "fireSpreadSpeed": 60,
+    "jumpFactor": 1.0,
+    "speedFactor": 1.0,
+    "canBePlacedOn": [],
     "frequencyOnChunks": 5,
     "spawnWorldTypes": [
       "Surface"

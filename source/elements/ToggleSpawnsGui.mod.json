@@ -1,0 +1,69 @@
+{
+  "_fv": 18,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 223,
+    "height": 225,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": true,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "text": "Hostile Mobs: <VAR:HostileMobSpawns>",
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "name": "Hostile Mobs: <VAR:HostileMobSpawns>",
+          "x": 114,
+          "y": 17
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Toggle",
+          "onClick": {
+            "name": "ChangeHostileMobSpawns"
+          },
+          "width": 55,
+          "height": 20,
+          "name": "Toggle",
+          "x": 195,
+          "y": 17
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Experimental Mode: <VAR:ExperimentalMode>",
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "name": "Experimental Mode: <VAR:ExperimentalMode>",
+          "x": 114,
+          "y": 35
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Toggle",
+          "onClick": {
+            "name": "ToggleExperimentalMode"
+          },
+          "width": 55,
+          "height": 20,
+          "name": "Toggle",
+          "x": 195,
+          "y": 44
+        }
+      }
+    ]
+  }
+}

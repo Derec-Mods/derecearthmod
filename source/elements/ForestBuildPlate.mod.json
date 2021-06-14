@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "biome",
   "definition": {
     "name": "Forest Build Plate",
@@ -96,7 +96,8 @@
       "DoubleFlowers",
       "ExtraDefaultFlowers",
       "OakTreesFlowersGrass",
-      "Ores"
+      "Ores",
+      "FrozenTopLayer"
     ],
     "spawnEntries": [
       {

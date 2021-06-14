@@ -50,7 +50,7 @@ public class ChestTappableBlock extends MinecraftEarthModModElements.ModElement 
 		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 		public CustomBlock() {
 			super(Block.Properties.create(Material.ROCK).sound(SoundType.WOOD).hardnessAndResistance(0.5f, 50f).setLightLevel(s -> 0).harvestLevel(0)
-					.harvestTool(ToolType.AXE));
+					.harvestTool(ToolType.AXE).setRequiresTool());
 			this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 			setRegistryName("chest_tappable");
 		}

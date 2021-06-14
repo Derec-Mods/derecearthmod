@@ -6,19 +6,16 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftearthmod.procedures.ShearWoolyCowProcedure;
 import net.minecraftearthmod.procedures.SetWoolyCowSpawnTickProcedure;
 import net.minecraftearthmod.procedures.IncrementRegrowthProcedure;
 import net.minecraftearthmod.itemgroup.DerecEarthMobsSpawnEggsItemGroup;
+import net.minecraftearthmod.entity.renderer.RockySheepRenderer;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.world.server.ServerWorld;
@@ -27,7 +24,6 @@ import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Hand;
@@ -47,7 +43,6 @@ import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.EatGrassGoal;
 import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.SpawnReason;
@@ -59,9 +54,6 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.AgeableEntity;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.BlockState;
 
@@ -70,23 +62,20 @@ import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.HashMap;
 
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.mojang.blaze3d.matrix.MatrixStack;
-
 @MinecraftEarthModModElements.ModElement.Tag
 public class RockySheepEntity extends MinecraftEarthModModElements.ModElement {
-	public static EntityType entity = null;
+	public static EntityType entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.CREATURE)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new)
+			.size(0.9f, 1.3f)).build("rocky_sheep").setRegistryName("rocky_sheep");
 	public RockySheepEntity(MinecraftEarthModModElements instance) {
 		super(instance, 94);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new ModelRegisterHandler());
+		FMLJavaModLoadingContext.get().getModEventBus().register(new RockySheepRenderer.ModelRegisterHandler());
+		FMLJavaModLoadingContext.get().getModEventBus().register(new EntityAttributesRegisterHandler());
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
 	public void initElements() {
-		entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.CREATURE).setShouldReceiveVelocityUpdates(true)
-				.setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new).size(0.9f, 1.3f)).build("rocky_sheep")
-						.setRegistryName("rocky_sheep");
 		elements.entities.add(() -> entity);
 		elements.items.add(() -> new SpawnEggItem(entity, -10066330, -1, new Item.Properties().group(DerecEarthMobsSpawnEggsItemGroup.tab))
 				.setRegistryName("rocky_sheep_spawn_egg"));
@@ -103,38 +92,27 @@ public class RockySheepEntity extends MinecraftEarthModModElements.ModElement {
 			biomeCriteria = true;
 		if (!biomeCriteria)
 			return;
-		event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(entity, 10, 2, 3));
+		event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(entity, 5, 2, 3));
 	}
 
 	@Override
 	public void init(FMLCommonSetupEvent event) {
-		DeferredWorkQueue.runLater(this::setupAttributes);
 		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				(entityType, world, reason, pos,
 						random) -> (world.getBlockState(pos.down()).getMaterial() == Material.ORGANIC && world.getLightSubtracted(pos, 0) > 8));
 	}
-	private static class ModelRegisterHandler {
+	private static class EntityAttributesRegisterHandler {
 		@SubscribeEvent
-		@OnlyIn(Dist.CLIENT)
-		public void registerModels(ModelRegistryEvent event) {
-			RenderingRegistry.registerEntityRenderingHandler(entity, renderManager -> {
-				return new MobRenderer(renderManager, new Modelrockysheep(), 0.5f) {
-					@Override
-					public ResourceLocation getEntityTexture(Entity entity) {
-						return new ResourceLocation("minecraft_earth_mod:textures/rockysheep.png");
-					}
-				};
-			});
+		public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
+			AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
+			ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3);
+			ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 8);
+			ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
+			ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
+			event.put(entity, ammma.create());
 		}
 	}
-	private void setupAttributes() {
-		AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-		ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3);
-		ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 8);
-		ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
-		ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
-		GlobalEntityTypeAttributes.put(entity, ammma.create());
-	}
+
 	public static class CustomEntity extends AnimalEntity {
 		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
 			this(entity, world);
@@ -255,71 +233,6 @@ public class RockySheepEntity extends MinecraftEarthModModElements.ModElement {
 			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
 				return true;
 			return false;
-		}
-	}
-
-	// Made with Blockbench 3.6.5
-	// Exported for Minecraft version 1.15
-	// Paste this class into your mod and generate all required imports
-	public static class Modelrockysheep extends EntityModel<Entity> {
-		private final ModelRenderer body;
-		private final ModelRenderer rotation;
-		private final ModelRenderer head;
-		private final ModelRenderer leg1;
-		private final ModelRenderer leg2;
-		private final ModelRenderer leg3;
-		private final ModelRenderer leg4;
-		public Modelrockysheep() {
-			textureWidth = 64;
-			textureHeight = 32;
-			body = new ModelRenderer(this);
-			body.setRotationPoint(0.0F, 5.0F, 2.0F);
-			rotation = new ModelRenderer(this);
-			rotation.setRotationPoint(0.0F, 0.0F, 0.0F);
-			body.addChild(rotation);
-			setRotationAngle(rotation, 1.5708F, 0.0F, 0.0F);
-			rotation.setTextureOffset(28, 8).addBox(-4.0F, -10.0F, -7.0F, 8.0F, 16.0F, 6.0F, 1.75F, false);
-			head = new ModelRenderer(this);
-			head.setRotationPoint(0.0F, 6.0F, -8.0F);
-			head.setTextureOffset(2, 2).addBox(-3.0F, -4.0F, -4.0F, 6.0F, 6.0F, 6.0F, 0.6F, false);
-			leg1 = new ModelRenderer(this);
-			leg1.setRotationPoint(-3.0F, 13.0F, 7.0F);
-			leg1.setTextureOffset(0, 16).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-			leg2 = new ModelRenderer(this);
-			leg2.setRotationPoint(3.0F, 13.0F, 7.0F);
-			leg2.setTextureOffset(0, 16).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-			leg3 = new ModelRenderer(this);
-			leg3.setRotationPoint(-3.0F, 13.0F, -5.0F);
-			leg3.setTextureOffset(0, 16).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-			leg4 = new ModelRenderer(this);
-			leg4.setRotationPoint(3.0F, 13.0F, -5.0F);
-			leg4.setTextureOffset(0, 16).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.5F, false);
-		}
-
-		@Override
-		public void render(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue,
-				float alpha) {
-			body.render(matrixStack, buffer, packedLight, packedOverlay);
-			head.render(matrixStack, buffer, packedLight, packedOverlay);
-			leg1.render(matrixStack, buffer, packedLight, packedOverlay);
-			leg2.render(matrixStack, buffer, packedLight, packedOverlay);
-			leg3.render(matrixStack, buffer, packedLight, packedOverlay);
-			leg4.render(matrixStack, buffer, packedLight, packedOverlay);
-		}
-
-		public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-			modelRenderer.rotateAngleX = x;
-			modelRenderer.rotateAngleY = y;
-			modelRenderer.rotateAngleZ = z;
-		}
-
-		public void setRotationAngles(Entity e, float f, float f1, float f2, float f3, float f4) {
-			this.head.rotateAngleY = f3 / (180F / (float) Math.PI);
-			this.head.rotateAngleX = f4 / (180F / (float) Math.PI);
-			this.leg1.rotateAngleX = MathHelper.cos(f * 1.0F) * -1.0F * f1;
-			this.leg4.rotateAngleX = MathHelper.cos(f * 1.0F) * 1.0F * f1;
-			this.leg2.rotateAngleX = MathHelper.cos(f * 1.0F) * 1.0F * f1;
-			this.leg3.rotateAngleX = MathHelper.cos(f * 1.0F) * -1.0F * f1;
 		}
 	}
 }

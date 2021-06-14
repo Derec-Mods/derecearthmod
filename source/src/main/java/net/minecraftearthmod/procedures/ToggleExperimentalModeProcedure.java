@@ -17,11 +17,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
 
 import java.util.Map;
 import java.util.Iterator;
+
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.File;
+
+import com.google.gson.JsonObject;
+import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
 
 @MinecraftEarthModModElements.ModElement.Tag
 public class ToggleExperimentalModeProcedure extends MinecraftEarthModModElements.ModElement {
@@ -42,6 +51,7 @@ public class ToggleExperimentalModeProcedure extends MinecraftEarthModModElement
 		}
 		Entity entity = (Entity) dependencies.get("entity");
 		IWorld world = (IWorld) dependencies.get("world");
+		File earthmobsconfig = new File(((Minecraft.getInstance().gameDir) + "" + ("\\config")), File.separator + "earthmobsconfig.json");
 		if ((MinecraftEarthModModVariables.MapVariables.get(world).ExperimentalMode)) {
 			if ((!(((entity instanceof ServerPlayerEntity) && (entity.world instanceof ServerWorld))
 					? ((ServerPlayerEntity) entity).getAdvancements()
@@ -75,6 +85,16 @@ public class ToggleExperimentalModeProcedure extends MinecraftEarthModModElement
 							(("Experimental Mode Set To: ") + "" + ((MinecraftEarthModModVariables.MapVariables.get(world).ExperimentalMode)))),
 							ChatType.SYSTEM, Util.DUMMY_UUID);
 			}
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			JsonObject obj = new JsonObject();
+			obj.addProperty("experimentalmode", (MinecraftEarthModModVariables.MapVariables.get(world).ExperimentalMode));
+			try {
+				FileWriter earthmobsconfigfw = new FileWriter(earthmobsconfig);
+				earthmobsconfigfw.write(gson.toJson(obj));
+				earthmobsconfigfw.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
 		} else {
 			if (world instanceof World) {
 				((World) world).getGameRules().get(ExperimentalModeGameRule.gamerule).set((true), ((World) world).getServer());
@@ -88,6 +108,16 @@ public class ToggleExperimentalModeProcedure extends MinecraftEarthModModElement
 					mcserv.getPlayerList().func_232641_a_(new StringTextComponent(
 							(("Experimental Mode Set To: ") + "" + ((MinecraftEarthModModVariables.MapVariables.get(world).ExperimentalMode)))),
 							ChatType.SYSTEM, Util.DUMMY_UUID);
+			}
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			JsonObject obj = new JsonObject();
+			obj.addProperty("experimentalmode", (MinecraftEarthModModVariables.MapVariables.get(world).ExperimentalMode));
+			try {
+				FileWriter earthmobsconfigfw = new FileWriter(earthmobsconfig);
+				earthmobsconfigfw.write(gson.toJson(obj));
+				earthmobsconfigfw.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
 			}
 		}
 	}

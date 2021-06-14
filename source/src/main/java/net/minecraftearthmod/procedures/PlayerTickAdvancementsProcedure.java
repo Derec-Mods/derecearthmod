@@ -6,7 +6,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.world.ExperimentalModeGameRule;
 import net.minecraftearthmod.block.MudBlock;
-import net.minecraftearthmod.MinecraftEarthModModVariables;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
@@ -69,31 +68,10 @@ public class PlayerTickAdvancementsProcedure extends MinecraftEarthModModElement
 								.getAdvancement(new ResourceLocation("minecraft_earth_mod:experimenter")))
 						.isDone()
 				: false))) {
-			if (((world instanceof World) ? ((World) world).getGameRules().getBoolean(ExperimentalModeGameRule.gamerule) : false)) {
+			if ((world.getWorldInfo().getGameRulesInstance().getBoolean(ExperimentalModeGameRule.gamerule))) {
 				if (entity instanceof ServerPlayerEntity) {
 					Advancement _adv = ((MinecraftServer) ((ServerPlayerEntity) entity).server).getAdvancementManager()
 							.getAdvancement(new ResourceLocation("minecraft_earth_mod:experimenter"));
-					AdvancementProgress _ap = ((ServerPlayerEntity) entity).getAdvancements().getProgress(_adv);
-					if (!_ap.isDone()) {
-						Iterator _iterator = _ap.getRemaningCriteria().iterator();
-						while (_iterator.hasNext()) {
-							String _criterion = (String) _iterator.next();
-							((ServerPlayerEntity) entity).getAdvancements().grantCriterion(_adv, _criterion);
-						}
-					}
-				}
-			}
-		}
-		if ((MinecraftEarthModModVariables.RunningEarthMod)) {
-			if ((!(((entity instanceof ServerPlayerEntity) && (entity.world instanceof ServerWorld))
-					? ((ServerPlayerEntity) entity).getAdvancements()
-							.getProgress(((MinecraftServer) ((ServerPlayerEntity) entity).server).getAdvancementManager()
-									.getAdvancement(new ResourceLocation("minecraft_earth_mod:minecraft_earth_advancement")))
-							.isDone()
-					: false))) {
-				if (entity instanceof ServerPlayerEntity) {
-					Advancement _adv = ((MinecraftServer) ((ServerPlayerEntity) entity).server).getAdvancementManager()
-							.getAdvancement(new ResourceLocation("minecraft_earth_mod:minecraft_earth_advancement"));
 					AdvancementProgress _ap = ((ServerPlayerEntity) entity).getAdvancements().getProgress(_adv);
 					if (!_ap.isDone()) {
 						Iterator _iterator = _ap.getRemaningCriteria().iterator();

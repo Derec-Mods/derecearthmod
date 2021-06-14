@@ -5,12 +5,12 @@ import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftearthmod.procedures.RemoveBoneShardProcedure;
+import net.minecraftearthmod.entity.renderer.BoneshardRenderer;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.world.World;
@@ -33,8 +33,6 @@ import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.Entity;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.Minecraft;
 
 import java.util.Random;
 import java.util.Map;
@@ -44,25 +42,18 @@ import java.util.HashMap;
 public class BoneshardItem extends MinecraftEarthModModElements.ModElement {
 	@ObjectHolder("minecraft_earth_mod:boneshard")
 	public static final Item block = null;
-	@ObjectHolder("minecraft_earth_mod:entitybulletboneshard")
-	public static final EntityType arrow = null;
+	public static final EntityType arrow = (EntityType.Builder.<ArrowCustomEntity>create(ArrowCustomEntity::new, EntityClassification.MISC)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
+			.size(0.5f, 0.5f)).build("entitybulletboneshard").setRegistryName("entitybulletboneshard");
 	public BoneshardItem(MinecraftEarthModModElements instance) {
 		super(instance, 52);
+		FMLJavaModLoadingContext.get().getModEventBus().register(new BoneshardRenderer.ModelRegisterHandler());
 	}
 
 	@Override
 	public void initElements() {
 		elements.items.add(() -> new ItemRanged());
-		elements.entities.add(() -> (EntityType.Builder.<ArrowCustomEntity>create(ArrowCustomEntity::new, EntityClassification.MISC)
-				.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
-				.size(0.5f, 0.5f)).build("entitybulletboneshard").setRegistryName("entitybulletboneshard"));
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void init(FMLCommonSetupEvent event) {
-		RenderingRegistry.registerEntityRenderingHandler(arrow,
-				renderManager -> new SpriteRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		elements.entities.add(() -> arrow);
 	}
 	public static class ItemRanged extends Item {
 		public ItemRanged() {

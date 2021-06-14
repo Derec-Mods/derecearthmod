@@ -94,6 +94,7 @@ public class JungleBuildPlateBiome extends MinecraftEarthModModElements.ModEleme
 				DefaultBiomeFeatures.withJungleGrass(biomeGenerationSettings);
 				DefaultBiomeFeatures.withJungleTrees(biomeGenerationSettings);
 				DefaultBiomeFeatures.withBambooVegetation(biomeGenerationSettings);
+				DefaultBiomeFeatures.withFrozenTopLayer(biomeGenerationSettings);
 				MobSpawnInfo.Builder mobSpawnInfo = new MobSpawnInfo.Builder().isValidSpawnBiomeForPlayer();
 				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(MelonGolemEntity.entity, 20, 2, 3));
 				mobSpawnInfo.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(RainbowSheepEntity.entity, 1, 1, 3));

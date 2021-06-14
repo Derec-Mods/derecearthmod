@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "mob",
   "definition": {
     "mobName": "Mob Of Me",
@@ -71,6 +71,11 @@
     "immuneToLightning": false,
     "immuneToPotions": false,
     "immuneToPlayer": false,
+    "immuneToExplosion": false,
+    "immuneToTrident": false,
+    "immuneToAnvil": false,
+    "immuneToWither": false,
+    "immuneToDragonBreath": false,
     "mobDrop": {
       "value": ""
     },
@@ -107,13 +112,29 @@
       "value": ""
     },
     "rangedItemType": "Default item",
-    "spawnThisMob": false,
+    "spawnThisMob": true,
     "doesDespawnWhenIdle": false,
-    "spawningProbability": 20,
-    "mobSpawningType": "monster",
-    "minNumberOfMobsPerGroup": 4,
-    "maxNumberOfMobsPerGroup": 4,
-    "restrictionBiomes": [],
+    "spawningProbability": 1,
+    "mobSpawningType": "creature",
+    "minNumberOfMobsPerGroup": 3,
+    "maxNumberOfMobsPerGroup": 6,
+    "restrictionBiomes": [
+      {
+        "value": "CUSTOM:PlainsBuildPlate"
+      },
+      {
+        "value": "CUSTOM:MountainsBuildPlate"
+      },
+      {
+        "value": "CUSTOM:ForestBuildPlate"
+      },
+      {
+        "value": "CUSTOM:IcyBuildPlate"
+      },
+      {
+        "value": "CUSTOM:JungleBuildPlate"
+      }
+    ],
     "spawnInDungeons": false
   }
 }

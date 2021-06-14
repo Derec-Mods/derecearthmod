@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "fluid",
   "definition": {
     "name": "Mud",
@@ -41,6 +41,9 @@
     },
     "onTickUpdate": {
       "name": "MudUpdateTick"
+    },
+    "onEntityCollides": {
+      "name": "PlayMudSound"
     }
   }
 }

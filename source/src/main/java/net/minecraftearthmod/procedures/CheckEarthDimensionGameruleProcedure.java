@@ -4,7 +4,6 @@ import net.minecraftearthmod.world.DoEarthDimensionGameRule;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 
 import java.util.Map;
@@ -22,6 +21,6 @@ public class CheckEarthDimensionGameruleProcedure extends MinecraftEarthModModEl
 			return false;
 		}
 		IWorld world = (IWorld) dependencies.get("world");
-		return ((world instanceof World) ? ((World) world).getGameRules().getBoolean(DoEarthDimensionGameRule.gamerule) : false);
+		return (world.getWorldInfo().getGameRulesInstance().getBoolean(DoEarthDimensionGameRule.gamerule));
 	}
 }

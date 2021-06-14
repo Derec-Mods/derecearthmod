@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "block",
   "definition": {
     "texture": "furnacegolemlight",
@@ -19,12 +19,18 @@
     "hasTransparency": true,
     "connectedSides": true,
     "transparencyType": "CUTOUT",
-    "mx": 0.0,
-    "my": 0.0,
-    "mz": 0.0,
-    "Mx": 1.0,
-    "My": 1.0,
-    "Mz": 1.0,
+    "disableOffset": false,
+    "boundingBoxes": [
+      {
+        "mx": 0.0,
+        "my": 0.0,
+        "mz": 0.0,
+        "Mx": 16.0,
+        "My": 16.0,
+        "Mz": 16.0,
+        "subtract": false
+      }
+    ],
     "name": "Furnace Golem Light",
     "specialInfo": [
       "You should not have this"
@@ -62,6 +68,8 @@
     "fireSpreadSpeed": 0,
     "isLadder": false,
     "slipperiness": 0.6,
+    "speedFactor": 1.0,
+    "jumpFactor": 1.0,
     "reactionToPushing": "IGNORE",
     "isNotColidable": true,
     "soundOnStep": {

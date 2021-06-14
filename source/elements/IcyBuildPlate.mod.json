@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "biome",
   "definition": {
     "name": "Icy Build Plate",
@@ -70,7 +70,8 @@
       "Structures",
       "Ores",
       "Lakes",
-      "Icebergs"
+      "Icebergs",
+      "FrozenTopLayer"
     ],
     "spawnEntries": [
       {

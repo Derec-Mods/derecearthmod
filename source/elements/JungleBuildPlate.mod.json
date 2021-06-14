@@ -1,5 +1,5 @@
 {
-  "_fv": 15,
+  "_fv": 18,
   "_type": "biome",
   "definition": {
     "name": "Jungle Build Plate",
@@ -86,7 +86,8 @@
       "Caves",
       "JungleGrass",
       "JungleTreeForest",
-      "Bamboo"
+      "Bamboo",
+      "FrozenTopLayer"
     ],
     "spawnEntries": [
       {

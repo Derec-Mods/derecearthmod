@@ -50,7 +50,7 @@ public class GrassTappableBlock extends MinecraftEarthModModElements.ModElement 
 		public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 		public CustomBlock() {
 			super(Block.Properties.create(Material.ROCK).sound(SoundType.PLANT).hardnessAndResistance(0.5f, 50f).setLightLevel(s -> 0).harvestLevel(0)
-					.harvestTool(ToolType.SHOVEL));
+					.harvestTool(ToolType.SHOVEL).setRequiresTool());
 			this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 			setRegistryName("grass_tappable");
 		}

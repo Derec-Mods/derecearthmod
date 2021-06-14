@@ -1,0 +1,9 @@
+{
+  "group": "minecraft_earth_mod",
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "item": "minecraft:bone"
+  },
+  "result": "minecraft_earth_mod:boneshard"
+}

@@ -4,7 +4,6 @@ import net.minecraftearthmod.world.ExperimentalModeGameRule;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
 import net.minecraft.world.IWorld;
 
 import java.util.Map;
@@ -22,6 +21,6 @@ public class CheckExperimentalProcedure extends MinecraftEarthModModElements.Mod
 			return false;
 		}
 		IWorld world = (IWorld) dependencies.get("world");
-		return ((world instanceof World) ? ((World) world).getGameRules().getBoolean(ExperimentalModeGameRule.gamerule) : false);
+		return (world.getWorldInfo().getGameRulesInstance().getBoolean(ExperimentalModeGameRule.gamerule));
 	}
 }

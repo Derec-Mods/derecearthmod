@@ -74,17 +74,15 @@ public class BoulderZombieClimbingBlockBlock extends MinecraftEarthModModElement
 		public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 			Vector3d offset = state.getOffset(world, pos);
 			switch ((Direction) state.get(FACING)) {
-				case UP :
-				case DOWN :
 				case SOUTH :
 				default :
-					return VoxelShapes.create(1D, 0D, 1D, 0.1D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.or(makeCuboidShape(16, 0, 16, 1.6, 16, 1.6)).withOffset(offset.x, offset.y, offset.z);
 				case NORTH :
-					return VoxelShapes.create(0D, 0D, 0D, 0.9D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
-				case WEST :
-					return VoxelShapes.create(0D, 0D, 1D, 0.9D, 1D, 0.1D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.or(makeCuboidShape(0, 0, 0, 14.4, 16, 14.4)).withOffset(offset.x, offset.y, offset.z);
 				case EAST :
-					return VoxelShapes.create(1D, 0D, 0D, 0.1D, 1D, 0.9D).withOffset(offset.x, offset.y, offset.z);
+					return VoxelShapes.or(makeCuboidShape(16, 0, 0, 1.6, 16, 14.4)).withOffset(offset.x, offset.y, offset.z);
+				case WEST :
+					return VoxelShapes.or(makeCuboidShape(0, 0, 16, 14.4, 16, 1.6)).withOffset(offset.x, offset.y, offset.z);
 			}
 		}
 

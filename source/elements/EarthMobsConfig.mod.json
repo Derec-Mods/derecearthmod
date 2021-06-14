@@ -1,0 +1,15 @@
+{
+  "_fv": 18,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "PERIOD",
+    "keyBindingName": "Earth Mobs Config",
+    "keyBindingCategoryKey": "ui",
+    "onKeyPressed": {
+      "name": "OpenEarthMobsConfig"
+    },
+    "onKeyReleased": {
+      "name": "CloseEarthMobsConfig"
+    }
+  }
+}
