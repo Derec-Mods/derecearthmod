@@ -1,12 +1,11 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.entity.CluckshroomEntity;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -30,13 +29,31 @@ import net.minecraft.block.Blocks;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModElement {
-	public ShearCluckshroomProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 23);
-		MinecraftForge.EVENT_BUS.register(this);
+public class ShearCluckshroomProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
+			Entity entity = event.getTarget();
+			PlayerEntity sourceentity = event.getPlayer();
+			if (event.getHand() != sourceentity.getActiveHand()) {
+				return;
+			}
+			double i = event.getPos().getX();
+			double j = event.getPos().getY();
+			double k = event.getPos().getZ();
+			IWorld world = event.getWorld();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("sourceentity", sourceentity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -84,12 +101,12 @@ public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModE
 			if (!entity.world.isRemote())
 				entity.remove();
 			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
+				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
 			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM, (int) (1)));
+				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
@@ -97,6 +114,7 @@ public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModE
 				Entity entityToSpawn = new ChickenEntity(EntityType.CHICKEN, (World) world);
 				entityToSpawn.setLocationAndAngles(x, y, z, (float) 0, (float) 0);
 				entityToSpawn.setRenderYawOffset((float) 0);
+				entityToSpawn.setRotationYawHead((float) 0);
 				entityToSpawn.setMotion(0, 0, 0);
 				if (entityToSpawn instanceof MobEntity)
 					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
@@ -104,27 +122,5 @@ public class ShearCluckshroomProcedure extends MinecraftEarthModModElements.ModE
 				world.addEntity(entityToSpawn);
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
-		Entity entity = event.getTarget();
-		PlayerEntity sourceentity = event.getPlayer();
-		if (event.getHand() != sourceentity.getActiveHand()) {
-			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", i);
-		dependencies.put("y", j);
-		dependencies.put("z", k);
-		dependencies.put("world", world);
-		dependencies.put("entity", entity);
-		dependencies.put("sourceentity", sourceentity);
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

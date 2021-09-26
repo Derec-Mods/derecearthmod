@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.minecraftearthmod.item.RubyItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -23,12 +22,7 @@ import net.minecraft.command.CommandSource;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModElement {
-	public GiveAttackBoostProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 41);
-	}
-
+public class GiveAttackBoostProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -61,15 +55,15 @@ public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModEl
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		double random = 0;
-		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(RubyItem.block, (int) (1))) : false)) {
+		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(RubyItem.block)) : false)) {
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+				ItemStack _stktoremove = new ItemStack(RubyItem.block);
 				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) entity).container.func_234641_j_());
 			}
 			random = (double) (Math.random() * 100);
-			System.out.println((random));
-			if ((((random) > 0) && ((random) <= 20))) {
+			System.out.println(random);
+			if (((random > 0) && (random <= 20))) {
 				if (world instanceof ServerWorld) {
 					((World) world).getServer().getCommandManager().handleCommand(
 							new CommandSource(ICommandSource.DUMMY, new Vector3d(x, y, z), Vector2f.ZERO, (ServerWorld) world, 4, "",
@@ -77,7 +71,7 @@ public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModEl
 							"give @p minecraft:potion{Potion:\"minecraft:water\",CustomPotionEffects:[{Id:5,Duration:12000,ShowParticles:0b}],display:{Name:\"\"Attack Boost I\"\",Lore:[\"Increases your attack damage for 10 minutes\"]}}");
 				}
 			}
-			if ((((random) > 20) && ((random) <= 40))) {
+			if (((random > 20) && (random <= 40))) {
 				if (world instanceof ServerWorld) {
 					((World) world).getServer().getCommandManager().handleCommand(
 							new CommandSource(ICommandSource.DUMMY, new Vector3d(x, y, z), Vector2f.ZERO, (ServerWorld) world, 4, "",
@@ -85,7 +79,7 @@ public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModEl
 							"give @p minecraft:potion{Potion:\"minecraft:water\",CustomPotionEffects:[{Id:23,Amplifier:19,ShowParticles:0b}],display:{Name:\"\"Food Boost I\"\",Lore:[\"Gives you a quick food bar boost\"]}}");
 				}
 			}
-			if ((((random) > 40) && ((random) <= 60))) {
+			if (((random > 40) && (random <= 60))) {
 				if (world instanceof ServerWorld) {
 					((World) world).getServer().getCommandManager().handleCommand(
 							new CommandSource(ICommandSource.DUMMY, new Vector3d(x, y, z), Vector2f.ZERO, (ServerWorld) world, 4, "",
@@ -93,7 +87,7 @@ public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModEl
 							"give @p minecraft:potion{Potion:\"minecraft:water\",CustomPotionEffects:[{Id:3,Duration:12000,ShowParticles:0b}],display:{Name:\"\"Mining Boost I\"\",Lore:[\"Increase mining speed for 10 minutes\"]}}");
 				}
 			}
-			if ((((random) > 60) && ((random) <= 80))) {
+			if (((random > 60) && (random <= 80))) {
 				if (world instanceof ServerWorld) {
 					((World) world).getServer().getCommandManager().handleCommand(
 							new CommandSource(ICommandSource.DUMMY, new Vector3d(x, y, z), Vector2f.ZERO, (ServerWorld) world, 4, "",
@@ -101,7 +95,7 @@ public class GiveAttackBoostProcedure extends MinecraftEarthModModElements.ModEl
 							"give @p minecraft:potion{Potion:\"minecraft:water\",CustomPotionEffects:[{Id:21,Amplifier:4,Duration:12000,ShowParticles:0b}],display:{Name:\"\"Health Boost I\"\",Lore:[\"Increases health temporarily\"]}}");
 				}
 			}
-			if ((((random) > 80) && ((random) <= 100))) {
+			if (((random > 80) && (random <= 100))) {
 				if (world instanceof ServerWorld) {
 					((World) world).getServer().getCommandManager().handleCommand(
 							new CommandSource(ICommandSource.DUMMY, new Vector3d(x, y, z), Vector2f.ZERO, (ServerWorld) world, 4, "",

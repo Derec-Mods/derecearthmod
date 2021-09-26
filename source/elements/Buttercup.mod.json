@@ -1,5 +1,5 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "plant",
   "definition": {
     "renderType": 12,
@@ -9,6 +9,8 @@
     "isItemTinted": false,
     "plantType": "normal",
     "staticPlantGenerationType": "Flower",
+    "suspiciousStewEffect": "SATURATION",
+    "suspiciousStewDuration": 0,
     "growapableSpawnType": "Plains",
     "growapableMaxHeight": 3,
     "doublePlantGenerationType": "Flower",
@@ -24,6 +26,7 @@
     "resistance": 0.0,
     "luminance": 0,
     "unbreakable": false,
+    "isCustomSoundType": false,
     "soundOnStep": {
       "value": "PLANT"
     },
@@ -80,6 +83,7 @@
         "value": "birch_forest"
       }
     ],
+    "patchSize": 64,
     "onRightClicked": {
       "name": "FillBottle"
     }

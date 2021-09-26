@@ -2,7 +2,6 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -17,12 +16,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckCanLayEggProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckCanLayEggProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 161);
-	}
-
+public class CheckCanLayEggProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -59,7 +53,7 @@ public class CheckCanLayEggProcedure extends MinecraftEarthModModElements.ModEle
 		} else {
 			if ((Math.random() <= 0.25)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.EGG, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.EGG));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}

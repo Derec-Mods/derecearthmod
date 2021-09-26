@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.MinecraftEarthModModVariables;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -15,12 +14,7 @@ import net.minecraft.advancements.Advancement;
 import java.util.Map;
 import java.util.Iterator;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class P2PCheckProcedure extends MinecraftEarthModModElements.ModElement {
-	public P2PCheckProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 123);
-	}
-
+public class P2PCheckProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -34,7 +28,7 @@ public class P2PCheckProcedure extends MinecraftEarthModModElements.ModElement {
 		}
 		Entity entity = (Entity) dependencies.get("entity");
 		IWorld world = (IWorld) dependencies.get("world");
-		if ((((MinecraftEarthModModVariables.MapVariables.get(world).paidyet)).equals("yes"))) {
+		if (((MinecraftEarthModModVariables.MapVariables.get(world).paidyet).equals("yes"))) {
 			if (entity instanceof ServerPlayerEntity) {
 				Advancement _adv = ((MinecraftServer) ((ServerPlayerEntity) entity).server).getAdvancementManager()
 						.getAdvancement(new ResourceLocation("minecraft_earth_mod:p_2_p"));

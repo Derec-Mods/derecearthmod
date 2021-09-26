@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import net.minecraftearthmod.gui.RubyShopGui;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -22,12 +21,7 @@ import java.util.Map;
 
 import io.netty.buffer.Unpooled;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class GotoPage1Procedure extends MinecraftEarthModModElements.ModElement {
-	public GotoPage1Procedure(MinecraftEarthModModElements instance) {
-		super(instance, 70);
-	}
-
+public class GotoPage1Procedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

@@ -10,7 +10,6 @@ import net.minecraftearthmod.block.GrassTappableBlock;
 import net.minecraftearthmod.block.ChestTappableBlock;
 import net.minecraftearthmod.block.BirchTappableBlock;
 import net.minecraftearthmod.MinecraftEarthModModVariables;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -25,12 +24,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class BuyTappableProcedure extends MinecraftEarthModModElements.ModElement {
-	public BuyTappableProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 82);
-	}
-
+public class BuyTappableProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -63,78 +57,78 @@ public class BuyTappableProcedure extends MinecraftEarthModModElements.ModElemen
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		double ran = 0;
-		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(RubyItem.block, (int) (1))) : false)) {
+		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(RubyItem.block)) : false)) {
 			ran = (double) (Math.random() * 100);
 			MinecraftEarthModModVariables.MapVariables.get(world).paidyet = (String) "yes";
 			MinecraftEarthModModVariables.MapVariables.get(world).syncData(world);
-			if (((ran) <= 17)) {
+			if ((ran <= 17)) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(ChestTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(ChestTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
-			if ((((ran) > 17) && ((ran) <= 34))) {
+			if (((ran > 17) && (ran <= 34))) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(GrassTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(GrassTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
-			if ((((ran) > 34) && ((ran) <= 51))) {
+			if (((ran > 34) && (ran <= 51))) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(StoneTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(StoneTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
-			if ((((ran) > 51) && ((ran) <= 68))) {
+			if (((ran > 51) && (ran <= 68))) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(BirchTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(BirchTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
-			if ((((ran) > 68) && ((ran) <= 85))) {
+			if (((ran > 68) && (ran <= 85))) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(OakTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(OakTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
-			if ((((ran) > 85) && ((ran) <= 100))) {
+			if (((ran > 85) && (ran <= 100))) {
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(RubyItem.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(SpruceTappableBlock.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(SpruceTappableBlock.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}

@@ -1,18 +1,12 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class WolfTameProcedure extends MinecraftEarthModModElements.ModElement {
-	public WolfTameProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 120);
-	}
-
+public class WolfTameProcedure {
 	public static boolean executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

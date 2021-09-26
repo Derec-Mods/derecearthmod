@@ -1,6 +1,6 @@
 {
-  "_fv": 18,
-  "_type": "gun",
+  "_fv": 24,
+  "_type": "rangeditem",
   "definition": {
     "renderType": 0,
     "texture": "bone_shard",

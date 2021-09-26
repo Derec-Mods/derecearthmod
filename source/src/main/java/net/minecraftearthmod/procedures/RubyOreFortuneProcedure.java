@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.item.RubyItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -16,12 +15,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class RubyOreFortuneProcedure extends MinecraftEarthModModElements.ModElement {
-	public RubyOreFortuneProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 31);
-	}
-
+public class RubyOreFortuneProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -60,7 +54,7 @@ public class RubyOreFortuneProcedure extends MinecraftEarthModModElements.ModEle
 				((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY))) == 1)) {
 			if ((Math.random() <= 0.3)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
@@ -70,14 +64,14 @@ public class RubyOreFortuneProcedure extends MinecraftEarthModModElements.ModEle
 				((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY))) == 2)) {
 			if ((Math.random() <= 0.32)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
 			if ((Math.random() <= 0.2)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
@@ -87,21 +81,21 @@ public class RubyOreFortuneProcedure extends MinecraftEarthModModElements.ModEle
 				((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY))) == 3)) {
 			if ((Math.random() <= 0.38)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
 			if ((Math.random() <= 0.25)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
 			if ((Math.random() <= 0.1)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(RubyItem.block));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}

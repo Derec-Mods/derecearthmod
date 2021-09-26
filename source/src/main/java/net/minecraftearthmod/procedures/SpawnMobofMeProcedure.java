@@ -2,7 +2,7 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.item.MobofMeItemItem;
 import net.minecraftearthmod.entity.MobOfMeEntity;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.entity.MerlEntity;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -18,12 +18,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class SpawnMobofMeProcedure extends MinecraftEarthModModElements.ModElement {
-	public SpawnMobofMeProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 176);
-	}
-
+public class SpawnMobofMeProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -56,17 +51,28 @@ public class SpawnMobofMeProcedure extends MinecraftEarthModModElements.ModEleme
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if (entity instanceof PlayerEntity) {
-			ItemStack _stktoremove = new ItemStack(MobofMeItemItem.block, (int) (1));
+			ItemStack _stktoremove = new ItemStack(MobofMeItemItem.block);
 			((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 					((PlayerEntity) entity).container.func_234641_j_());
 		}
-		if (world instanceof ServerWorld) {
-			Entity entityToSpawn = new MobOfMeEntity.CustomEntity(MobOfMeEntity.entity, (World) world);
-			entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
-			if (entityToSpawn instanceof MobEntity)
-				((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
-						SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
-			world.addEntity(entityToSpawn);
+		if ((Math.random() <= 0.9)) {
+			if (world instanceof ServerWorld) {
+				Entity entityToSpawn = new MobOfMeEntity.CustomEntity(MobOfMeEntity.entity, (World) world);
+				entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
+				if (entityToSpawn instanceof MobEntity)
+					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
+				world.addEntity(entityToSpawn);
+			}
+		} else {
+			if (world instanceof ServerWorld) {
+				Entity entityToSpawn = new MerlEntity.CustomEntity(MerlEntity.entity, (World) world);
+				entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
+				if (entityToSpawn instanceof MobEntity)
+					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
+				world.addEntity(entityToSpawn);
+			}
 		}
 	}
 }

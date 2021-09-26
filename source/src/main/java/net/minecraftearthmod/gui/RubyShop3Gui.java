@@ -119,7 +119,7 @@ public class RubyShop3Gui extends MinecraftEarthModModElements.ModElement {
 			this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 25, 48) {
 				@Override
 				public boolean isItemValid(ItemStack stack) {
-					return (new ItemStack(RubyItem.block, (int) (1)).getItem() == stack.getItem());
+					return (RubyItem.block == stack.getItem());
 				}
 			}));
 			int si;

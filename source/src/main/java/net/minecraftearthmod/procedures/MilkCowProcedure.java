@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -22,12 +21,7 @@ import net.minecraft.block.Blocks;
 import java.util.Random;
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MilkCowProcedure extends MinecraftEarthModModElements.ModElement {
-	public MilkCowProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 128);
-	}
-
+public class MilkCowProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -66,9 +60,9 @@ public class MilkCowProcedure extends MinecraftEarthModModElements.ModElement {
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
-				.getItem() == new ItemStack(Items.BUCKET, (int) (1)).getItem())) {
+				.getItem() == Items.BUCKET)) {
 			if (sourceentity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(Items.BUCKET, (int) (1));
+				ItemStack _stktoremove = new ItemStack(Items.BUCKET);
 				((PlayerEntity) sourceentity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) sourceentity).container.func_234641_j_());
 			}
@@ -82,14 +76,14 @@ public class MilkCowProcedure extends MinecraftEarthModModElements.ModElement {
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}
 			if (sourceentity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(Items.MILK_BUCKET, (int) (1));
+				ItemStack _setstack = new ItemStack(Items.MILK_BUCKET);
 				_setstack.setCount((int) 1);
 				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) sourceentity), _setstack);
 			}
 		}
 		if (((entity.getPersistentData().getDouble("regrow")) >= 6000)) {
 			if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
-					.getItem() == new ItemStack(Items.SHEARS, (int) (1)).getItem())) {
+					.getItem() == Items.SHEARS)) {
 				{
 					ItemStack _ist = ((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY);
 					if (_ist.attemptDamageItem((int) 1, new Random(), null)) {
@@ -108,7 +102,7 @@ public class MilkCowProcedure extends MinecraftEarthModModElements.ModElement {
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.BROWN_WOOL, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.BROWN_WOOL));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}

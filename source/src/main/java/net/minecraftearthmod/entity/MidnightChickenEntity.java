@@ -123,7 +123,7 @@ public class MidnightChickenEntity extends MinecraftEarthModModElements.ModEleme
 			super.registerGoals();
 			this.goalSelector.addGoal(1, new BreedGoal(this, 1));
 			this.goalSelector.addGoal(2, new PanicGoal(this, 1.2));
-			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Items.WHEAT_SEEDS, (int) (1)).getItem()), false));
+			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(Items.WHEAT_SEEDS), false));
 			this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, (float) 6));
 			this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 1));
 			this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
@@ -203,7 +203,7 @@ public class MidnightChickenEntity extends MinecraftEarthModModElements.ModEleme
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.WHEAT_SEEDS, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT_SEEDS == stack.getItem())
 				return true;
 			return false;
 		}

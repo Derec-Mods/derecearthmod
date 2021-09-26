@@ -1,12 +1,11 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.block.CarvedMelonBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -31,13 +30,32 @@ import java.util.Random;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement {
-	public ShearMelonProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 145);
-		MinecraftForge.EVENT_BUS.register(this);
+public class ShearMelonProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+			PlayerEntity entity = event.getPlayer();
+			if (event.getHand() != entity.getActiveHand()) {
+				return;
+			}
+			double i = event.getPos().getX();
+			double j = event.getPos().getY();
+			double k = event.getPos().getZ();
+			IWorld world = event.getWorld();
+			BlockState state = world.getBlockState(event.getPos());
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("direction", event.getFace());
+			dependencies.put("blockstate", state);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -69,9 +87,8 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.MELON.getDefaultState().getBlock())) {
-			if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
-					.getItem() == new ItemStack(Items.SHEARS, (int) (1)).getItem())) {
+		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.MELON)) {
+			if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY).getItem() == Items.SHEARS)) {
 				{
 					ItemStack _ist = ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY);
 					if (_ist.attemptDamageItem((int) 1, new Random(), null)) {
@@ -117,32 +134,11 @@ public class ShearMelonProcedure extends MinecraftEarthModModElements.ModElement
 				} catch (Exception e) {
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.MELON_SEEDS, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.MELON_SEEDS));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
-			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", i);
-		dependencies.put("y", j);
-		dependencies.put("z", k);
-		dependencies.put("world", world);
-		dependencies.put("entity", entity);
-		dependencies.put("direction", event.getFace());
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

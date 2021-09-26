@@ -44,7 +44,6 @@ import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.block.material.Material;
@@ -153,10 +152,6 @@ public class JollyLlamaEntity extends MinecraftEarthModModElements.ModElement {
 			ActionResultType retval = ActionResultType.func_233537_a_(this.world.isRemote());
 			super.func_230254_b_(sourceentity, hand);
 			sourceentity.startRiding(this);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
 			return retval;
 		}
 
@@ -172,7 +167,7 @@ public class JollyLlamaEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Blocks.HAY_BLOCK, (int) (1)).getItem() == stack.getItem())
+			if (Blocks.HAY_BLOCK.asItem() == stack.getItem())
 				return true;
 			return false;
 		}

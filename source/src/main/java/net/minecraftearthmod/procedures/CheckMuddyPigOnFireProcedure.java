@@ -4,7 +4,6 @@ import net.minecraftearthmod.entity.MuddyPigEntity;
 import net.minecraftearthmod.entity.MoobloomEntity;
 import net.minecraftearthmod.entity.HornedSheepEntity;
 import net.minecraftearthmod.entity.CluckshroomEntity;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -16,12 +15,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckMuddyPigOnFireProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckMuddyPigOnFireProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 19);
-	}
-
+public class CheckMuddyPigOnFireProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -57,80 +51,80 @@ public class CheckMuddyPigOnFireProcedure extends MinecraftEarthModModElements.M
 		if ((entity.isBurning())) {
 			random = (double) (Math.random() * 100);
 			if ((entity instanceof MuddyPigEntity.CustomEntity)) {
-				if (((random) <= 75)) {
+				if ((random <= 75)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				} else {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 			}
 			if ((entity instanceof CluckshroomEntity.CustomEntity)) {
-				if (((random) <= 75)) {
+				if ((random <= 75)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				} else {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 			}
 			if ((entity instanceof MoobloomEntity.CustomEntity)) {
-				if (((random) <= 75)) {
+				if ((random <= 75)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				} else {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 			}
 			if ((entity instanceof HornedSheepEntity.CustomEntity)) {
-				if (((random) <= 75)) {
+				if ((random <= 75)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				} else {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}

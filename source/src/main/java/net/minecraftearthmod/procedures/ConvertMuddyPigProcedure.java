@@ -1,13 +1,12 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.item.MudFormulaItem;
 import net.minecraftearthmod.entity.MuddyPigEntity;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -29,13 +28,31 @@ import net.minecraft.entity.Entity;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModElement {
-	public ConvertMuddyPigProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 96);
-		MinecraftForge.EVENT_BUS.register(this);
+public class ConvertMuddyPigProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
+			Entity entity = event.getTarget();
+			PlayerEntity sourceentity = event.getPlayer();
+			if (event.getHand() != sourceentity.getActiveHand()) {
+				return;
+			}
+			double i = event.getPos().getX();
+			double j = event.getPos().getY();
+			double k = event.getPos().getZ();
+			IWorld world = event.getWorld();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("sourceentity", sourceentity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -74,7 +91,7 @@ public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModEl
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
-				.getItem() == new ItemStack(MudFormulaItem.block, (int) (1)).getItem())) {
+				.getItem() == MudFormulaItem.block)) {
 			if ((entity instanceof PigEntity)) {
 				if (world instanceof World && !world.isRemote()) {
 					((World) world)
@@ -89,7 +106,7 @@ public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModEl
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (sourceentity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(MudFormulaItem.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(MudFormulaItem.block);
 					((PlayerEntity) sourceentity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) sourceentity).container.func_234641_j_());
 				}
@@ -105,27 +122,5 @@ public class ConvertMuddyPigProcedure extends MinecraftEarthModModElements.ModEl
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
-		Entity entity = event.getTarget();
-		PlayerEntity sourceentity = event.getPlayer();
-		if (event.getHand() != sourceentity.getActiveHand()) {
-			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", i);
-		dependencies.put("y", j);
-		dependencies.put("z", k);
-		dependencies.put("world", world);
-		dependencies.put("entity", entity);
-		dependencies.put("sourceentity", sourceentity);
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

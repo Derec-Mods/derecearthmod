@@ -1,0 +1,19 @@
+{
+  "_fv": 10,
+  "_type": "fluid",
+  "definition": {
+    "name": "Mud",
+    "textureStill": "mud",
+    "textureFlowing": "mud",
+    "luminosity": 0,
+    "density": 1000,
+    "viscosity": 2000,
+    "isGas": false,
+    "type": "WATER",
+    "generateBucket": true,
+    "creativeTab": {
+      "value": "MISC"
+    },
+    "spawnWorldTypes": []
+  }
+}

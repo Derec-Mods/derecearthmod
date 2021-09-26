@@ -1,7 +1,7 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">mod_load</field><next><block type=\"file_variable\"><field name=\"var\">earthmobsconfig</field><field name=\"isDirectory\">FALSE</field><field name=\"createFile\">TRUE</field><value name=\"name\"><block type=\"text\"><field name=\"TEXT\">earthmobsconfig.json</field></block></value><value name=\"location\"><block type=\"get_game_directory\"></block></value></block></next></block><block type=\"text_join\" x=\"771\" y=\"150\"><mutation items=\"2\"></mutation><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">config</field></block></value></block></xml>"
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">mod_load</field><next><block type=\"file_variable\"><field name=\"var\">earthmobsconfig</field><field name=\"isDirectory\">FALSE</field><field name=\"createFile\">TRUE</field><value name=\"name\"><block type=\"text\"><field name=\"TEXT\">earthmobsconfig.json</field></block></value><value name=\"location\"><block type=\"get_game_directory\"/></value></block></next></block><block type=\"text_join\" x=\"771\" y=\"150\"><mutation items=\"2\"/><value name=\"ADD1\"><block type=\"text\"><field name=\"TEXT\">config</field></block></value></block></xml>"
   }
 }

@@ -2,7 +2,6 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -20,12 +19,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class SitDownWolfProcedure extends MinecraftEarthModModElements.ModElement {
-	public SitDownWolfProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 164);
-	}
-
+public class SitDownWolfProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

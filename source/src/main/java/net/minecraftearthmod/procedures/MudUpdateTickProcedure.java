@@ -1,6 +1,5 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -11,12 +10,7 @@ import net.minecraft.block.BlockState;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MudUpdateTickProcedure extends MinecraftEarthModModElements.ModElement {
-	public MudUpdateTickProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 97);
-	}
-
+public class MudUpdateTickProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("x") == null) {
 			if (!dependencies.containsKey("x"))
@@ -42,8 +36,8 @@ public class MudUpdateTickProcedure extends MinecraftEarthModModElements.ModElem
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if ((((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock())
-				|| ((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock()))) {
+		if ((((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.WATER)
+				|| ((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.WATER))) {
 			{
 				BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
 				BlockState _bs = Blocks.DIRT.getDefaultState();

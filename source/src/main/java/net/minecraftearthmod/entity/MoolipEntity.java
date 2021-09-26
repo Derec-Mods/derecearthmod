@@ -127,10 +127,9 @@ public class MoolipEntity extends MinecraftEarthModModElements.ModElement {
 			this.goalSelector.addGoal(1, new LookAtGoal(this, MuddyPigEntity.CustomEntity.class, (float) 6));
 			this.goalSelector.addGoal(2, new LookAtGoal(this, ServerPlayerEntity.class, (float) 6));
 			this.goalSelector.addGoal(3, new BreedGoal(this, 1));
-			this.goalSelector.addGoal(4,
-					new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(PinkDaisyBlock.block, (int) (1)).getItem()), false));
-			this.goalSelector.addGoal(5, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Blocks.WHEAT, (int) (1)).getItem()), false));
-			this.goalSelector.addGoal(6, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Items.WHEAT, (int) (1)).getItem()), false));
+			this.goalSelector.addGoal(4, new TemptGoal(this, 1, Ingredient.fromItems(PinkDaisyBlock.block.asItem()), false));
+			this.goalSelector.addGoal(5, new TemptGoal(this, 1, Ingredient.fromItems(Blocks.WHEAT.asItem()), false));
+			this.goalSelector.addGoal(6, new TemptGoal(this, 1, Ingredient.fromItems(Items.WHEAT), false));
 			this.goalSelector.addGoal(7, new PanicGoal(this, 1.2));
 			this.goalSelector.addGoal(8, new RandomWalkingGoal(this, 1));
 			this.goalSelector.addGoal(9, new LookRandomlyGoal(this));
@@ -213,11 +212,11 @@ public class MoolipEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Blocks.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Blocks.WHEAT.asItem() == stack.getItem())
 				return true;
-			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT == stack.getItem())
 				return true;
-			if (new ItemStack(ButtercupBlock.block, (int) (1)).getItem() == stack.getItem())
+			if (ButtercupBlock.block.asItem() == stack.getItem())
 				return true;
 			return false;
 		}

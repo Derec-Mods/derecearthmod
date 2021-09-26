@@ -1,5 +1,5 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "item",
   "definition": {
     "renderType": 0,
@@ -30,6 +30,7 @@
     "inventoryStackSize": 64,
     "onRightClickedInAir": {
       "name": "Blow"
-    }
+    },
+    "hasDispenseBehavior": false
   }
 }

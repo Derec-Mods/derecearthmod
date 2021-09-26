@@ -133,7 +133,7 @@ public class CluckshroomEntity extends MinecraftEarthModModElements.ModElement {
 		protected void registerGoals() {
 			super.registerGoals();
 			this.goalSelector.addGoal(1, new BreedGoal(this, 1));
-			this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Items.WHEAT_SEEDS, (int) (1)).getItem()), false));
+			this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.fromItems(Items.WHEAT_SEEDS), false));
 			this.goalSelector.addGoal(3, new PanicGoal(this, 1));
 			this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 1));
 			this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
@@ -234,7 +234,7 @@ public class CluckshroomEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.WHEAT_SEEDS, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT_SEEDS == stack.getItem())
 				return true;
 			return false;
 		}

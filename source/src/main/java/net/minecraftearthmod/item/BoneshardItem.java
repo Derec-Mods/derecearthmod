@@ -125,7 +125,7 @@ public class BoneshardItem extends MinecraftEarthModModElements.ModElement {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack getItem() {
-			return new ItemStack(BoneshardItem.block, (int) (1));
+			return new ItemStack(BoneshardItem.block);
 		}
 
 		@Override
@@ -147,6 +147,7 @@ public class BoneshardItem extends MinecraftEarthModModElements.ModElement {
 			double z = this.getPosZ();
 			World world = this.world;
 			Entity entity = this.func_234616_v_();
+			Entity imediatesourceentity = this;
 			if (this.inGround) {
 				this.remove();
 			}

@@ -1,19 +1,13 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.world.DoEarthDimensionGameRule;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckEarthDimensionGameruleProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckEarthDimensionGameruleProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 206);
-	}
-
+public class CheckEarthDimensionGameruleProcedure {
 	public static boolean executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("world") == null) {
 			if (!dependencies.containsKey("world"))

@@ -1,6 +1,5 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.entity.passive.TameableEntity;
@@ -8,12 +7,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckTamedWolfProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckTamedWolfProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 151);
-	}
-
+public class CheckTamedWolfProcedure {
 	public static boolean executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

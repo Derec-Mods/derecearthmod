@@ -6,6 +6,8 @@ import net.minecraftforge.common.ToolType;
 
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
+import net.minecraft.world.IBlockReader;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Direction;
@@ -47,6 +49,11 @@ public class CarvedMelonBlock extends MinecraftEarthModModElements.ModElement {
 					.harvestTool(ToolType.AXE).setRequiresTool());
 			this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 			setRegistryName("carved_melon");
+		}
+
+		@Override
+		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return 15;
 		}
 
 		@Override

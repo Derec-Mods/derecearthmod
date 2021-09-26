@@ -1,0 +1,20 @@
+{
+  "_fv": 10,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Stone cutting",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "recipeRetstackSize": 10,
+    "group": "",
+    "recipeShapeless": false,
+    "stoneCuttingInputStack": {
+      "value": "CUSTOM:Horn"
+    },
+    "stoneCuttingReturnStack": {
+      "value": "Items.DYE#15"
+    },
+    "name": "horn_cut",
+    "namespace": "mod"
+  }
+}

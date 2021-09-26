@@ -130,7 +130,7 @@ public class MelonGolemEntity extends MinecraftEarthModModElements.ModElement {
 			super(type, world);
 			experienceValue = 3;
 			setNoAI(false);
-			this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(CarvedMelonBlock.block, (int) (1)));
+			this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(CarvedMelonBlock.block));
 		}
 
 		@Override
@@ -208,14 +208,20 @@ public class MelonGolemEntity extends MinecraftEarthModModElements.ModElement {
 		}
 
 		@Override
+		protected void arrowHit(LivingEntity livingEntity) {
+			super.arrowHit(livingEntity);
+			livingEntity.setArrowCountInEntity(livingEntity.getArrowCountInEntity() - 1);
+		}
+
+		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack getItem() {
-			return new ItemStack(Items.MELON_SEEDS, (int) (1));
+			return new ItemStack(Items.MELON_SEEDS);
 		}
 
 		@Override
 		protected ItemStack getArrowStack() {
-			return new ItemStack(Items.MELON_SEEDS, (int) (1));
+			return new ItemStack(Items.MELON_SEEDS);
 		}
 	}
 }

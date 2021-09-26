@@ -22,7 +22,7 @@ public class DerecEarthMobsSpawnEggsItemGroup extends MinecraftEarthModModElemen
 			@OnlyIn(Dist.CLIENT)
 			@Override
 			public ItemStack createIcon() {
-				return new ItemStack(HornItem.block, (int) (1));
+				return new ItemStack(HornItem.block);
 			}
 
 			@OnlyIn(Dist.CLIENT)

@@ -1,13 +1,12 @@
 
 package net.minecraftearthmod.command;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.procedures.ToggleExperimentalModeProcedure;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.entity.Entity;
@@ -22,24 +21,17 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class ToggleexperimentalCommand extends MinecraftEarthModModElements.ModElement {
-	public ToggleexperimentalCommand(MinecraftEarthModModElements instance) {
-		super(instance, 196);
-		MinecraftForge.EVENT_BUS.register(this);
-	}
-
+@Mod.EventBusSubscriber
+public class ToggleexperimentalCommand {
 	@SubscribeEvent
-	public void registerCommands(RegisterCommandsEvent event) {
-		event.getDispatcher().register(customCommand());
+	public static void registerCommands(RegisterCommandsEvent event) {
+		event.getDispatcher()
+				.register(LiteralArgumentBuilder.<CommandSource>literal("toggleexperimental").requires(s -> s.hasPermissionLevel(1))
+						.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(ToggleexperimentalCommand::execute))
+						.executes(ToggleexperimentalCommand::execute));
 	}
 
-	private LiteralArgumentBuilder<CommandSource> customCommand() {
-		return LiteralArgumentBuilder.<CommandSource>literal("toggleexperimental").requires(s -> s.hasPermissionLevel(1))
-				.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(this::execute)).executes(this::execute);
-	}
-
-	private int execute(CommandContext<CommandSource> ctx) {
+	private static int execute(CommandContext<CommandSource> ctx) {
 		ServerWorld world = ctx.getSource().getWorld();
 		double x = ctx.getSource().getPos().getX();
 		double y = ctx.getSource().getPos().getY();

@@ -2,7 +2,6 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.world.WaterproofGolemsGameRule;
 import net.minecraftearthmod.block.FurnaceGolemLightBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -16,12 +15,7 @@ import net.minecraft.block.Blocks;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class FurnaceGolemOnEntityTickUpdateProcedure extends MinecraftEarthModModElements.ModElement {
-	public FurnaceGolemOnEntityTickUpdateProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 26);
-	}
-
+public class FurnaceGolemOnEntityTickUpdateProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -64,13 +58,13 @@ public class FurnaceGolemOnEntityTickUpdateProcedure extends MinecraftEarthModMo
 		}
 		if ((Math.random() <= 0.001)) {
 			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.TORCH, (int) (1)));
+				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.TORCH));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
 		}
-		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock())
-				|| ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER.getDefaultState().getBlock()))) {
+		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER)
+				|| ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.WATER))) {
 			if ((!(world.getWorldInfo().getGameRulesInstance().getBoolean(WaterproofGolemsGameRule.gamerule)))) {
 				entity.attackEntityFrom(DamageSource.GENERIC, (float) 0.5);
 			}

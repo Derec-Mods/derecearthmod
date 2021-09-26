@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.entity.FurnaceGolemEntity;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -11,12 +10,7 @@ import net.minecraft.block.Blocks;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class FurnaceGolemLightUpdateTickProcedure extends MinecraftEarthModModElements.ModElement {
-	public FurnaceGolemLightUpdateTickProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 25);
-	}
-
+public class FurnaceGolemLightUpdateTickProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

@@ -5,7 +5,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import net.minecraftearthmod.item.MinecraftEarthDimensionItem;
 import net.minecraftearthmod.MinecraftEarthModModVariables;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -23,12 +22,7 @@ import net.minecraft.entity.Entity;
 import java.util.function.Supplier;
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class BuyKeyProcedure extends MinecraftEarthModModElements.ModElement {
-	public BuyKeyProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 136);
-	}
-
+public class BuyKeyProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -98,7 +92,7 @@ public class BuyKeyProcedure extends MinecraftEarthModModElements.ModElement {
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}
 			if (entity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(MinecraftEarthDimensionItem.block, (int) (1));
+				ItemStack _setstack = new ItemStack(MinecraftEarthDimensionItem.block);
 				_setstack.setCount((int) 1);
 				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
 			}

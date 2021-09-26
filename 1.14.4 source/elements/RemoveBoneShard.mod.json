@@ -1,0 +1,7 @@
+{
+  "_fv": 10,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"168\" y=\"109\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"item_cooldown_for\"><value name=\"item\"><block type=\"itemstack_to_mcitem\"/></value><value name=\"ticks\"><block type=\"math_number\"><field name=\"NUM\">20</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value><next><block type=\"entity_remove_item\"><value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:Boneshard</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></next></block></next></block></xml>"
+  }
+}

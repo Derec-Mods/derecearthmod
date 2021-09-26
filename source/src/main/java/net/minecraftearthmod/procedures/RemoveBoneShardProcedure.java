@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.item.BoneshardItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.item.ItemStack;
@@ -10,12 +9,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class RemoveBoneShardProcedure extends MinecraftEarthModModElements.ModElement {
-	public RemoveBoneShardProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 54);
-	}
-
+public class RemoveBoneShardProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -30,9 +24,9 @@ public class RemoveBoneShardProcedure extends MinecraftEarthModModElements.ModEl
 		Entity entity = (Entity) dependencies.get("entity");
 		ItemStack itemstack = (ItemStack) dependencies.get("itemstack");
 		if (entity instanceof PlayerEntity)
-			((PlayerEntity) entity).getCooldownTracker().setCooldown(((itemstack)).getItem(), (int) 20);
+			((PlayerEntity) entity).getCooldownTracker().setCooldown((itemstack).getItem(), (int) 20);
 		if (entity instanceof PlayerEntity) {
-			ItemStack _stktoremove = new ItemStack(BoneshardItem.block, (int) (1));
+			ItemStack _stktoremove = new ItemStack(BoneshardItem.block);
 			((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 					((PlayerEntity) entity).container.func_234641_j_());
 		}

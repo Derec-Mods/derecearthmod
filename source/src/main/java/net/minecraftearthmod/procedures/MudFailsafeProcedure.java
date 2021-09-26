@@ -1,13 +1,12 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.item.PailItem;
 import net.minecraftearthmod.item.BucketOfMudItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -26,13 +25,28 @@ import net.minecraft.command.CommandSource;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MudFailsafeProcedure extends MinecraftEarthModModElements.ModElement {
-	public MudFailsafeProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 69);
-		MinecraftForge.EVENT_BUS.register(this);
+public class MudFailsafeProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+			if (event.phase == TickEvent.Phase.END) {
+				Entity entity = event.player;
+				World world = entity.world;
+				double i = entity.getPosX();
+				double j = entity.getPosY();
+				double k = entity.getPosZ();
+				Map<String, Object> dependencies = new HashMap<>();
+				dependencies.put("x", i);
+				dependencies.put("y", j);
+				dependencies.put("z", k);
+				dependencies.put("world", world);
+				dependencies.put("entity", entity);
+				dependencies.put("event", event);
+				executeProcedure(dependencies);
+			}
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -64,23 +78,21 @@ public class MudFailsafeProcedure extends MinecraftEarthModModElements.ModElemen
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(PailItem.block, (int) (1))) : false)) {
+		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(PailItem.block)) : false)) {
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(PailItem.block, (int) (1));
+				ItemStack _stktoremove = new ItemStack(PailItem.block);
 				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) entity).container.func_234641_j_());
 			}
 			if (entity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(Items.BUCKET, (int) (1));
+				ItemStack _setstack = new ItemStack(Items.BUCKET);
 				_setstack.setCount((int) 1);
 				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
 			}
 		}
-		if (((entity instanceof PlayerEntity)
-				? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(BucketOfMudItem.block, (int) (1)))
-				: false)) {
+		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(BucketOfMudItem.block)) : false)) {
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(BucketOfMudItem.block, (int) (1));
+				ItemStack _stktoremove = new ItemStack(BucketOfMudItem.block);
 				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) entity).container.func_234641_j_());
 			}
@@ -90,25 +102,6 @@ public class MudFailsafeProcedure extends MinecraftEarthModModElements.ModElemen
 								new StringTextComponent(""), ((World) world).getServer(), null).withFeedbackDisabled(),
 						"give @p minecraft_earth_mod:mud_bucket");
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			Entity entity = event.player;
-			World world = entity.world;
-			double i = entity.getPosX();
-			double j = entity.getPosY();
-			double k = entity.getPosZ();
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", i);
-			dependencies.put("y", j);
-			dependencies.put("z", k);
-			dependencies.put("world", world);
-			dependencies.put("entity", entity);
-			dependencies.put("event", event);
-			this.executeProcedure(dependencies);
 		}
 	}
 }

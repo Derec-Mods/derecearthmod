@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -21,12 +20,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class EatButtercupProcedure extends MinecraftEarthModModElements.ModElement {
-	public EatButtercupProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 37);
-	}
-
+public class EatButtercupProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -70,7 +64,7 @@ public class EatButtercupProcedure extends MinecraftEarthModModElements.ModEleme
 		if (entity instanceof LivingEntity)
 			((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.REGENERATION, (int) 60, (int) 1, (false), (false)));
 		if (entity instanceof PlayerEntity) {
-			ItemStack _setstack = new ItemStack(Items.GLASS_BOTTLE, (int) (1));
+			ItemStack _setstack = new ItemStack(Items.GLASS_BOTTLE);
 			_setstack.setCount((int) 1);
 			ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
 		}

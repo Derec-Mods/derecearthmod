@@ -1,5 +1,5 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "item",
   "definition": {
     "renderType": 1,
@@ -31,6 +31,7 @@
     "inventoryStackSize": 64,
     "onRightClickedOnBlock": {
       "name": "SpawnMobofMe"
-    }
+    },
+    "hasDispenseBehavior": false
   }
 }

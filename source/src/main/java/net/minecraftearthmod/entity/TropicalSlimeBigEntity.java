@@ -9,7 +9,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 
-import net.minecraftearthmod.procedures.SpawnNormalSlimeProcedure;
 import net.minecraftearthmod.entity.renderer.TropicalSlimeBigRenderer;
 import net.minecraftearthmod.MinecraftEarthModModElements;
 
@@ -32,11 +31,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureAttribute;
-
-import java.util.Map;
-import java.util.HashMap;
 
 @MinecraftEarthModModElements.ModElement.Tag
 public class TropicalSlimeBigEntity extends MinecraftEarthModModElements.ModElement {
@@ -125,20 +120,6 @@ public class TropicalSlimeBigEntity extends MinecraftEarthModModElements.ModElem
 			if (source == DamageSource.FALL)
 				return false;
 			return super.attackEntityFrom(source, amount);
-		}
-
-		@Override
-		public void onDeath(DamageSource source) {
-			super.onDeath(source);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity sourceentity = source.getTrueSource();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				SpawnNormalSlimeProcedure.executeProcedure($_dependencies);
-			}
 		}
 	}
 }

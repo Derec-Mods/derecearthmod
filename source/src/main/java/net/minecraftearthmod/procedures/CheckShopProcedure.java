@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import net.minecraftearthmod.gui.RubyShopGui;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -23,12 +22,7 @@ import java.util.Map;
 
 import io.netty.buffer.Unpooled;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckShopProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckShopProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 179);
-	}
-
+public class CheckShopProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -60,9 +54,8 @@ public class CheckShopProcedure extends MinecraftEarthModModElements.ModElement 
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if ((((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.DISPENSER.getDefaultState().getBlock())
-				|| ((world.getBlockState(new BlockPos((int) x, (int) (y + 1), (int) z))).getBlock() == Blocks.DISPENSER.getDefaultState()
-						.getBlock()))) {
+		if ((((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.DISPENSER)
+				|| ((world.getBlockState(new BlockPos((int) x, (int) (y + 1), (int) z))).getBlock() == Blocks.DISPENSER))) {
 			{
 				Entity _ent = entity;
 				if (_ent instanceof ServerPlayerEntity) {

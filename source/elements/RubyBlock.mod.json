@@ -1,5 +1,5 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "block",
   "definition": {
     "texture": "ruby_block",
@@ -49,14 +49,15 @@
     "useLootTableForDrops": false,
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
-    "canProvidePower": false,
-    "lightOpacity": 255,
+    "canRedstoneConnect": false,
+    "lightOpacity": 15,
     "material": {
       "value": "IRON"
     },
     "tickRate": 10,
     "tickRandomly": false,
     "isReplaceable": false,
+    "canProvidePower": false,
     "colorOnMap": "DEFAULT",
     "creativePickItem": {
       "value": ""
@@ -71,6 +72,7 @@
     "jumpFactor": 1.0,
     "reactionToPushing": "NORMAL",
     "isNotColidable": false,
+    "isCustomSoundType": false,
     "soundOnStep": {
       "value": "METAL"
     },

@@ -230,7 +230,7 @@ public class RockySheepEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT == stack.getItem())
 				return true;
 			return false;
 		}

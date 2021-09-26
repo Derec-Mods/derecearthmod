@@ -4,7 +4,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import net.minecraftearthmod.item.ConvertibleMudItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -20,12 +19,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MudConverterBucketTakeProcedure extends MinecraftEarthModModElements.ModElement {
-	public MudConverterBucketTakeProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 207);
-	}
-
+public class MudConverterBucketTakeProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -58,9 +52,9 @@ public class MudConverterBucketTakeProcedure extends MinecraftEarthModModElement
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
-				.getItem() == new ItemStack(ConvertibleMudItem.block, (int) (1)).getItem())) {
+				.getItem() == ConvertibleMudItem.block)) {
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(ConvertibleMudItem.block, (int) (1));
+				ItemStack _stktoremove = new ItemStack(ConvertibleMudItem.block);
 				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) entity).container.func_234641_j_());
 			}

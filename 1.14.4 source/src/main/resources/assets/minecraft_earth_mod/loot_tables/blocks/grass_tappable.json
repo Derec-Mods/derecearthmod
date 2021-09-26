@@ -1,0 +1,153 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": {
+        "min": 1,
+        "max": 3
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sapling#4",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#3",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft_earth_mod:buttercup",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt#1",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:yellow_flower#32767",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:dirt#0",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tallgrass#2",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:tallgrass#32767",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sapling#3",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:waterlily",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:melon_seeds",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#5",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#8",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pumpkin",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pumpkin_seeds",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#7",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#0",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_mushroom",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#4",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:double_plant#4",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:reeds",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:double_plant#0",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_flower#6",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:water_bucket",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:spawn_egg#50",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:spawn_egg#101",
+          "weight": 1
+        }
+      ]
+    }
+  ]
+}

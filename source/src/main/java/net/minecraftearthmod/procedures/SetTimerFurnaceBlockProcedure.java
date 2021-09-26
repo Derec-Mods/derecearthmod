@@ -1,6 +1,5 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -11,12 +10,7 @@ import net.minecraft.block.BlockState;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class SetTimerFurnaceBlockProcedure extends MinecraftEarthModModElements.ModElement {
-	public SetTimerFurnaceBlockProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 126);
-	}
-
+public class SetTimerFurnaceBlockProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("x") == null) {
 			if (!dependencies.containsKey("x"))

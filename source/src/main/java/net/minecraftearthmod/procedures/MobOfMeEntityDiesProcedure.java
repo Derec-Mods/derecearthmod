@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.item.MobofMeItemItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -11,12 +10,7 @@ import net.minecraft.entity.item.ItemEntity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MobOfMeEntityDiesProcedure extends MinecraftEarthModModElements.ModElement {
-	public MobOfMeEntityDiesProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 177);
-	}
-
+public class MobOfMeEntityDiesProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("x") == null) {
 			if (!dependencies.containsKey("x"))
@@ -43,7 +37,7 @@ public class MobOfMeEntityDiesProcedure extends MinecraftEarthModModElements.Mod
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if (world instanceof World && !world.isRemote()) {
-			ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(MobofMeItemItem.block, (int) (1)));
+			ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(MobofMeItemItem.block));
 			entityToSpawn.setPickupDelay((int) 10);
 			world.addEntity(entityToSpawn);
 		}

@@ -2,7 +2,6 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -13,12 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class PlayOpenSoundProcedure extends MinecraftEarthModModElements.ModElement {
-	public PlayOpenSoundProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 178);
-	}
-
+public class PlayOpenSoundProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("x") == null) {
 			if (!dependencies.containsKey("x"))

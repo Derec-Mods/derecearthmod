@@ -45,7 +45,6 @@ import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.block.material.Material;
@@ -187,10 +186,6 @@ public class DyedCatEntity extends MinecraftEarthModModElements.ModElement {
 						this.enablePersistence();
 				}
 			}
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
 			return retval;
 		}
 
@@ -206,11 +201,11 @@ public class DyedCatEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.COD, (int) (1)).getItem() == stack.getItem())
+			if (Items.COD == stack.getItem())
 				return true;
-			if (new ItemStack(Items.SALMON, (int) (1)).getItem() == stack.getItem())
+			if (Items.SALMON == stack.getItem())
 				return true;
-			if (new ItemStack(Items.TROPICAL_FISH, (int) (1)).getItem() == stack.getItem())
+			if (Items.TROPICAL_FISH == stack.getItem())
 				return true;
 			return false;
 		}

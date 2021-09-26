@@ -1,13 +1,12 @@
 
 package net.minecraftearthmod.command;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.procedures.RubyShopCommandCommandExecutedProcedure;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.entity.Entity;
@@ -22,24 +21,17 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class RubyShopCommandCommand extends MinecraftEarthModModElements.ModElement {
-	public RubyShopCommandCommand(MinecraftEarthModModElements instance) {
-		super(instance, 61);
-		MinecraftForge.EVENT_BUS.register(this);
-	}
-
+@Mod.EventBusSubscriber
+public class RubyShopCommandCommand {
 	@SubscribeEvent
-	public void registerCommands(RegisterCommandsEvent event) {
-		event.getDispatcher().register(customCommand());
+	public static void registerCommands(RegisterCommandsEvent event) {
+		event.getDispatcher()
+				.register(LiteralArgumentBuilder.<CommandSource>literal("shop").requires(s -> s.hasPermissionLevel(3))
+						.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(RubyShopCommandCommand::execute))
+						.executes(RubyShopCommandCommand::execute));
 	}
 
-	private LiteralArgumentBuilder<CommandSource> customCommand() {
-		return LiteralArgumentBuilder.<CommandSource>literal("shop").requires(s -> s.hasPermissionLevel(3))
-				.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(this::execute)).executes(this::execute);
-	}
-
-	private int execute(CommandContext<CommandSource> ctx) {
+	private static int execute(CommandContext<CommandSource> ctx) {
 		ServerWorld world = ctx.getSource().getWorld();
 		double x = ctx.getSource().getPos().getX();
 		double y = ctx.getSource().getPos().getY();

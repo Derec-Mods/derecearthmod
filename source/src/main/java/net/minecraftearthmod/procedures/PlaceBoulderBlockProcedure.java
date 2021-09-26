@@ -1,12 +1,11 @@
 package net.minecraftearthmod.procedures;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.entity.BoulderZombieEntity;
 import net.minecraftearthmod.block.BoulderZombieClimbingBlockBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -19,13 +18,24 @@ import net.minecraft.block.Blocks;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class PlaceBoulderBlockProcedure extends MinecraftEarthModModElements.ModElement {
-	public PlaceBoulderBlockProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 195);
-		MinecraftForge.EVENT_BUS.register(this);
+public class PlaceBoulderBlockProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
+			LivingEntity entity = event.getTarget();
+			LivingEntity sourceentity = event.getEntityLiving();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", sourceentity.getPosX());
+			dependencies.put("y", sourceentity.getPosY());
+			dependencies.put("z", sourceentity.getPosZ());
+			dependencies.put("world", sourceentity.getEntityWorld());
+			dependencies.put("entity", entity);
+			dependencies.put("sourceentity", sourceentity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -65,28 +75,13 @@ public class PlaceBoulderBlockProcedure extends MinecraftEarthModModElements.Mod
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((sourceentity instanceof BoulderZombieEntity.CustomEntity)) {
 			if ((entity instanceof PlayerEntity)) {
-				if ((!((world.getBlockState(new BlockPos((int) (x + 1), (int) y, (int) z))).getBlock() == Blocks.AIR.getDefaultState().getBlock()))) {
+				if ((!((world.getBlockState(new BlockPos((int) (x + 1), (int) y, (int) z))).getBlock() == Blocks.AIR))) {
 					world.setBlockState(new BlockPos((int) x, (int) y, (int) z), BoulderZombieClimbingBlockBlock.block.getDefaultState(), 3);
 				}
-				if ((!((world.getBlockState(new BlockPos((int) x, (int) y, (int) (z + 1)))).getBlock() == Blocks.AIR.getDefaultState().getBlock()))) {
+				if ((!((world.getBlockState(new BlockPos((int) x, (int) y, (int) (z + 1)))).getBlock() == Blocks.AIR))) {
 					world.setBlockState(new BlockPos((int) x, (int) y, (int) z), BoulderZombieClimbingBlockBlock.block.getDefaultState(), 3);
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
-		LivingEntity entity = event.getTarget();
-		LivingEntity sourceentity = event.getEntityLiving();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", sourceentity.getPosX());
-		dependencies.put("y", sourceentity.getPosY());
-		dependencies.put("z", sourceentity.getPosZ());
-		dependencies.put("world", sourceentity.getEntityWorld());
-		dependencies.put("entity", entity);
-		dependencies.put("sourceentity", sourceentity);
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

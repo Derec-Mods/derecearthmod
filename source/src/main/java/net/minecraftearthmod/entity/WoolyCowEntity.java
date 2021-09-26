@@ -138,8 +138,8 @@ public class WoolyCowEntity extends MinecraftEarthModModElements.ModElement {
 		protected void registerGoals() {
 			super.registerGoals();
 			this.goalSelector.addGoal(1, new BreedGoal(this, 1));
-			this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Blocks.WHEAT, (int) (1)).getItem()), false));
-			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Items.WHEAT, (int) (1)).getItem()), false));
+			this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.fromItems(Blocks.WHEAT.asItem()), false));
+			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(Items.WHEAT), false));
 			this.goalSelector.addGoal(4, new PanicGoal(this, 1.2));
 			this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 1));
 			this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
@@ -230,7 +230,7 @@ public class WoolyCowEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT == stack.getItem())
 				return true;
 			return false;
 		}

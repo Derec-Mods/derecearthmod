@@ -6,7 +6,6 @@ import net.minecraftearthmod.entity.MoolipEntity;
 import net.minecraftearthmod.entity.MoobloomEntity;
 import net.minecraftearthmod.block.PinkDaisyBlock;
 import net.minecraftearthmod.block.ButtercupBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.server.ServerWorld;
@@ -25,12 +24,7 @@ import net.minecraft.block.Blocks;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.ModElement {
-	public MoobloomPlantFlowerProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 48);
-	}
-
+public class MoobloomPlantFlowerProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -66,11 +60,10 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 		double ran2 = 0;
 		ran = (double) Math.random();
 		if ((entity instanceof MoobloomEntity.CustomEntity)) {
-			if (((ran) <= 0.0005)) {
-				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.GRASS_BLOCK.getDefaultState()
-						.getBlock())) {
+			if ((ran <= 0.0005)) {
+				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.GRASS_BLOCK)) {
 					ran2 = (double) Math.random();
-					if ((((ran2) <= 0.05) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if (((ran2 <= 0.05) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
@@ -82,7 +75,7 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 						}
 						world.setBlockState(new BlockPos((int) x, (int) y, (int) z), ButtercupBlock.block.getDefaultState(), 3);
 					}
-					if (((((ran2) > 0.05) && ((ran2) <= 0.25)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if ((((ran2 > 0.05) && (ran2 <= 0.25)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
@@ -105,7 +98,7 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 									"setblock ~ ~1 ~ minecraft:sunflower[half=upper]");
 						}
 					}
-					if (((((ran2) > 0.25) && ((ran2) <= 1)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if ((((ran2 > 0.25) && (ran2 <= 1)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
@@ -121,11 +114,10 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 			}
 		}
 		if ((entity instanceof MoolipEntity.CustomEntity)) {
-			if (((ran) <= 0.0005)) {
-				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.GRASS_BLOCK.getDefaultState()
-						.getBlock())) {
+			if ((ran <= 0.0005)) {
+				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.GRASS_BLOCK)) {
 					ran2 = (double) Math.random();
-					if ((((ran2) <= 0.05) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if (((ran2 <= 0.05) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
@@ -137,7 +129,7 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 						}
 						world.setBlockState(new BlockPos((int) x, (int) y, (int) z), PinkDaisyBlock.block.getDefaultState(), 3);
 					}
-					if (((((ran2) > 0.05) && ((ran2) <= 0.25)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if ((((ran2 > 0.05) && (ran2 <= 0.25)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
@@ -160,7 +152,7 @@ public class MoobloomPlantFlowerProcedure extends MinecraftEarthModModElements.M
 									"setblock ~ ~1 ~ minecraft:lilac[half=upper]");
 						}
 					}
-					if (((((ran2) > 0.25) && ((ran2) <= 1)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
+					if ((((ran2 > 0.25) && (ran2 <= 1)) && (world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z))))) {
 						if (world instanceof World && !world.isRemote()) {
 							((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 									(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),

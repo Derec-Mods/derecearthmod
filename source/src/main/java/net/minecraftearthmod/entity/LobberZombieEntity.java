@@ -225,14 +225,20 @@ public class LobberZombieEntity extends MinecraftEarthModModElements.ModElement 
 		}
 
 		@Override
+		protected void arrowHit(LivingEntity livingEntity) {
+			super.arrowHit(livingEntity);
+			livingEntity.setArrowCountInEntity(livingEntity.getArrowCountInEntity() - 1);
+		}
+
+		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack getItem() {
-			return new ItemStack(Items.ROTTEN_FLESH, (int) (1));
+			return new ItemStack(Items.ROTTEN_FLESH);
 		}
 
 		@Override
 		protected ItemStack getArrowStack() {
-			return new ItemStack(Items.ROTTEN_FLESH, (int) (1));
+			return new ItemStack(Items.ROTTEN_FLESH);
 		}
 	}
 }

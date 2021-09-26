@@ -2,13 +2,12 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.item.MudFormulaItem;
 import net.minecraftearthmod.block.MudBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -25,13 +24,29 @@ import net.minecraft.entity.Entity;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MakeMudFormulaProcedure extends MinecraftEarthModModElements.ModElement {
-	public MakeMudFormulaProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 159);
-		MinecraftForge.EVENT_BUS.register(this);
+public class MakeMudFormulaProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+			PlayerEntity entity = event.getPlayer();
+			if (event.getHand() != entity.getActiveHand()) {
+				return;
+			}
+			double i = event.getPos().getX();
+			double j = event.getPos().getY();
+			double k = event.getPos().getZ();
+			IWorld world = event.getWorld();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -63,9 +78,10 @@ public class MakeMudFormulaProcedure extends MinecraftEarthModModElements.ModEle
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == MudBlock.block.getDefaultState().getBlock())) {
+		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == MudBlock.block)
+				|| ((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == MudBlock.block))) {
 			if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
-					.getItem() == new ItemStack(Items.GLASS_BOTTLE, (int) (1)).getItem())) {
+					.getItem() == Items.GLASS_BOTTLE)) {
 				if (world instanceof World && !world.isRemote()) {
 					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
@@ -76,37 +92,16 @@ public class MakeMudFormulaProcedure extends MinecraftEarthModModElements.ModEle
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE, (int) (1));
+					ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 				if (entity instanceof PlayerEntity) {
-					ItemStack _setstack = new ItemStack(MudFormulaItem.block, (int) (1));
+					ItemStack _setstack = new ItemStack(MudFormulaItem.block);
 					_setstack.setCount((int) 1);
 					ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
-			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", i);
-		dependencies.put("y", j);
-		dependencies.put("z", k);
-		dependencies.put("world", world);
-		dependencies.put("entity", entity);
-		dependencies.put("direction", event.getFace());
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

@@ -22,7 +22,7 @@ public class TappablesTabItemGroup extends MinecraftEarthModModElements.ModEleme
 			@OnlyIn(Dist.CLIENT)
 			@Override
 			public ItemStack createIcon() {
-				return new ItemStack(ChestTappableBlock.block, (int) (1));
+				return new ItemStack(ChestTappableBlock.block);
 			}
 
 			@OnlyIn(Dist.CLIENT)

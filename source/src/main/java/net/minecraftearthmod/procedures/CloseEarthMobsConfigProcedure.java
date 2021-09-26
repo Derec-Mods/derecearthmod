@@ -1,6 +1,5 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,12 +7,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CloseEarthMobsConfigProcedure extends MinecraftEarthModModElements.ModElement {
-	public CloseEarthMobsConfigProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 215);
-	}
-
+public class CloseEarthMobsConfigProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

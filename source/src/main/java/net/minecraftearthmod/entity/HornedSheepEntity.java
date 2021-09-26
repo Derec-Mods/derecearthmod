@@ -239,9 +239,9 @@ public class HornedSheepEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Blocks.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Blocks.WHEAT.asItem() == stack.getItem())
 				return true;
-			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT == stack.getItem())
 				return true;
 			return false;
 		}

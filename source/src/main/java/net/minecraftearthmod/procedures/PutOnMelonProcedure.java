@@ -1,11 +1,10 @@
 package net.minecraftearthmod.procedures;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraftearthmod.block.CarvedMelonBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -20,13 +19,29 @@ import net.minecraft.block.Blocks;
 import java.util.Map;
 import java.util.HashMap;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class PutOnMelonProcedure extends MinecraftEarthModModElements.ModElement {
-	public PutOnMelonProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 144);
-		MinecraftForge.EVENT_BUS.register(this);
+public class PutOnMelonProcedure {
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+			PlayerEntity entity = event.getPlayer();
+			if (event.getHand() != entity.getActiveHand()) {
+				return;
+			}
+			double i = event.getPos().getX();
+			double j = event.getPos().getY();
+			double k = event.getPos().getZ();
+			IWorld world = event.getWorld();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
-
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -34,46 +49,26 @@ public class PutOnMelonProcedure extends MinecraftEarthModModElements.ModElement
 			return;
 		}
 		Entity entity = (Entity) dependencies.get("entity");
-		if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
-				.getItem() == new ItemStack(CarvedMelonBlock.block, (int) (1)).getItem())) {
+		if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY).getItem() == CarvedMelonBlock.block
+				.asItem())) {
 			if ((((entity instanceof LivingEntity)
 					? ((LivingEntity) entity).getItemStackFromSlot(EquipmentSlotType.fromSlotTypeAndIndex(EquipmentSlotType.Group.ARMOR, (int) 3))
-					: ItemStack.EMPTY).getItem() == new ItemStack(Blocks.AIR, (int) (1)).getItem())) {
+					: ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 				if (entity instanceof LivingEntity) {
 					if (entity instanceof PlayerEntity)
-						((PlayerEntity) entity).inventory.armorInventory.set((int) 3, new ItemStack(CarvedMelonBlock.block, (int) (1)));
+						((PlayerEntity) entity).inventory.armorInventory.set((int) 3, new ItemStack(CarvedMelonBlock.block));
 					else
 						((LivingEntity) entity).setItemStackToSlot(EquipmentSlotType.fromSlotTypeAndIndex(EquipmentSlotType.Group.ARMOR, (int) 3),
-								new ItemStack(CarvedMelonBlock.block, (int) (1)));
+								new ItemStack(CarvedMelonBlock.block));
 					if (entity instanceof ServerPlayerEntity)
 						((ServerPlayerEntity) entity).inventory.markDirty();
 				}
 				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(CarvedMelonBlock.block, (int) (1));
+					ItemStack _stktoremove = new ItemStack(CarvedMelonBlock.block);
 					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 							((PlayerEntity) entity).container.func_234641_j_());
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-		PlayerEntity entity = event.getPlayer();
-		if (event.getHand() != entity.getActiveHand()) {
-			return;
-		}
-		double i = event.getPos().getX();
-		double j = event.getPos().getY();
-		double k = event.getPos().getZ();
-		IWorld world = event.getWorld();
-		Map<String, Object> dependencies = new HashMap<>();
-		dependencies.put("x", i);
-		dependencies.put("y", j);
-		dependencies.put("z", k);
-		dependencies.put("world", world);
-		dependencies.put("entity", entity);
-		dependencies.put("event", event);
-		this.executeProcedure(dependencies);
 	}
 }

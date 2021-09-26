@@ -1,6 +1,6 @@
 {
-  "_fv": 18,
-  "_type": "mob",
+  "_fv": 24,
+  "_type": "livingentity",
   "definition": {
     "mobName": "Muddy Pig",
     "mobLabel": "",

@@ -16,6 +16,8 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.Minecraft;
 
+import java.util.HashMap;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
@@ -24,6 +26,7 @@ public class RubyShop3GuiWindow extends ContainerScreen<RubyShop3Gui.GuiContaine
 	private World world;
 	private int x, y, z;
 	private PlayerEntity entity;
+	private final static HashMap guistate = RubyShop3Gui.guistate;
 	public RubyShop3GuiWindow(RubyShop3Gui.GuiContainerMod container, PlayerInventory inventory, ITextComponent text) {
 		super(container, inventory, text);
 		this.world = container.world;

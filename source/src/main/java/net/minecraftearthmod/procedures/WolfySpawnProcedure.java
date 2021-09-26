@@ -1,18 +1,12 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class WolfySpawnProcedure extends MinecraftEarthModModElements.ModElement {
-	public WolfySpawnProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 165);
-	}
-
+public class WolfySpawnProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))

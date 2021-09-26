@@ -6,7 +6,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftearthmod.item.PailItem;
 import net.minecraftearthmod.item.BucketOfMudItem;
 import net.minecraftearthmod.block.MudBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -21,12 +20,7 @@ import net.minecraft.block.Blocks;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class PickUpMudProcedure extends MinecraftEarthModModElements.ModElement {
-	public PickUpMudProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 30);
-	}
-
+public class PickUpMudProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -58,7 +52,7 @@ public class PickUpMudProcedure extends MinecraftEarthModModElements.ModElement 
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) (y + 1), (int) z))).getBlock() == MudBlock.block.getDefaultState().getBlock())) {
+		if (((world.getBlockState(new BlockPos((int) x, (int) (y + 1), (int) z))).getBlock() == MudBlock.block)) {
 			if (world instanceof World && !world.isRemote()) {
 				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
 						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.fill")),
@@ -69,13 +63,13 @@ public class PickUpMudProcedure extends MinecraftEarthModModElements.ModElement 
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}
 			if (entity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(BucketOfMudItem.block, (int) (1));
+				ItemStack _setstack = new ItemStack(BucketOfMudItem.block);
 				_setstack.setCount((int) 1);
 				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
 			}
 			world.setBlockState(new BlockPos((int) x, (int) (y + 1), (int) z), Blocks.AIR.getDefaultState(), 3);
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(PailItem.block, (int) (1));
+				ItemStack _stktoremove = new ItemStack(PailItem.block);
 				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) entity).container.func_234641_j_());
 			}

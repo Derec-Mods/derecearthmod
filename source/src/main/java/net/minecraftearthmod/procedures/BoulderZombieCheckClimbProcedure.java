@@ -1,7 +1,6 @@
 package net.minecraftearthmod.procedures;
 
 import net.minecraftearthmod.block.BoulderZombieClimbingBlockBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -12,12 +11,7 @@ import net.minecraft.entity.Entity;
 import java.util.Map;
 import java.util.Collections;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class BoulderZombieCheckClimbProcedure extends MinecraftEarthModModElements.ModElement {
-	public BoulderZombieCheckClimbProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 194);
-	}
-
+public class BoulderZombieCheckClimbProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -49,8 +43,7 @@ public class BoulderZombieCheckClimbProcedure extends MinecraftEarthModModElemen
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == BoulderZombieClimbingBlockBlock.block.getDefaultState()
-				.getBlock())) {
+		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == BoulderZombieClimbingBlockBlock.block)) {
 			{
 				Entity _ent = entity;
 				_ent.setPositionAndUpdate(x, (y + 1), z);

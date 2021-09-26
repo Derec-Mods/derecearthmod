@@ -1,19 +1,45 @@
 {
-  "_fv": 18,
+  "_fv": 24,
   "_type": "fluid",
   "definition": {
     "name": "Mud",
+    "bucketName": "Bucket of Mud",
     "textureStill": "mud",
     "textureFlowing": "mud",
+    "tintType": "No tint",
+    "canMultiply": false,
+    "flowRate": 5,
+    "levelDecrease": 1,
+    "slopeFindDistance": 4,
+    "spawnParticles": false,
+    "dripParticle": {
+      "value": "EXPLOSION_NORMAL"
+    },
+    "flowStrength": 1.0,
     "luminosity": 0,
     "density": 1000,
     "viscosity": 2005,
     "isGas": false,
+    "temperature": 300,
     "type": "WATER",
     "generateBucket": true,
+    "textureBucket": "",
     "creativeTab": {
       "value": "MISC"
     },
+    "emptySound": {
+      "value": ""
+    },
+    "rarity": "COMMON",
+    "specialInfo": [],
+    "resistance": 100.0,
+    "luminance": 0,
+    "lightOpacity": 1,
+    "emissiveRendering": false,
+    "tickRate": 10,
+    "flammability": 0,
+    "fireSpreadSpeed": 0,
+    "colorOnMap": "DEFAULT",
     "frequencyOnChunks": 1,
     "spawnWorldTypes": [
       "Surface",
@@ -41,9 +67,6 @@
     },
     "onTickUpdate": {
       "name": "MudUpdateTick"
-    },
-    "onEntityCollides": {
-      "name": "PlayMudSound"
     }
   }
 }

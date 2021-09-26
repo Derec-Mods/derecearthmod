@@ -394,7 +394,7 @@ public class SkeletonWolfEntity extends MinecraftEarthModModElements.ModElement 
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.ROTTEN_FLESH, (int) (1)).getItem() == stack.getItem())
+			if (Items.ROTTEN_FLESH == stack.getItem())
 				return true;
 			return false;
 		}

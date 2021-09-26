@@ -2,7 +2,6 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -21,12 +20,7 @@ import net.minecraft.block.Blocks;
 import java.util.Random;
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class ShearSheepProcedure extends MinecraftEarthModModElements.ModElement {
-	public ShearSheepProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 152);
-	}
-
+public class ShearSheepProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -66,7 +60,7 @@ public class ShearSheepProcedure extends MinecraftEarthModModElements.ModElement
 		IWorld world = (IWorld) dependencies.get("world");
 		if (((entity.getPersistentData().getDouble("regrow")) >= 6000)) {
 			if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
-					.getItem() == new ItemStack(Items.SHEARS, (int) (1)).getItem())) {
+					.getItem() == Items.SHEARS)) {
 				if ((!((sourceentity instanceof PlayerEntity) ? ((PlayerEntity) sourceentity).abilities.isCreativeMode : false))) {
 					{
 						ItemStack _ist = ((sourceentity instanceof LivingEntity)
@@ -89,20 +83,20 @@ public class ShearSheepProcedure extends MinecraftEarthModModElements.ModElement
 							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 				}
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
 				if (((Math.random() * 100) <= 50)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 				if (((Math.random() * 100) <= 50)) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.WHITE_WOOL));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}

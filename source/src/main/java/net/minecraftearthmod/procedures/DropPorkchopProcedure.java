@@ -1,6 +1,5 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -15,12 +14,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class DropPorkchopProcedure extends MinecraftEarthModModElements.ModElement {
-	public DropPorkchopProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 90);
-	}
-
+public class DropPorkchopProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -62,35 +56,35 @@ public class DropPorkchopProcedure extends MinecraftEarthModModElements.ModEleme
 		rand = (double) Math.random();
 		if ((entity.isBurning())) {
 			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
-			if (((rand) < 0.33)) {
+			if ((rand < 0.33)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
-				if (((((rand) >= 0) && ((rand) <= 0.16)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
+				if ((((rand >= 0) && (rand <= 0.16)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
 						((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY))) >= 1))) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 			}
-			if ((((rand) >= 0.33) && ((rand) <= 0.66))) {
+			if (((rand >= 0.33) && (rand <= 0.66))) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
-				if (((((rand) >= 0.33) && ((rand) <= 0.49)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
+				if ((((rand >= 0.33) && (rand <= 0.49)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
 						((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY))) >= 1))) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
@@ -98,35 +92,35 @@ public class DropPorkchopProcedure extends MinecraftEarthModModElements.ModEleme
 			}
 		} else {
 			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP, (int) (1)));
+				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP));
 				entityToSpawn.setPickupDelay((int) 10);
 				world.addEntity(entityToSpawn);
 			}
-			if (((rand) < 0.33)) {
+			if ((rand < 0.33)) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
-				if (((((rand) >= 0) && ((rand) <= 0.16)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
+				if ((((rand >= 0) && (rand <= 0.16)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
 						((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY))) >= 1))) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}
 				}
 			}
-			if ((((rand) >= 0.33) && ((rand) <= 0.66))) {
+			if (((rand >= 0.33) && (rand <= 0.66))) {
 				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP, (int) (1)));
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP));
 					entityToSpawn.setPickupDelay((int) 10);
 					world.addEntity(entityToSpawn);
 				}
-				if (((((rand) >= 0.33) && ((rand) <= 0.49)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
+				if ((((rand >= 0.33) && (rand <= 0.49)) && ((EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING,
 						((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY))) >= 1))) {
 					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP, (int) (1)));
+						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.PORKCHOP));
 						entityToSpawn.setPickupDelay((int) 10);
 						world.addEntity(entityToSpawn);
 					}

@@ -4,7 +4,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import net.minecraftearthmod.item.ButterbeerItem;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.World;
@@ -20,12 +19,7 @@ import net.minecraft.entity.Entity;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MilkMooBloomProcedure extends MinecraftEarthModModElements.ModElement {
-	public MilkMooBloomProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 129);
-	}
-
+public class MilkMooBloomProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("sourceentity") == null) {
 			if (!dependencies.containsKey("sourceentity"))
@@ -58,9 +52,9 @@ public class MilkMooBloomProcedure extends MinecraftEarthModModElements.ModEleme
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((((sourceentity instanceof LivingEntity) ? ((LivingEntity) sourceentity).getHeldItemMainhand() : ItemStack.EMPTY)
-				.getItem() == new ItemStack(Items.GLASS_BOTTLE, (int) (1)).getItem())) {
+				.getItem() == Items.GLASS_BOTTLE)) {
 			if (sourceentity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE, (int) (1));
+				ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE);
 				((PlayerEntity) sourceentity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
 						((PlayerEntity) sourceentity).container.func_234641_j_());
 			}
@@ -74,7 +68,7 @@ public class MilkMooBloomProcedure extends MinecraftEarthModModElements.ModEleme
 						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
 			}
 			if (sourceentity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(ButterbeerItem.block, (int) (1));
+				ItemStack _setstack = new ItemStack(ButterbeerItem.block);
 				_setstack.setCount((int) 1);
 				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) sourceentity), _setstack);
 			}

@@ -121,7 +121,7 @@ public class SunsetCowEntity extends MinecraftEarthModModElements.ModElement {
 			super.registerGoals();
 			this.goalSelector.addGoal(1, new BreedGoal(this, 1));
 			this.goalSelector.addGoal(2, new PanicGoal(this, 1.2));
-			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(new ItemStack(Items.WHEAT, (int) (1)).getItem()), false));
+			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(Items.WHEAT), false));
 			this.goalSelector.addGoal(4, new RandomWalkingGoal(this, 1));
 			this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
 			this.goalSelector.addGoal(6, new SwimGoal(this));
@@ -163,6 +163,7 @@ public class SunsetCowEntity extends MinecraftEarthModModElements.ModElement {
 			{
 				Map<String, Object> $_dependencies = new HashMap<>();
 				$_dependencies.put("entity", entity);
+				$_dependencies.put("sourceentity", sourceentity);
 				$_dependencies.put("x", x);
 				$_dependencies.put("y", y);
 				$_dependencies.put("z", z);
@@ -205,7 +206,7 @@ public class SunsetCowEntity extends MinecraftEarthModModElements.ModElement {
 		public boolean isBreedingItem(ItemStack stack) {
 			if (stack == null)
 				return false;
-			if (new ItemStack(Items.WHEAT, (int) (1)).getItem() == stack.getItem())
+			if (Items.WHEAT == stack.getItem())
 				return true;
 			return false;
 		}

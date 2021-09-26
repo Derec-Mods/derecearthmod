@@ -3,7 +3,6 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import net.minecraftearthmod.block.MudBlock;
-import net.minecraftearthmod.MinecraftEarthModModElements;
 import net.minecraftearthmod.MinecraftEarthModMod;
 
 import net.minecraft.world.IWorld;
@@ -13,12 +12,7 @@ import net.minecraft.block.Blocks;
 
 import java.util.Map;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class CheckForMudonTopProcedure extends MinecraftEarthModModElements.ModElement {
-	public CheckForMudonTopProcedure(MinecraftEarthModModElements instance) {
-		super(instance, 209);
-	}
-
+public class CheckForMudonTopProcedure {
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("x") == null) {
 			if (!dependencies.containsKey("x"))
@@ -44,9 +38,8 @@ public class CheckForMudonTopProcedure extends MinecraftEarthModModElements.ModE
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if ((/* @BlockState */(world.getFluidState(new BlockPos((int) x, (int) (y + 1), (int) z)).getBlockState()).getBlock() == MudBlock.block
-				.getDefaultState().getBlock())) {
-			if ((/* @BlockState */(world.getFluidState(new BlockPos((int) x, (int) (y + 1), (int) z)).getBlockState()).getFluidState().isSource())) {
+		if (((world.getFluidState(new BlockPos((int) x, (int) (y + 1), (int) z)).getBlockState()).getBlock() == MudBlock.block)) {
+			if (((world.getFluidState(new BlockPos((int) x, (int) (y + 1), (int) z)).getBlockState()).getFluidState().isSource())) {
 				world.setBlockState(new BlockPos((int) x, (int) (y + 1), (int) z), Blocks.AIR.getDefaultState(), 3);
 				{
 					TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));

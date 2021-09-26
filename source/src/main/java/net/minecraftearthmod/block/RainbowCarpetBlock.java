@@ -72,6 +72,11 @@ public class RainbowCarpetBlock extends MinecraftEarthModModElements.ModElement 
 		}
 
 		@Override
+		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return 0;
+		}
+
+		@Override
 		public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 			Vector3d offset = state.getOffset(world, pos);
 			switch ((Direction) state.get(FACING)) {
