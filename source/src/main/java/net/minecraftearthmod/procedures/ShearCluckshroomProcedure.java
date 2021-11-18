@@ -86,40 +86,41 @@ public class ShearCluckshroomProcedure {
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
 		if ((entity instanceof CluckshroomEntity.CustomEntity)) {
-			if (world instanceof World && !world.isRemote()) {
-				((World) world)
-						.playSound(null, new BlockPos((int) x, (int) y, (int) z),
-								(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
-										.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
-								SoundCategory.NEUTRAL, (float) 1, (float) 1);
-			} else {
-				((World) world).playSound(x, y, z,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
-								.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
-			}
-			if (!entity.world.isRemote())
-				entity.remove();
-			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
-				entityToSpawn.setPickupDelay((int) 10);
-				world.addEntity(entityToSpawn);
-			}
-			if (world instanceof World && !world.isRemote()) {
-				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
-				entityToSpawn.setPickupDelay((int) 10);
-				world.addEntity(entityToSpawn);
-			}
-			if (world instanceof ServerWorld) {
-				Entity entityToSpawn = new ChickenEntity(EntityType.CHICKEN, (World) world);
-				entityToSpawn.setLocationAndAngles(x, y, z, (float) 0, (float) 0);
-				entityToSpawn.setRenderYawOffset((float) 0);
-				entityToSpawn.setRotationYawHead((float) 0);
-				entityToSpawn.setMotion(0, 0, 0);
-				if (entityToSpawn instanceof MobEntity)
-					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
-							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
-				world.addEntity(entityToSpawn);
+			if ((!(true))) {
+				if (world instanceof World && !world.isRemote()) {
+					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
+							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
+									.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
+							SoundCategory.NEUTRAL, (float) 1, (float) 1);
+				} else {
+					((World) world).playSound(x, y, z,
+							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS
+									.getValue(new ResourceLocation("item.sweet_berries.pick_from_bush")),
+							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
+				}
+				if (!entity.world.isRemote())
+					entity.remove();
+				if (world instanceof World && !world.isRemote()) {
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
+					entityToSpawn.setPickupDelay((int) 10);
+					world.addEntity(entityToSpawn);
+				}
+				if (world instanceof World && !world.isRemote()) {
+					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.RED_MUSHROOM));
+					entityToSpawn.setPickupDelay((int) 10);
+					world.addEntity(entityToSpawn);
+				}
+				if (world instanceof ServerWorld) {
+					Entity entityToSpawn = new ChickenEntity(EntityType.CHICKEN, (World) world);
+					entityToSpawn.setLocationAndAngles(x, y, z, (float) 0, (float) 0);
+					entityToSpawn.setRenderYawOffset((float) 0);
+					entityToSpawn.setRotationYawHead((float) 0);
+					entityToSpawn.setMotion(0, 0, 0);
+					if (entityToSpawn instanceof MobEntity)
+						((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
+								SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
+					world.addEntity(entityToSpawn);
+				}
 			}
 		}
 	}

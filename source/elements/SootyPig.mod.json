@@ -2,22 +2,22 @@
   "_fv": 24,
   "_type": "livingentity",
   "definition": {
-    "mobName": "Melon Golem",
+    "mobName": "Sooty Pig",
     "mobLabel": "",
-    "mobModelName": "Modelmelongolem",
-    "mobModelTexture": "melongolem.png",
+    "mobModelName": "Modelpiebaldpig",
+    "mobModelTexture": "sootypig.png",
     "mobModelGlowTexture": "",
-    "modelWidth": 0.7,
-    "modelHeight": 1.9000000000000001,
+    "modelWidth": 0.9,
+    "modelHeight": 0.9,
     "modelShadowSize": 0.5,
     "mountedYOffset": 0.0,
     "hasSpawnEgg": true,
     "spawnEggBaseColor": {
-      "value": -11441137,
+      "value": -14474451,
       "falpha": 0.0
     },
     "spawnEggDotColor": {
-      "value": -1,
+      "value": -7176327,
       "falpha": 0.0
     },
     "creativeTab": {
@@ -33,7 +33,7 @@
       "value": ""
     },
     "equipmentHelmet": {
-      "value": "CUSTOM:CarvedMelon"
+      "value": ""
     },
     "equipmentBody": {
       "value": ""
@@ -46,13 +46,13 @@
     },
     "mobBehaviourType": "Creature",
     "mobCreatureType": "UNDEFINED",
-    "attackStrength": 20,
+    "attackStrength": 3,
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
-    "armorBaseValue": 0.1,
+    "armorBaseValue": 0.0,
     "trackingRange": 64,
-    "health": 4,
+    "health": 10,
     "xpAmount": 3,
     "waterMob": false,
     "flyingMob": false,
@@ -80,13 +80,13 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.snowman.ambient"
+      "value": "entity.pig.ambient"
     },
     "hurtSound": {
-      "value": "entity.snowman.hurt"
+      "value": "entity.pig.hurt"
     },
     "deathSound": {
-      "value": "block.wood.break"
+      "value": "entity.pig.death"
     },
     "stepSound": {
       "value": ""
@@ -98,58 +98,34 @@
     "particleSpawningShape": "Spread",
     "particleSpawningRadious": 0.5,
     "particleAmount": 4,
+    "whenMobDies": {
+      "name": "DropPorkchop"
+    },
     "hasAI": true,
     "aiBase": "(none)",
-    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityMonster</field><field name=\"condition\">null,null</field><next><block type=\"wander_avoid_water\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></xml>",
-    "breedable": false,
+    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"253\" y=\"42\"><next><block type=\"breed\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"follow_item_in_hands\"><field name=\"speed\">1</field><field name=\"scared\">FALSE</field><field name=\"condition\">null,null</field><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">Items.CARROT</field></block></value><next><block type=\"follow_item_in_hands\"><field name=\"speed\">1</field><field name=\"scared\">FALSE</field><field name=\"condition\">null,null</field><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">Items.POTATO</field></block></value><next><block type=\"panic_when_attacked\"><field name=\"speed\">1.2</field><field name=\"condition\">null,null</field><next><block type=\"wander\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "breedable": true,
     "tameable": false,
-    "breedTriggerItems": [],
-    "ranged": true,
+    "breedTriggerItems": [
+      {
+        "value": "Items.CARROT"
+      },
+      {
+        "value": "Items.POTATO"
+      }
+    ],
+    "ranged": false,
     "rangedAttackItem": {
-      "value": "Items.MELON_SEEDS"
+      "value": ""
     },
     "rangedItemType": "Default item",
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
-    "spawningProbability": 3,
+    "spawningProbability": 5,
     "mobSpawningType": "creature",
     "minNumberOfMobsPerGroup": 1,
-    "maxNumberOfMobsPerGroup": 1,
-    "restrictionBiomes": [
-      {
-        "value": "mountains"
-      },
-      {
-        "value": "snowy_mountains"
-      },
-      {
-        "value": "taiga"
-      },
-      {
-        "value": "frozen_river"
-      },
-      {
-        "value": "snowy_tundra"
-      },
-      {
-        "value": "taiga_hills"
-      },
-      {
-        "value": "smaller_extreme_hills"
-      },
-      {
-        "value": "cold_beach"
-      },
-      {
-        "value": "taiga_cold_hills"
-      },
-      {
-        "value": "taiga_cold"
-      },
-      {
-        "value": "extreme_hills_with_trees"
-      }
-    ],
+    "maxNumberOfMobsPerGroup": 3,
+    "restrictionBiomes": [],
     "spawnInDungeons": false
   }
 }

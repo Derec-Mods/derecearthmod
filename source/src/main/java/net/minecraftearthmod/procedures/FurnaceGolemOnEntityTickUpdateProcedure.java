@@ -47,8 +47,8 @@ public class FurnaceGolemOnEntityTickUpdateProcedure {
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		IWorld world = (IWorld) dependencies.get("world");
-		if ((world.isAirBlock(new BlockPos((int) x, (int) (y + 1), (int) z)))) {
-			world.setBlockState(new BlockPos((int) x, (int) (y + 1), (int) z), FurnaceGolemLightBlock.block.getDefaultState(), 3);
+		if ((world.isAirBlock(new BlockPos((int) x, (int) (y + 3), (int) z)))) {
+			world.setBlockState(new BlockPos((int) x, (int) (y + 3), (int) z), FurnaceGolemLightBlock.block.getDefaultState(), 3);
 		}
 		if (((entity.getPersistentData().getDouble("calmtimer")) >= 1000)) {
 			entity.getPersistentData().putDouble("calmtimer", 7000);
@@ -56,7 +56,7 @@ public class FurnaceGolemOnEntityTickUpdateProcedure {
 		} else {
 			entity.getPersistentData().putDouble("calmtimer", ((entity.getPersistentData().getDouble("calmtimer")) + 1));
 		}
-		if ((Math.random() <= 0.001)) {
+		if ((Math.random() <= 0.0001)) {
 			if (world instanceof World && !world.isRemote()) {
 				ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Blocks.TORCH));
 				entityToSpawn.setPickupDelay((int) 10);
