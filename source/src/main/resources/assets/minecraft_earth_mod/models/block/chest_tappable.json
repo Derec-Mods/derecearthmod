@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/chesttappableside",
     "west": "minecraft_earth_mod:blocks/chesttappableside",
     "particle": "minecraft_earth_mod:blocks/chesttappableside"
-  }
+  },
+  "render_type": "solid"
 }

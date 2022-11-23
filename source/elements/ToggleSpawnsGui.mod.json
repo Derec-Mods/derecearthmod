@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "gui",
   "definition": {
     "type": 0,
@@ -63,6 +63,60 @@
           "x": 195,
           "y": 44
         }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Golem Spawns: <VAR:SpawnGolems>",
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "name": "Golem Spawns: <VAR:SpawnGolems>",
+          "x": 114,
+          "y": 62
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Mud Fountain Spawns: <VAR:SpawnMudStructure>",
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "name": "Mud Fountain Spawns: <VAR:SpawnMudStructure>",
+          "x": 114,
+          "y": 89
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Toggle",
+          "onClick": {
+            "name": "ToggleGolemSpawns"
+          },
+          "width": 55,
+          "height": 20,
+          "name": "Toggle",
+          "x": 195,
+          "y": 71
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "text": "Toggle",
+          "onClick": {
+            "name": "ToggleSpawnFountain"
+          },
+          "width": 55,
+          "height": 20,
+          "name": "Toggle",
+          "x": 195,
+          "y": 98
+        }
       }
     ],
     "gridSettings": {
@@ -70,7 +124,7 @@
       "sy": 18,
       "ox": 11,
       "oy": 15,
-      "snapOnGrid": false
+      "snapOnGrid": true
     }
   }
 }

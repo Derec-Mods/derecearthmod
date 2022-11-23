@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft_earth_mod:notbutterbeer"
+      "item": "minecraft_earth_mod:butterbeer"
     },
     "title": {
       "translate": "advancements.hogsmeade.title"
@@ -19,7 +19,9 @@
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "minecraft_earth_mod:notbutterbeer"
+          "items": [
+            "minecraft_earth_mod:butterbeer"
+          ]
         }
       }
     }

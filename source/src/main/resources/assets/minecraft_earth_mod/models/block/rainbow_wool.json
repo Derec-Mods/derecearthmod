@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/rainbowwoolback",
     "west": "minecraft_earth_mod:blocks/rainbowwoolside",
     "particle": "minecraft_earth_mod:blocks/rainbowwooltop2"
-  }
+  },
+  "render_type": "solid"
 }

@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/birch_log",
     "west": "minecraft_earth_mod:blocks/birch_log",
     "particle": "minecraft_earth_mod:blocks/birch_log_top"
-  }
+  },
+  "render_type": "solid"
 }

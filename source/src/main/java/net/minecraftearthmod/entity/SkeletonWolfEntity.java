@@ -2,14 +2,8 @@
 package net.minecraftearthmod.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.DungeonHooks;
 
 import net.minecraftearthmod.procedures.WolfySpawnProcedure;
@@ -19,384 +13,278 @@ import net.minecraftearthmod.procedures.HowlProcedure;
 import net.minecraftearthmod.procedures.CheckWolfSitProcedure;
 import net.minecraftearthmod.procedures.CheckTameProcedure;
 import net.minecraftearthmod.procedures.CheckHostileMobSpawnsProcedure;
-import net.minecraftearthmod.itemgroup.DerecEarthMobsSpawnEggsItemGroup;
-import net.minecraftearthmod.entity.renderer.SkeletonWolfRenderer;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.world.entity.ai.goal.FollowMobGoal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Hand;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.network.IPacket;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.ai.goal.RestrictSunGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.OwnerHurtByTargetGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.FollowOwnerGoal;
-import net.minecraft.entity.ai.goal.FollowMobGoal;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.AgeableEntity;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nullable;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.List;
 
-import com.google.common.collect.ImmutableMap;
+public class SkeletonWolfEntity extends TamableAnimal {
+	public SkeletonWolfEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(MinecraftEarthModModEntities.SKELETON_WOLF.get(), world);
+	}
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class SkeletonWolfEntity extends MinecraftEarthModModElements.ModElement {
-	public static EntityType entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.MONSTER)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new)
-			.size(0.6f, 0.85f)).build("skeleton_wolf").setRegistryName("skeleton_wolf");
-	public SkeletonWolfEntity(MinecraftEarthModModElements instance) {
-		super(instance, 57);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new SkeletonWolfRenderer.ModelRegisterHandler());
-		FMLJavaModLoadingContext.get().getModEventBus().register(new EntityAttributesRegisterHandler());
-		MinecraftForge.EVENT_BUS.register(this);
+	public SkeletonWolfEntity(EntityType<SkeletonWolfEntity> type, Level world) {
+		super(type, world);
+		xpReward = 5;
+		setNoAi(false);
 	}
 
 	@Override
-	public void initElements() {
-		elements.entities.add(() -> entity);
-		elements.items.add(() -> new SpawnEggItem(entity, -10066330, -1, new Item.Properties().group(DerecEarthMobsSpawnEggsItemGroup.tab))
-				.setRegistryName("skeleton_wolf_spawn_egg"));
-	}
-
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		boolean biomeCriteria = false;
-		if (new ResourceLocation("forest").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("taiga").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("taiga_hills").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("giant_tree_taiga").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("snowy_taiga").equals(event.getName()))
-			biomeCriteria = true;
-		if (!biomeCriteria)
-			return;
-		event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(entity, 10, 1, 1));
+	public Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public void init(FMLCommonSetupEvent event) {
-		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> {
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(1, new FollowOwnerGoal(this, 1, (float) 10, (float) 2, false) {
+			@Override
+			public boolean canUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canUse() && CheckWolfSitProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canContinueToUse() && CheckWolfSitProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(2, new OwnerHurtByTargetGoal(this));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, MuddyPigEntity.class, false, false) {
+			@Override
+			public boolean canUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canUse() && WolfTameProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canContinueToUse() && WolfTameProcedure.execute(entity);
+			}
+		});
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false) {
+			@Override
+			public boolean canUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canUse() && WolfTameProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = SkeletonWolfEntity.this.getX();
+				double y = SkeletonWolfEntity.this.getY();
+				double z = SkeletonWolfEntity.this.getZ();
+				Entity entity = SkeletonWolfEntity.this;
+				Level world = SkeletonWolfEntity.this.level;
+				return super.canContinueToUse() && WolfTameProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.2, false) {
+			@Override
+			protected double getAttackReachSqr(LivingEntity entity) {
+				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+			}
+		});
+		this.goalSelector.addGoal(6, new FollowMobGoal(this, (float) 1, 10, 5));
+		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+	}
+
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEAD;
+	}
+
+	@Override
+	public SoundEvent getAmbientSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.ambient"));
+	}
+
+	@Override
+	public SoundEvent getHurtSound(DamageSource ds) {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.hurt"));
+	}
+
+	@Override
+	public SoundEvent getDeathSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.death"));
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		HowlProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		return super.hurt(source, amount);
+	}
+
+	@Override
+	public void die(DamageSource source) {
+		super.die(source);
+		HowlProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
+			@Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+		WolfySpawnProcedure.execute(this);
+		return retval;
+	}
+
+	@Override
+	public InteractionResult mobInteract(Player sourceentity, InteractionHand hand) {
+		ItemStack itemstack = sourceentity.getItemInHand(hand);
+		InteractionResult retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+		Item item = itemstack.getItem();
+		if (itemstack.getItem() instanceof SpawnEggItem) {
+			retval = super.mobInteract(sourceentity, hand);
+		} else if (this.level.isClientSide()) {
+			retval = (this.isTame() && this.isOwnedBy(sourceentity) || this.isFood(itemstack))
+					? InteractionResult.sidedSuccess(this.level.isClientSide())
+					: InteractionResult.PASS;
+		} else {
+			if (this.isTame()) {
+				if (this.isOwnedBy(sourceentity)) {
+					if (item.isEdible() && this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+						this.usePlayerItem(sourceentity, hand, itemstack);
+						this.heal((float) item.getFoodProperties().getNutrition());
+						retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+					} else if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
+						this.usePlayerItem(sourceentity, hand, itemstack);
+						this.heal(4);
+						retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+					} else {
+						retval = super.mobInteract(sourceentity, hand);
+					}
+				}
+			} else if (this.isFood(itemstack)) {
+				this.usePlayerItem(sourceentity, hand, itemstack);
+				if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, sourceentity)) {
+					this.tame(sourceentity);
+					this.level.broadcastEntityEvent(this, (byte) 7);
+				} else {
+					this.level.broadcastEntityEvent(this, (byte) 6);
+				}
+				this.setPersistenceRequired();
+				retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+			} else {
+				retval = super.mobInteract(sourceentity, hand);
+				if (retval == InteractionResult.SUCCESS || retval == InteractionResult.CONSUME)
+					this.setPersistenceRequired();
+			}
+		}
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
+
+		SitDownWolfProcedure.execute(world, x, y, z, entity);
+		return retval;
+	}
+
+	@Override
+	public void awardKillScore(Entity entity, int score, DamageSource damageSource) {
+		super.awardKillScore(entity, score, damageSource);
+		HowlProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), entity);
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		CheckTameProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+	}
+
+	@Override
+	public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageable) {
+		SkeletonWolfEntity retval = MinecraftEarthModModEntities.SKELETON_WOLF.get().create(serverWorld);
+		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null, null);
+		return retval;
+	}
+
+	@Override
+	public boolean isFood(ItemStack stack) {
+		return List.of(Items.ROTTEN_FLESH).contains(stack.getItem());
+	}
+
+	public static void init() {
+		SpawnPlacements.register(MinecraftEarthModModEntities.SKELETON_WOLF.get(), SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
 					int x = pos.getX();
 					int y = pos.getY();
 					int z = pos.getZ();
-					return CheckHostileMobSpawnsProcedure.executeProcedure(ImmutableMap.of("world", world));
+					return CheckHostileMobSpawnsProcedure.execute(world);
 				});
-		DungeonHooks.addDungeonMob(entity, 180);
-	}
-	private static class EntityAttributesRegisterHandler {
-		@SubscribeEvent
-		public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-			AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-			ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3);
-			ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 10);
-			ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
-			ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 4);
-			event.put(entity, ammma.create());
-		}
+		DungeonHooks.addDungeonMob(MinecraftEarthModModEntities.SKELETON_WOLF.get(), 180);
 	}
 
-	public static class CustomEntity extends TameableEntity {
-		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			this(entity, world);
-		}
-
-		public CustomEntity(EntityType<CustomEntity> type, World world) {
-			super(type, world);
-			experienceValue = 5;
-			setNoAI(false);
-		}
-
-		@Override
-		public IPacket<?> createSpawnPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
-		@Override
-		protected void registerGoals() {
-			super.registerGoals();
-			this.goalSelector.addGoal(1, new FollowOwnerGoal(this, 1, (float) 10, (float) 2, false) {
-				@Override
-				public boolean shouldExecute() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldExecute() && CheckWolfSitProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-
-				@Override
-				public boolean shouldContinueExecuting() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldContinueExecuting() && CheckWolfSitProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-			});
-			this.goalSelector.addGoal(2, new OwnerHurtByTargetGoal(this));
-			this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, MuddyPigEntity.CustomEntity.class, false, false) {
-				@Override
-				public boolean shouldExecute() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldExecute() && WolfTameProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-
-				@Override
-				public boolean shouldContinueExecuting() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldContinueExecuting() && WolfTameProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-			});
-			this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, ServerPlayerEntity.class, false, false) {
-				@Override
-				public boolean shouldExecute() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldExecute() && WolfTameProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-
-				@Override
-				public boolean shouldContinueExecuting() {
-					double x = CustomEntity.this.getPosX();
-					double y = CustomEntity.this.getPosY();
-					double z = CustomEntity.this.getPosZ();
-					Entity entity = CustomEntity.this;
-					return super.shouldContinueExecuting() && WolfTameProcedure.executeProcedure(ImmutableMap.of("entity", entity));
-				}
-			});
-			this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.2, false));
-			this.goalSelector.addGoal(6, new FollowMobGoal(this, (float) 1, 10, 5));
-			this.goalSelector.addGoal(7, new RestrictSunGoal(this));
-			this.goalSelector.addGoal(8, new RandomWalkingGoal(this, 1));
-			this.goalSelector.addGoal(9, new LookRandomlyGoal(this));
-		}
-
-		@Override
-		public CreatureAttribute getCreatureAttribute() {
-			return CreatureAttribute.UNDEAD;
-		}
-
-		@Override
-		public net.minecraft.util.SoundEvent getAmbientSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.ambient"));
-		}
-
-		@Override
-		public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.hurt"));
-		}
-
-		@Override
-		public net.minecraft.util.SoundEvent getDeathSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.death"));
-		}
-
-		@Override
-		public boolean attackEntityFrom(DamageSource source, float amount) {
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			Entity sourceentity = source.getTrueSource();
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				HowlProcedure.executeProcedure($_dependencies);
-			}
-			return super.attackEntityFrom(source, amount);
-		}
-
-		@Override
-		public void onDeath(DamageSource source) {
-			super.onDeath(source);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity sourceentity = source.getTrueSource();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				HowlProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason,
-				@Nullable ILivingEntityData livingdata, @Nullable CompoundNBT tag) {
-			ILivingEntityData retval = super.onInitialSpawn(world, difficulty, reason, livingdata, tag);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				WolfySpawnProcedure.executeProcedure($_dependencies);
-			}
-			return retval;
-		}
-
-		@Override
-		public ActionResultType func_230254_b_(PlayerEntity sourceentity, Hand hand) {
-			ItemStack itemstack = sourceentity.getHeldItem(hand);
-			ActionResultType retval = ActionResultType.func_233537_a_(this.world.isRemote());
-			Item item = itemstack.getItem();
-			if (itemstack.getItem() instanceof SpawnEggItem) {
-				retval = super.func_230254_b_(sourceentity, hand);
-			} else if (this.world.isRemote()) {
-				retval = (this.isTamed() && this.isOwner(sourceentity) || this.isBreedingItem(itemstack))
-						? ActionResultType.func_233537_a_(this.world.isRemote())
-						: ActionResultType.PASS;
-			} else {
-				if (this.isTamed()) {
-					if (this.isOwner(sourceentity)) {
-						if (item.isFood() && this.isBreedingItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
-							this.consumeItemFromStack(sourceentity, itemstack);
-							this.heal((float) item.getFood().getHealing());
-							retval = ActionResultType.func_233537_a_(this.world.isRemote());
-						} else if (this.isBreedingItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
-							this.consumeItemFromStack(sourceentity, itemstack);
-							this.heal(4);
-							retval = ActionResultType.func_233537_a_(this.world.isRemote());
-						} else {
-							retval = super.func_230254_b_(sourceentity, hand);
-						}
-					}
-				} else if (this.isBreedingItem(itemstack)) {
-					this.consumeItemFromStack(sourceentity, itemstack);
-					if (this.rand.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, sourceentity)) {
-						this.setTamedBy(sourceentity);
-						this.world.setEntityState(this, (byte) 7);
-					} else {
-						this.world.setEntityState(this, (byte) 6);
-					}
-					this.enablePersistence();
-					retval = ActionResultType.func_233537_a_(this.world.isRemote());
-				} else {
-					retval = super.func_230254_b_(sourceentity, hand);
-					if (retval == ActionResultType.SUCCESS || retval == ActionResultType.CONSUME)
-						this.enablePersistence();
-				}
-			}
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				SitDownWolfProcedure.executeProcedure($_dependencies);
-			}
-			return retval;
-		}
-
-		@Override
-		public void awardKillScore(Entity entity, int score, DamageSource damageSource) {
-			super.awardKillScore(entity, score, damageSource);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity sourceentity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				HowlProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public void baseTick() {
-			super.baseTick();
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				CheckTameProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageable) {
-			CustomEntity retval = (CustomEntity) entity.create(serverWorld);
-			retval.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(new BlockPos(retval.getPosition())), SpawnReason.BREEDING,
-					(ILivingEntityData) null, (CompoundNBT) null);
-			return retval;
-		}
-
-		@Override
-		public boolean isBreedingItem(ItemStack stack) {
-			if (stack == null)
-				return false;
-			if (Items.ROTTEN_FLESH == stack.getItem())
-				return true;
-			return false;
-		}
+	public static AttributeSupplier.Builder createAttributes() {
+		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MAX_HEALTH, 10);
+		builder = builder.add(Attributes.ARMOR, 0);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 4);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		return builder;
 	}
 }

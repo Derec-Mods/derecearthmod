@@ -19,7 +19,9 @@
       "trigger": "minecraft:placed_block",
       "conditions": {
         "item": {
-          "item": "minecraft_earth_mod:ruby_block"
+          "items": [
+            "minecraft_earth_mod:ruby_block"
+          ]
         }
       }
     }

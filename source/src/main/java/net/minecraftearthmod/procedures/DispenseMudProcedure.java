@@ -3,75 +3,43 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import net.minecraftearthmod.item.PailItem;
-import net.minecraftearthmod.item.BucketOfMudItem;
-import net.minecraftearthmod.block.MudBlock;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.init.MinecraftEarthModModItems;
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
-
-import java.util.Map;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 public class DispenseMudProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure DispenseMud!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure DispenseMud!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure DispenseMud!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure DispenseMud!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure DispenseMud!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) (y + 1), (int) z))).getBlock() == Blocks.AIR)) {
-			if (world instanceof World && !world.isRemote()) {
-				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1);
-			} else {
-				((World) world).playSound(x, y, z,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
+		if ((world.getBlockState(new BlockPos(x, y + 1, z))).getBlock() == Blocks.AIR) {
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty")),
+							SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty")),
+							SoundSource.NEUTRAL, 1, 1, false);
+				}
 			}
-			world.setBlockState(new BlockPos((int) x, (int) (y + 1), (int) z), MudBlock.block.getDefaultState(), 3);
-			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(BucketOfMudItem.block);
-				((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-						((PlayerEntity) entity).container.func_234641_j_());
+			world.setBlock(new BlockPos(x, y + 1, z), MinecraftEarthModModBlocks.MUD.get().defaultBlockState(), 3);
+			if (entity instanceof Player _player) {
+				ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.BUCKET_OF_MUD.get());
+				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+						_player.inventoryMenu.getCraftSlots());
 			}
-			if (entity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(PailItem.block);
-				_setstack.setCount((int) 1);
-				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
+			if (entity instanceof Player _player) {
+				ItemStack _setstack = new ItemStack(MinecraftEarthModModItems.PAIL.get());
+				_setstack.setCount(1);
+				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
 			}
 		}
 	}

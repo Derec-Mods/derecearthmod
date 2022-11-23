@@ -3,5 +3,6 @@
   "textures": {
     "cross": "minecraft_earth_mod:blocks/buttercup",
     "particle": "minecraft_earth_mod:blocks/buttercup"
-  }
+  },
+  "render_type": "cutout"
 }

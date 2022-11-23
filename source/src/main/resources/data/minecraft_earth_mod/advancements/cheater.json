@@ -20,7 +20,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft_earth_mod:furnace_golem_light",
+            "items": [
+              "minecraft_earth_mod:furnace_golem_light"
+            ],
             "count": {
               "min": 1,
               "max": 64

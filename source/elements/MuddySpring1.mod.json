@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "structure",
   "definition": {
     "structure": "mudfountain2",
@@ -18,9 +18,6 @@
     "restrictionBlocks": [],
     "restrictionBiomes": [
       {
-        "value": "plains"
-      },
-      {
         "value": "forest"
       },
       {
@@ -31,8 +28,17 @@
       },
       {
         "value": "badlands"
+      },
+      {
+        "value": "beaches"
+      },
+      {
+        "value": "desert"
       }
     ],
-    "ignoreBlocks": "STRUCTURE_BLOCK"
+    "ignoreBlocks": "STRUCTURE_BLOCK",
+    "generateCondition": {
+      "name": "GetSpawnMudFountain"
+    }
   }
 }

@@ -1,413 +1,177 @@
 
 package net.minecraftearthmod.block;
 
-import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
+import org.checkerframework.checker.units.qual.s;
 
 import net.minecraftearthmod.procedures.SetTickProcedure;
 import net.minecraftearthmod.procedures.RemoveLightProcedure;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.block.entity.FurnaceGolemLightBlockEntity;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.loot.LootContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.BlockItem;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.block.material.PushReaction;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Block;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
-import javax.annotation.Nullable;
-
-import java.util.stream.IntStream;
-import java.util.Random;
-import java.util.Map;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Collections;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class FurnaceGolemLightBlock extends MinecraftEarthModModElements.ModElement {
-	@ObjectHolder("minecraft_earth_mod:furnace_golem_light")
-	public static final Block block = null;
-	@ObjectHolder("minecraft_earth_mod:furnace_golem_light")
-	public static final TileEntityType<CustomTileEntity> tileEntityType = null;
-	public FurnaceGolemLightBlock(MinecraftEarthModModElements instance) {
-		super(instance, 24);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new TileEntityRegisterHandler());
+public class FurnaceGolemLightBlock extends Block
+		implements
+
+			EntityBlock {
+	public FurnaceGolemLightBlock() {
+		super(BlockBehaviour.Properties.of(Material.BARRIER).sound(SoundType.GRAVEL).strength(-1, 3600000).lightLevel(s -> 15).noCollission()
+				.noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
 	}
 
 	@Override
-	public void initElements() {
-		elements.blocks.add(() -> new CustomBlock());
-		elements.items.add(() -> new BlockItem(block, new Item.Properties().group(null)).setRegistryName(block.getRegistryName()));
+	public void appendHoverText(ItemStack itemstack, BlockGetter world, List<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(Component.literal("You should not have this"));
 	}
-	private static class TileEntityRegisterHandler {
-		@SubscribeEvent
-		public void registerTileEntity(RegistryEvent.Register<TileEntityType<?>> event) {
-			event.getRegistry()
-					.register(TileEntityType.Builder.create(CustomTileEntity::new, block).build(null).setRegistryName("furnace_golem_light"));
-		}
-	}
+
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void clientLoad(FMLClientSetupEvent event) {
-		RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+		return adjacentBlockState.getBlock() == this ? true : super.skipRendering(state, adjacentBlockState, side);
 	}
-	public static class CustomBlock extends Block {
-		public CustomBlock() {
-			super(Block.Properties.create(Material.BARRIER).sound(SoundType.GROUND).hardnessAndResistance(-1, 3600000).setLightLevel(s -> 15)
-					.doesNotBlockMovement().notSolid().setOpaque((bs, br, bp) -> false));
-			setRegistryName("furnace_golem_light");
-		}
 
-		@Override
-		@OnlyIn(Dist.CLIENT)
-		public void addInformation(ItemStack itemstack, IBlockReader world, List<ITextComponent> list, ITooltipFlag flag) {
-			super.addInformation(itemstack, world, list, flag);
-			list.add(new StringTextComponent("You should not have this"));
-		}
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+		return true;
+	}
 
-		@OnlyIn(Dist.CLIENT)
-		public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
-			return adjacentBlockState.getBlock() == this ? true : super.isSideInvisible(state, adjacentBlockState, side);
-		}
+	@Override
+	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+		return 0;
+	}
 
-		@Override
-		public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-			return true;
-		}
+	@Override
+	public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+		return context.getItemInHand().getItem() != this.asItem();
+	}
 
-		@Override
-		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	@Override
+	public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
+		return BlockPathTypes.OPEN;
+	}
+
+	@Override
+	public PushReaction getPistonPushReaction(BlockState state) {
+		return PushReaction.IGNORE;
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+		if (!dropsOriginal.isEmpty())
+			return dropsOriginal;
+		return Collections.singletonList(new ItemStack(this, 1));
+	}
+
+	@Override
+	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+		super.onPlace(blockstate, world, pos, oldState, moving);
+		world.scheduleTick(pos, this, 10);
+		SetTickProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	@Override
+	public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
+		super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
+		RemoveLightProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	@Override
+	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
+		super.tick(blockstate, world, pos, random);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+
+		RemoveLightProcedure.execute(world, x, y, z);
+		world.scheduleTick(pos, this, 10);
+	}
+
+	@Override
+	public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
+		super.entityInside(blockstate, world, pos, entity);
+		SetTickProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	@Override
+	public void stepOn(Level world, BlockPos pos, BlockState blockstate, Entity entity) {
+		super.stepOn(world, pos, blockstate, entity);
+		RemoveLightProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	@Override
+	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
+		super.use(blockstate, world, pos, entity, hand, hit);
+		int x = pos.getX();
+		int y = pos.getY();
+		int z = pos.getZ();
+		double hitX = hit.getLocation().x;
+		double hitY = hit.getLocation().y;
+		double hitZ = hit.getLocation().z;
+		Direction direction = hit.getDirection();
+
+		RemoveLightProcedure.execute(world, x, y, z);
+		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
+		return tileEntity instanceof MenuProvider menuProvider ? menuProvider : null;
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new FurnaceGolemLightBlockEntity(pos, state);
+	}
+
+	@Override
+	public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
+		super.triggerEvent(state, world, pos, eventID, eventParam);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
+	}
+
+	@Override
+	public boolean hasAnalogOutputSignal(BlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
+		BlockEntity tileentity = world.getBlockEntity(pos);
+		if (tileentity instanceof FurnaceGolemLightBlockEntity be)
+			return AbstractContainerMenu.getRedstoneSignalFromContainer(be);
+		else
 			return 0;
-		}
-
-		@Override
-		public boolean isReplaceable(BlockState state, BlockItemUseContext context) {
-			return context.getItem().getItem() != this.asItem();
-		}
-
-		@Override
-		public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, MobEntity entity) {
-			return PathNodeType.OPEN;
-		}
-
-		@Override
-		public PushReaction getPushReaction(BlockState state) {
-			return PushReaction.IGNORE;
-		}
-
-		@Override
-		public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-			List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-			if (!dropsOriginal.isEmpty())
-				return dropsOriginal;
-			return Collections.singletonList(new ItemStack(this, 1));
-		}
-
-		@Override
-		public void onBlockAdded(BlockState blockstate, World world, BlockPos pos, BlockState oldState, boolean moving) {
-			super.onBlockAdded(blockstate, world, pos, oldState, moving);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, 10);
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				SetTickProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public void neighborChanged(BlockState blockstate, World world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
-			super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			if (world.getRedstonePowerFromNeighbors(new BlockPos(x, y, z)) > 0) {
-			} else {
-			}
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				RemoveLightProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public void tick(BlockState blockstate, ServerWorld world, BlockPos pos, Random random) {
-			super.tick(blockstate, world, pos, random);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				RemoveLightProcedure.executeProcedure($_dependencies);
-			}
-			world.getPendingBlockTicks().scheduleTick(new BlockPos(x, y, z), this, 10);
-		}
-
-		@Override
-		public void onEntityCollision(BlockState blockstate, World world, BlockPos pos, Entity entity) {
-			super.onEntityCollision(blockstate, world, pos, entity);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				SetTickProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public void onEntityWalk(World world, BlockPos pos, Entity entity) {
-			super.onEntityWalk(world, pos, entity);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			BlockState blockstate = world.getBlockState(pos);
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				RemoveLightProcedure.executeProcedure($_dependencies);
-			}
-		}
-
-		@Override
-		public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos pos, PlayerEntity entity, Hand hand,
-				BlockRayTraceResult hit) {
-			super.onBlockActivated(blockstate, world, pos, entity, hand, hit);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			double hitX = hit.getHitVec().x;
-			double hitY = hit.getHitVec().y;
-			double hitZ = hit.getHitVec().z;
-			Direction direction = hit.getFace();
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				RemoveLightProcedure.executeProcedure($_dependencies);
-			}
-			return ActionResultType.SUCCESS;
-		}
-
-		@Override
-		public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
-			TileEntity tileEntity = worldIn.getTileEntity(pos);
-			return tileEntity instanceof INamedContainerProvider ? (INamedContainerProvider) tileEntity : null;
-		}
-
-		@Override
-		public boolean hasTileEntity(BlockState state) {
-			return true;
-		}
-
-		@Override
-		public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-			return new CustomTileEntity();
-		}
-
-		@Override
-		public boolean eventReceived(BlockState state, World world, BlockPos pos, int eventID, int eventParam) {
-			super.eventReceived(state, world, pos, eventID, eventParam);
-			TileEntity tileentity = world.getTileEntity(pos);
-			return tileentity == null ? false : tileentity.receiveClientEvent(eventID, eventParam);
-		}
-
-		@Override
-		public boolean hasComparatorInputOverride(BlockState state) {
-			return true;
-		}
-
-		@Override
-		public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
-			TileEntity tileentity = world.getTileEntity(pos);
-			if (tileentity instanceof CustomTileEntity)
-				return Container.calcRedstoneFromInventory((CustomTileEntity) tileentity);
-			else
-				return 0;
-		}
-	}
-
-	public static class CustomTileEntity extends LockableLootTileEntity implements ISidedInventory {
-		private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
-		protected CustomTileEntity() {
-			super(tileEntityType);
-		}
-
-		@Override
-		public void read(BlockState blockState, CompoundNBT compound) {
-			super.read(blockState, compound);
-			if (!this.checkLootAndRead(compound)) {
-				this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-			}
-			ItemStackHelper.loadAllItems(compound, this.stacks);
-		}
-
-		@Override
-		public CompoundNBT write(CompoundNBT compound) {
-			super.write(compound);
-			if (!this.checkLootAndWrite(compound)) {
-				ItemStackHelper.saveAllItems(compound, this.stacks);
-			}
-			return compound;
-		}
-
-		@Override
-		public SUpdateTileEntityPacket getUpdatePacket() {
-			return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
-		}
-
-		@Override
-		public CompoundNBT getUpdateTag() {
-			return this.write(new CompoundNBT());
-		}
-
-		@Override
-		public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-			this.read(this.getBlockState(), pkt.getNbtCompound());
-		}
-
-		@Override
-		public int getSizeInventory() {
-			return stacks.size();
-		}
-
-		@Override
-		public boolean isEmpty() {
-			for (ItemStack itemstack : this.stacks)
-				if (!itemstack.isEmpty())
-					return false;
-			return true;
-		}
-
-		@Override
-		public ITextComponent getDefaultName() {
-			return new StringTextComponent("furnace_golem_light");
-		}
-
-		@Override
-		public int getInventoryStackLimit() {
-			return 64;
-		}
-
-		@Override
-		public Container createMenu(int id, PlayerInventory player) {
-			return ChestContainer.createGeneric9X3(id, player, this);
-		}
-
-		@Override
-		public ITextComponent getDisplayName() {
-			return new StringTextComponent("Furnace Golem Light");
-		}
-
-		@Override
-		protected NonNullList<ItemStack> getItems() {
-			return this.stacks;
-		}
-
-		@Override
-		protected void setItems(NonNullList<ItemStack> stacks) {
-			this.stacks = stacks;
-		}
-
-		@Override
-		public boolean isItemValidForSlot(int index, ItemStack stack) {
-			return true;
-		}
-
-		@Override
-		public int[] getSlotsForFace(Direction side) {
-			return IntStream.range(0, this.getSizeInventory()).toArray();
-		}
-
-		@Override
-		public boolean canInsertItem(int index, ItemStack stack, @Nullable Direction direction) {
-			return this.isItemValidForSlot(index, stack);
-		}
-
-		@Override
-		public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
-			return true;
-		}
-		private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
-		@Override
-		public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-			if (!this.removed && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-				return handlers[facing.ordinal()].cast();
-			return super.getCapability(capability, facing);
-		}
-
-		@Override
-		public void remove() {
-			super.remove();
-			for (LazyOptional<? extends IItemHandler> handler : handlers)
-				handler.invalidate();
-		}
 	}
 }

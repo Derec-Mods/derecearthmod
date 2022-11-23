@@ -20,7 +20,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft_earth_mod:minecraft_earth_dimension",
+            "items": [
+              "minecraft_earth_mod:minecraft_earth_dimension"
+            ],
             "count": {
               "min": 1,
               "max": 64

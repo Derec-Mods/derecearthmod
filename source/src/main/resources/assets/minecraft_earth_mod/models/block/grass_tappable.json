@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/grasstappableside",
     "west": "minecraft_earth_mod:blocks/grasstappableside",
     "particle": "minecraft_earth_mod:blocks/grasstappableside"
-  }
+  },
+  "render_type": "solid"
 }

@@ -20,7 +20,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft_earth_mod:rainbow_wool",
+            "items": [
+              "minecraft_earth_mod:rainbow_wool"
+            ],
             "count": {
               "min": 1,
               "max": 64

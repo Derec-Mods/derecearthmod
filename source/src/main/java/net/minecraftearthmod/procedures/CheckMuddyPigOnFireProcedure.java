@@ -4,129 +4,98 @@ import net.minecraftearthmod.entity.MuddyPigEntity;
 import net.minecraftearthmod.entity.MoobloomEntity;
 import net.minecraftearthmod.entity.HornedSheepEntity;
 import net.minecraftearthmod.entity.CluckshroomEntity;
-import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.item.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.Entity;
-
-import java.util.Map;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.Entity;
 
 public class CheckMuddyPigOnFireProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure CheckMuddyPigOnFire!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure CheckMuddyPigOnFire!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure CheckMuddyPigOnFire!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure CheckMuddyPigOnFire!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure CheckMuddyPigOnFire!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
 		double random = 0;
-		if ((entity.isBurning())) {
-			random = (double) (Math.random() * 100);
-			if ((entity instanceof MuddyPigEntity.CustomEntity)) {
-				if ((random <= 75)) {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+		if (entity.isOnFire()) {
+			random = Math.random() * 100;
+			if (entity instanceof MuddyPigEntity) {
+				if (random <= 75) {
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				} else {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				}
 			}
-			if ((entity instanceof CluckshroomEntity.CustomEntity)) {
-				if ((random <= 75)) {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+			if (entity instanceof CluckshroomEntity) {
+				if (random <= 75) {
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				} else {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_CHICKEN));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				}
 			}
-			if ((entity instanceof MoobloomEntity.CustomEntity)) {
-				if ((random <= 75)) {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+			if (entity instanceof MoobloomEntity) {
+				if (random <= 75) {
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_BEEF));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				} else {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_BEEF));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_BEEF));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_BEEF));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				}
 			}
-			if ((entity instanceof HornedSheepEntity.CustomEntity)) {
-				if ((random <= 75)) {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+			if (entity instanceof HornedSheepEntity) {
+				if (random <= 75) {
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_MUTTON));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				} else {
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_MUTTON));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
-					if (world instanceof World && !world.isRemote()) {
-						ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.COOKED_MUTTON));
-						entityToSpawn.setPickupDelay((int) 10);
-						world.addEntity(entityToSpawn);
+					if (world instanceof Level _level && !_level.isClientSide()) {
+						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_MUTTON));
+						entityToSpawn.setPickUpDelay(10);
+						_level.addFreshEntity(entityToSpawn);
 					}
 				}
 			}

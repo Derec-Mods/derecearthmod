@@ -1,75 +1,40 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModMod;
-
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-
-import java.util.Map;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
 
 public class CheckTameProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure CheckTame!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure CheckTame!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure CheckTame!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure CheckTame!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure CheckTame!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if ((!((entity instanceof TameableEntity) ? ((TameableEntity) entity).isTamed() : false))) {
-			if ((world.canBlockSeeSky(new BlockPos((int) x, (int) y, (int) z)))) {
-				if (((((world instanceof World) ? ((World) world).isDaytime() : false) && (!world.getWorldInfo().isRaining()))
-						&& (!world.getWorldInfo().isThundering()))) {
-					entity.setFire((int) 10);
+		if (!(entity instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)) {
+			if (world instanceof Level _lvl && _lvl.isDay() && !world.getLevelData().isRaining() && !world.getLevelData().isThundering()) {
+				if (world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
+					entity.setSecondsOnFire(10);
 				}
 			}
 		}
-		if (((entity instanceof TameableEntity) ? ((TameableEntity) entity).isTamed() : false)) {
+		if (entity instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false) {
 			entity.getPersistentData().putString("isTame", "yes");
 		}
-		if ((((entity.getPersistentData().getString("sit"))).equals("sitting"))) {
-			if (entity instanceof LivingEntity)
-				((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int) 696, (int) 100, (false), (false)));
-			if (((Math.random() <= 0.01) && ((entity instanceof TameableEntity) ? ((TameableEntity) entity).isTamed() : false))) {
-				if (world instanceof ServerWorld) {
-					((ServerWorld) world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, x, y, z, (int) 2, 1, 1, 1, 0);
-				}
+		if ((entity.getPersistentData().getString("sit")).equals("sitting")) {
+			if (entity instanceof LivingEntity _entity)
+				_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 696, 100, (false), (false)));
+			if (Math.random() <= 0.01 && (entity instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)) {
+				if (world instanceof ServerLevel _level)
+					_level.sendParticles(ParticleTypes.ANGRY_VILLAGER, x, y, z, 2, 1, 1, 1, 0);
 			}
 		} else {
-			if (entity instanceof LivingEntity) {
-				((LivingEntity) entity).removePotionEffect(Effects.SLOWNESS);
-			}
+			if (entity instanceof LivingEntity _entity)
+				_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
 		}
 	}
 }

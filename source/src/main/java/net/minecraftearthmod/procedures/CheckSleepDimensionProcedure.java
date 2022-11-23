@@ -2,60 +2,38 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Registry;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.Entity;
+import javax.annotation.Nullable;
 
-import java.util.Map;
-import java.util.HashMap;
-
+@Mod.EventBusSubscriber
 public class CheckSleepDimensionProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onPlayerInBed(PlayerSleepInBedEvent event) {
-			PlayerEntity entity = event.getPlayer();
-			double i = event.getPos().getX();
-			double j = event.getPos().getY();
-			double k = event.getPos().getZ();
-			World world = entity.world;
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", i);
-			dependencies.put("y", j);
-			dependencies.put("z", k);
-			dependencies.put("world", world);
-			dependencies.put("entity", entity);
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
+	@SubscribeEvent
+	public static void onPlayerInBed(PlayerSleepInBedEvent event) {
+		execute(event, event.getEntity().level, event.getEntity());
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure CheckSleepDimension!");
+
+	public static void execute(LevelAccessor world, Entity entity) {
+		execute(null, world, entity);
+	}
+
+	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure CheckSleepDimension!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		IWorld world = (IWorld) dependencies.get("world");
-		if (((entity.world.getDimensionKey()) == (RegistryKey.getOrCreateKey(Registry.WORLD_KEY,
-				new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))))) {
-			if ((!((world instanceof World) ? ((World) world).isDaytime() : false))) {
-				if (world instanceof ServerWorld)
-					((ServerWorld) world).setDayTime((int) 1);
+		if (entity.level.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY,
+				new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
+			if (!(world instanceof Level _lvl && _lvl.isDay())) {
+				if (world instanceof ServerLevel _level)
+					_level.setDayTime(1);
 			}
 		}
 	}

@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Glowing Squid Test",
@@ -52,6 +52,7 @@
     "movementSpeed": 0.3,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 10,
     "xpAmount": 0,
     "waterMob": false,

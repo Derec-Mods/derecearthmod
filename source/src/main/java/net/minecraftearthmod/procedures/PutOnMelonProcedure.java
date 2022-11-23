@@ -2,71 +2,53 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import net.minecraftearthmod.block.CarvedMelonBlock;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
-import net.minecraft.world.IWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Entity;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.annotation.Nullable;
 
+@Mod.EventBusSubscriber
 public class PutOnMelonProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-			PlayerEntity entity = event.getPlayer();
-			if (event.getHand() != entity.getActiveHand()) {
-				return;
-			}
-			double i = event.getPos().getX();
-			double j = event.getPos().getY();
-			double k = event.getPos().getZ();
-			IWorld world = event.getWorld();
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", i);
-			dependencies.put("y", j);
-			dependencies.put("z", k);
-			dependencies.put("world", world);
-			dependencies.put("entity", entity);
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
-	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure PutOnMelon!");
+	@SubscribeEvent
+	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+		if (event.getHand() != event.getEntity().getUsedItemHand())
 			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY).getItem() == CarvedMelonBlock.block
-				.asItem())) {
-			if ((((entity instanceof LivingEntity)
-					? ((LivingEntity) entity).getItemStackFromSlot(EquipmentSlotType.fromSlotTypeAndIndex(EquipmentSlotType.Group.ARMOR, (int) 3))
-					: ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
-				if (entity instanceof LivingEntity) {
-					if (entity instanceof PlayerEntity)
-						((PlayerEntity) entity).inventory.armorInventory.set((int) 3, new ItemStack(CarvedMelonBlock.block));
-					else
-						((LivingEntity) entity).setItemStackToSlot(EquipmentSlotType.fromSlotTypeAndIndex(EquipmentSlotType.Group.ARMOR, (int) 3),
-								new ItemStack(CarvedMelonBlock.block));
-					if (entity instanceof ServerPlayerEntity)
-						((ServerPlayerEntity) entity).inventory.markDirty();
+		execute(event, event.getEntity());
+	}
+
+	public static void execute(Entity entity) {
+		execute(null, entity);
+	}
+
+	private static void execute(@Nullable Event event, Entity entity) {
+		if (entity == null)
+			return;
+		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
+				.getItem() == MinecraftEarthModModBlocks.CARVED_MELON.get().asItem()) {
+			if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)
+					.getItem() == Blocks.AIR.asItem()) {
+				{
+					Entity _entity = entity;
+					if (_entity instanceof Player _player) {
+						_player.getInventory().armor.set(3, new ItemStack(MinecraftEarthModModBlocks.CARVED_MELON.get()));
+						_player.getInventory().setChanged();
+					} else if (_entity instanceof LivingEntity _living) {
+						_living.setItemSlot(EquipmentSlot.HEAD, new ItemStack(MinecraftEarthModModBlocks.CARVED_MELON.get()));
+					}
 				}
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(CarvedMelonBlock.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModBlocks.CARVED_MELON.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
 				}
 			}
 		}

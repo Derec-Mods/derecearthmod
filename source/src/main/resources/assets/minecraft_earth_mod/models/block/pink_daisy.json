@@ -3,5 +3,6 @@
   "textures": {
     "cross": "minecraft_earth_mod:blocks/pinkdaisy",
     "particle": "minecraft_earth_mod:blocks/pinkdaisy"
-  }
+  },
+  "render_type": "cutout"
 }

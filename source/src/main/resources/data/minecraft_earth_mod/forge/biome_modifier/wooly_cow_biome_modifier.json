@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "windswept_hills",
+    "snowy_plains",
+    "taiga"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:wooly_cow",
+    "weight": 4,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "fluid",
   "definition": {
     "name": "Mud",
@@ -19,7 +19,6 @@
     "luminosity": 0,
     "density": 1000,
     "viscosity": 2005,
-    "isGas": false,
     "temperature": 300,
     "type": "WATER",
     "generateBucket": true,

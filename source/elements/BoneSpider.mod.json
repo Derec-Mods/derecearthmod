@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Bone Spider",
@@ -52,6 +52,7 @@
     "movementSpeed": 0.19999999999999998,
     "armorBaseValue": 1.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 32,
     "xpAmount": 12,
     "waterMob": false,

@@ -2,162 +2,102 @@
 package net.minecraftearthmod.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.DungeonHooks;
 
 import net.minecraftearthmod.procedures.TropicalSlimeSmallEntityFallsProcedure;
-import net.minecraftearthmod.itemgroup.DerecEarthMobsSpawnEggsItemGroup;
-import net.minecraftearthmod.entity.renderer.TropicalSlimeSmallRenderer;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.World;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.network.IPacket;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.Item;
-import net.minecraft.entity.monster.SlimeEntity;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.BlockPos;
 
-import java.util.Map;
-import java.util.HashMap;
+public class TropicalSlimeSmallEntity extends Slime {
+	public TropicalSlimeSmallEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(MinecraftEarthModModEntities.TROPICAL_SLIME_SMALL.get(), world);
+	}
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class TropicalSlimeSmallEntity extends MinecraftEarthModModElements.ModElement {
-	public static EntityType entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.MONSTER)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new).size(1f, 1f))
-					.build("tropical_slime_small").setRegistryName("tropical_slime_small");
-	public TropicalSlimeSmallEntity(MinecraftEarthModModElements instance) {
-		super(instance, 9);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new TropicalSlimeSmallRenderer.ModelRegisterHandler());
-		FMLJavaModLoadingContext.get().getModEventBus().register(new EntityAttributesRegisterHandler());
-		MinecraftForge.EVENT_BUS.register(this);
+	public TropicalSlimeSmallEntity(EntityType<TropicalSlimeSmallEntity> type, Level world) {
+		super(type, world);
+		xpReward = 5;
+		setNoAi(false);
 	}
 
 	@Override
-	public void initElements() {
-		elements.entities.add(() -> entity);
-		elements.items.add(() -> new SpawnEggItem(entity, -16737844, -16738048, new Item.Properties().group(DerecEarthMobsSpawnEggsItemGroup.tab))
-				.setRegistryName("tropical_slime_small_spawn_egg"));
-	}
-
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		boolean biomeCriteria = false;
-		if (new ResourceLocation("stone_shore").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("beach").equals(event.getName()))
-			biomeCriteria = true;
-		if (new ResourceLocation("snowy_beach").equals(event.getName()))
-			biomeCriteria = true;
-		if (!biomeCriteria)
-			return;
-		event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(entity, 5, 2, 3));
+	public Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public void init(FMLCommonSetupEvent event) {
-		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				MonsterEntity::canMonsterSpawn);
-		DungeonHooks.addDungeonMob(entity, 180);
-	}
-	private static class EntityAttributesRegisterHandler {
-		@SubscribeEvent
-		public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-			AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-			ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0);
-			ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 16);
-			ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
-			ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
-			event.put(entity, ammma.create());
-		}
+	protected void registerGoals() {
+		super.registerGoals();
+
 	}
 
-	public static class CustomEntity extends SlimeEntity {
-		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			this(entity, world);
-		}
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEFINED;
+	}
 
-		public CustomEntity(EntityType<CustomEntity> type, World world) {
-			super(type, world);
-			experienceValue = 5;
-			setNoAI(false);
-		}
+	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.squish")), 0.15f, 1);
+	}
 
-		@Override
-		public IPacket<?> createSpawnPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
+	@Override
+	public SoundEvent getHurtSound(DamageSource ds) {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.hurt_small"));
+	}
 
-		@Override
-		protected void registerGoals() {
-			super.registerGoals();
-		}
+	@Override
+	public SoundEvent getDeathSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.death_small"));
+	}
 
-		@Override
-		public CreatureAttribute getCreatureAttribute() {
-			return CreatureAttribute.UNDEFINED;
-		}
+	@Override
+	public boolean causeFallDamage(float l, float d, DamageSource source) {
+		TropicalSlimeSmallEntityFallsProcedure.execute(this.level, this.getX(), this.getY(), this.getZ());
+		return super.causeFallDamage(l, d, source);
+	}
 
-		@Override
-		public void playStepSound(BlockPos pos, BlockState blockIn) {
-			this.playSound((net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.squish")), 0.15f,
-					1);
-		}
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source == DamageSource.FALL)
+			return false;
+		if (source == DamageSource.DROWN)
+			return false;
+		return super.hurt(source, amount);
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.hurt_small"));
-		}
+	public static void init() {
+		SpawnPlacements.register(MinecraftEarthModModEntities.TROPICAL_SLIME_SMALL.get(), SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL
+						&& Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
+		DungeonHooks.addDungeonMob(MinecraftEarthModModEntities.TROPICAL_SLIME_SMALL.get(), 180);
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getDeathSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.slime.death_small"));
-		}
-
-		@Override
-		public boolean onLivingFall(float l, float d) {
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				TropicalSlimeSmallEntityFallsProcedure.executeProcedure($_dependencies);
-			}
-			return super.onLivingFall(l, d);
-		}
-
-		@Override
-		public boolean attackEntityFrom(DamageSource source, float amount) {
-			if (source == DamageSource.FALL)
-				return false;
-			if (source == DamageSource.DROWN)
-				return false;
-			return super.attackEntityFrom(source, amount);
-		}
+	public static AttributeSupplier.Builder createAttributes() {
+		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0);
+		builder = builder.add(Attributes.MAX_HEALTH, 16);
+		builder = builder.add(Attributes.ARMOR, 0);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		return builder;
 	}
 }

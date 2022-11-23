@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "ocean",
+  "spawners": {
+    "type": "minecraft_earth_mod:glowing_squid",
+    "weight": 20,
+    "minCount": 2,
+    "maxCount": 3
+  }
+}

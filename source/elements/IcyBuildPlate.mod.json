@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "biome",
   "definition": {
     "name": "Icy Build Plate",
@@ -12,21 +12,14 @@
     "moodSoundDelay": 0,
     "spawnParticles": false,
     "particlesProbability": 0.0,
-    "biomeCategory": "ICY",
-    "parent": {
-      "value": "CUSTOM:MountainsBuildPlate"
-    },
     "rainingPossibility": 0.7,
     "temperature": 0.1,
     "baseHeight": 0.1,
     "heightVariation": 0.1,
-    "biomeType": "ICY",
     "spawnBiome": false,
+    "spawnBiomeNether": false,
+    "spawnInCaves": false,
     "biomeWeight": 5,
-    "biomeDictionaryTypes": [
-      "SNOWY",
-      "RARE"
-    ],
     "grassPerChunk": 1,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 1,
@@ -40,7 +33,6 @@
     "vanillaTreeType": "Mega spruce trees",
     "treeType": 1,
     "minHeight": 7,
-    "maxWaterDepth": 0,
     "treeStem": {
       "value": "Blocks.AIR"
     },
@@ -55,15 +47,24 @@
     },
     "spawnStronghold": false,
     "spawnMineshaft": false,
+    "spawnMineshaftMesa": false,
     "spawnPillagerOutpost": false,
     "villageType": "snowy",
     "spawnWoodlandMansion": false,
     "spawnJungleTemple": false,
     "spawnDesertPyramid": false,
+    "spawnSwampHut": false,
     "spawnIgloo": true,
     "spawnOceanMonument": false,
     "spawnShipwreck": false,
+    "spawnShipwreckBeached": false,
+    "spawnBuriedTreasure": false,
     "oceanRuinType": "NONE",
+    "spawnNetherBridge": false,
+    "spawnNetherFossil": false,
+    "spawnBastionRemnant": false,
+    "spawnEndCity": false,
+    "spawnRuinedPortal": "NONE",
     "defaultFeatures": [
       "Caves",
       "MonsterRooms",

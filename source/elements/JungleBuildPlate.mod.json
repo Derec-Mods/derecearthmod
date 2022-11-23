@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "biome",
   "definition": {
     "name": "Jungle Build Plate",
@@ -31,20 +31,14 @@
       "value": "EXPLOSION_NORMAL"
     },
     "particlesProbability": 0.0,
-    "biomeCategory": "JUNGLE",
-    "parent": {
-      "value": "CUSTOM:PlainsBuildPlate"
-    },
     "rainingPossibility": 0.6,
     "temperature": 0.95,
     "baseHeight": 0.1,
     "heightVariation": 0.30000000000000004,
-    "biomeType": "WARM",
     "spawnBiome": false,
+    "spawnBiomeNether": false,
+    "spawnInCaves": false,
     "biomeWeight": 7,
-    "biomeDictionaryTypes": [
-      "JUNGLE"
-    ],
     "grassPerChunk": 6,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 5,
@@ -58,7 +52,6 @@
     "vanillaTreeType": "Default",
     "treeType": 1,
     "minHeight": 1,
-    "maxWaterDepth": 0,
     "treeStem": {
       "value": "Blocks.AIR"
     },
@@ -73,15 +66,24 @@
     },
     "spawnStronghold": false,
     "spawnMineshaft": false,
+    "spawnMineshaftMesa": false,
     "spawnPillagerOutpost": false,
     "villageType": "none",
     "spawnWoodlandMansion": false,
     "spawnJungleTemple": true,
     "spawnDesertPyramid": false,
+    "spawnSwampHut": false,
     "spawnIgloo": false,
     "spawnOceanMonument": false,
     "spawnShipwreck": false,
+    "spawnShipwreckBeached": false,
+    "spawnBuriedTreasure": false,
     "oceanRuinType": "NONE",
+    "spawnNetherBridge": false,
+    "spawnNetherFossil": false,
+    "spawnBastionRemnant": false,
+    "spawnEndCity": false,
+    "spawnRuinedPortal": "NONE",
     "defaultFeatures": [
       "Caves",
       "JungleGrass",

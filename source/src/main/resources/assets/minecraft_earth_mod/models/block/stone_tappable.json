@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/stonetappablesides",
     "west": "minecraft_earth_mod:blocks/stonetappablesides",
     "particle": "minecraft_earth_mod:blocks/stonetappablesides"
-  }
+  },
+  "render_type": "solid"
 }

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft_earth_mod:ruby_ore",
+    "minecraft_earth_mod:ruby_block",
+    "minecraft_earth_mod:ruby_shop_block",
+    "minecraft_earth_mod:stone_tappable"
+  ]
+}

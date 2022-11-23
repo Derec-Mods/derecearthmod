@@ -1,28 +1,40 @@
 {
-  "_fv": 24,
-  "_type": "food",
+  "_fv": 34,
+  "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "buttercupdrink",
     "customModelName": "Normal",
     "name": "Not Butterbeer",
     "rarity": "COMMON",
-    "specialInfo": [
-      "It's not butterbeer m'kay"
-    ],
     "creativeTab": {
       "value": "FOOD"
     },
     "stackSize": 1,
+    "enchantability": 0,
+    "useDuration": 32,
+    "toolType": 0.0,
+    "damageCount": 0,
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [
+      "It's not butterbeer m'kay"
+    ],
+    "hasGlow": false,
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "onFinishUsingItem": {
+      "name": "EatButtercup"
+    },
+    "isFood": true,
     "nutritionalValue": 4,
     "saturation": 0.6,
-    "eatingSpeed": 32,
-    "forDogs": false,
+    "isMeat": false,
     "isAlwaysEdible": true,
-    "animation": "drink",
-    "hasGlow": false,
-    "onEaten": {
-      "name": "EatButtercup"
-    }
+    "animation": "drink"
   }
 }

@@ -1,22 +1,14 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.MinecraftEarthModMod;
-
-import net.minecraft.entity.Entity;
-
-import java.util.Map;
+import net.minecraft.world.entity.Entity;
 
 public class IfFurnaceGolemAngryProcedure {
-	public static boolean executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure IfFurnaceGolemAngry!");
+	public static boolean execute(Entity entity) {
+		if (entity == null)
 			return false;
+		if (entity.getPersistentData().getBoolean("pissed")) {
+			return true;
 		}
-		Entity entity = (Entity) dependencies.get("entity");
-		if ((entity.getPersistentData().getBoolean("pissed"))) {
-			return (true);
-		}
-		return (false);
+		return false;
 	}
 }

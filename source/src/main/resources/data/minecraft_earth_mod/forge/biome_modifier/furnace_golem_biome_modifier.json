@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "spawners": {
+    "type": "minecraft_earth_mod:furnace_golem",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

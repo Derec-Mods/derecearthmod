@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "item",
   "definition": {
     "renderType": 1,
@@ -32,6 +32,11 @@
     "onRightClickedOnBlock": {
       "name": "SpawnMobofMe"
     },
-    "hasDispenseBehavior": false
+    "isFood": false,
+    "nutritionalValue": 0,
+    "saturation": 0.30000001192092896,
+    "isMeat": false,
+    "isAlwaysEdible": false,
+    "animation": "eat"
   }
 }

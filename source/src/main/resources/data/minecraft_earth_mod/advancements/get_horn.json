@@ -20,7 +20,9 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft_earth_mod:horn",
+            "items": [
+              "minecraft_earth_mod:horn"
+            ],
             "count": {
               "min": 1,
               "max": 64

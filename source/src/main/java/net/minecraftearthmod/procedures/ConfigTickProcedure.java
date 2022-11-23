@@ -2,27 +2,24 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.TickEvent;
 
-import net.minecraft.world.IWorld;
+import javax.annotation.Nullable;
 
-import java.util.Map;
-import java.util.HashMap;
-
+@Mod.EventBusSubscriber
 public class ConfigTickProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onWorldTick(TickEvent.WorldTickEvent event) {
-			if (event.phase == TickEvent.Phase.END) {
-				IWorld world = event.world;
-				Map<String, Object> dependencies = new HashMap<>();
-				dependencies.put("world", world);
-				dependencies.put("event", event);
-				executeProcedure(dependencies);
-			}
+	@SubscribeEvent
+	public static void onWorldTick(TickEvent.LevelTickEvent event) {
+		if (event.phase == TickEvent.Phase.END) {
+			execute(event);
 		}
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
+
+	public static void execute() {
+		execute(null);
+	}
+
+	private static void execute(@Nullable Event event) {
 	}
 }

@@ -1,11 +1,11 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Albino Cow",
     "mobLabel": "",
-    "mobModelName": "Modelalbinocow",
-    "mobModelTexture": "albinocow.png",
+    "mobModelName": "Modeldefaultcow_new",
+    "mobModelTexture": "albinocow6432.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.9,
     "modelHeight": 1.4,
@@ -52,6 +52,7 @@
     "movementSpeed": 0.3,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 10,
     "xpAmount": 3,
     "waterMob": false,

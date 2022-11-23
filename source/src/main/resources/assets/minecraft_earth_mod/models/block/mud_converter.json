@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/mudconverter_3",
     "west": "minecraft_earth_mod:blocks/mudconverter_3",
     "particle": "minecraft_earth_mod:blocks/mudconverter_2"
-  }
+  },
+  "render_type": "solid"
 }

@@ -1,77 +1,43 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.item.MobofMeItemItem;
+import net.minecraftearthmod.init.MinecraftEarthModModItems;
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 import net.minecraftearthmod.entity.MobOfMeEntity;
 import net.minecraftearthmod.entity.MerlEntity;
-import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.Entity;
-
-import java.util.Map;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerLevel;
 
 public class SpawnMobofMeProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure SpawnMobofMe!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
+		if (entity instanceof Player _player) {
+			ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.MOBOF_ME_ITEM.get());
+			_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure SpawnMobofMe!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure SpawnMobofMe!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure SpawnMobofMe!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure SpawnMobofMe!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if (entity instanceof PlayerEntity) {
-			ItemStack _stktoremove = new ItemStack(MobofMeItemItem.block);
-			((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-					((PlayerEntity) entity).container.func_234641_j_());
-		}
-		if ((Math.random() <= 0.9)) {
-			if (world instanceof ServerWorld) {
-				Entity entityToSpawn = new MobOfMeEntity.CustomEntity(MobOfMeEntity.entity, (World) world);
-				entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
-				if (entityToSpawn instanceof MobEntity)
-					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
-							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
-				world.addEntity(entityToSpawn);
+		if (Math.random() <= 0.9) {
+			if (world instanceof ServerLevel _level) {
+				Entity entityToSpawn = new MobOfMeEntity(MinecraftEarthModModEntities.MOB_OF_ME.get(), _level);
+				entityToSpawn.moveTo(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
+				if (entityToSpawn instanceof Mob _mobToSpawn)
+					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
+							null);
+				world.addFreshEntity(entityToSpawn);
 			}
 		} else {
-			if (world instanceof ServerWorld) {
-				Entity entityToSpawn = new MerlEntity.CustomEntity(MerlEntity.entity, (World) world);
-				entityToSpawn.setLocationAndAngles(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
-				if (entityToSpawn instanceof MobEntity)
-					((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world, world.getDifficultyForLocation(entityToSpawn.getPosition()),
-							SpawnReason.MOB_SUMMONED, (ILivingEntityData) null, (CompoundNBT) null);
-				world.addEntity(entityToSpawn);
+			if (world instanceof ServerLevel _level) {
+				Entity entityToSpawn = new MerlEntity(MinecraftEarthModModEntities.MERL.get(), _level);
+				entityToSpawn.moveTo(x, (y + 1), z, world.getRandom().nextFloat() * 360F, 0);
+				if (entityToSpawn instanceof Mob _mobToSpawn)
+					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null,
+							null);
+				world.addFreshEntity(entityToSpawn);
 			}
 		}
 	}

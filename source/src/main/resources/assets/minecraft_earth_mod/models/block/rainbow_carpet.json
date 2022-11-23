@@ -4,5 +4,6 @@
     "all": "minecraft_earth_mod:blocks/rainbowwoolbot",
     "particle": "minecraft_earth_mod:blocks/rainbowwoolbot",
     "missing": "minecraft_earth_mod:blocks/rainbowwoolbot"
-  }
+  },
+  "render_type": "solid"
 }

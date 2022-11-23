@@ -1,0 +1,17 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "forest",
+    "windswept_hills",
+    "taiga",
+    "minecraft_earth_mod:mountains_build_plate",
+    "minecraft_earth_mod:plains_build_plate",
+    "plains"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:rainbow_sheep",
+    "weight": 1,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

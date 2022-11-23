@@ -2,195 +2,151 @@
 package net.minecraftearthmod.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.NetworkHooks;
 
+import net.minecraftearthmod.procedures.CleanMuddyPigProcedure;
 import net.minecraftearthmod.procedures.CheckMuddyPigOnFireProcedure;
-import net.minecraftearthmod.itemgroup.DerecEarthMobsSpawnEggsItemGroup;
-import net.minecraftearthmod.item.BucketOfMudItem;
-import net.minecraftearthmod.entity.renderer.MuddyPigRenderer;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.init.MinecraftEarthModModItems;
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.World;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.network.IPacket;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.BreedGoal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.BlockPos;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.List;
 
-@MinecraftEarthModModElements.ModElement.Tag
-public class MuddyPigEntity extends MinecraftEarthModModElements.ModElement {
-	public static EntityType entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.CREATURE)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new)
-			.size(0.9f, 0.9f)).build("muddy_pig").setRegistryName("muddy_pig");
-	public MuddyPigEntity(MinecraftEarthModModElements instance) {
-		super(instance, 5);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new MuddyPigRenderer.ModelRegisterHandler());
-		FMLJavaModLoadingContext.get().getModEventBus().register(new EntityAttributesRegisterHandler());
-		MinecraftForge.EVENT_BUS.register(this);
+public class MuddyPigEntity extends Animal {
+	public MuddyPigEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(MinecraftEarthModModEntities.MUDDY_PIG.get(), world);
+	}
+
+	public MuddyPigEntity(EntityType<MuddyPigEntity> type, Level world) {
+		super(type, world);
+		xpReward = 3;
+		setNoAi(false);
 	}
 
 	@Override
-	public void initElements() {
-		elements.entities.add(() -> entity);
-		elements.items.add(() -> new SpawnEggItem(entity, -31270, -9293312, new Item.Properties().group(DerecEarthMobsSpawnEggsItemGroup.tab))
-				.setRegistryName("muddy_pig_spawn_egg"));
-	}
-
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(entity, 2, 1, 3));
+	public Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public void init(FMLCommonSetupEvent event) {
-		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos,
-						random) -> (world.getBlockState(pos.down()).getMaterial() == Material.ORGANIC && world.getLightSubtracted(pos, 0) > 8));
-	}
-	private static class EntityAttributesRegisterHandler {
-		@SubscribeEvent
-		public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-			AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-			ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3);
-			ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 10);
-			ammma = ammma.createMutableAttribute(Attributes.ARMOR, 0);
-			ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 0);
-			event.put(entity, ammma.create());
-		}
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(1, new BreedGoal(this, 1));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.of(MinecraftEarthModModItems.BUCKET_OF_MUD.get()), false));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.of(Blocks.WHEAT.asItem()), false));
+		this.goalSelector.addGoal(4, new TemptGoal(this, 1, Ingredient.of(Items.CARROT), false));
+		this.goalSelector.addGoal(5, new TemptGoal(this, 1, Ingredient.of(Items.POTATO), false));
+		this.goalSelector.addGoal(6, new PanicGoal(this, 1.2));
+		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(8, new FloatGoal(this));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
 	}
 
-	public static class CustomEntity extends AnimalEntity {
-		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			this(entity, world);
-		}
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEFINED;
+	}
 
-		public CustomEntity(EntityType<CustomEntity> type, World world) {
-			super(type, world);
-			experienceValue = 3;
-			setNoAI(false);
-		}
+	@Override
+	public SoundEvent getAmbientSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.ambient"));
+	}
 
-		@Override
-		public IPacket<?> createSpawnPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
+	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.step")), 0.15f, 1);
+	}
 
-		@Override
-		protected void registerGoals() {
-			super.registerGoals();
-			this.goalSelector.addGoal(1, new BreedGoal(this, 1));
-			this.goalSelector.addGoal(2, new TemptGoal(this, 1, Ingredient.fromItems(BucketOfMudItem.block), false));
-			this.goalSelector.addGoal(3, new TemptGoal(this, 1, Ingredient.fromItems(Blocks.WHEAT.asItem()), false));
-			this.goalSelector.addGoal(4, new TemptGoal(this, 1, Ingredient.fromItems(Items.CARROT), false));
-			this.goalSelector.addGoal(5, new TemptGoal(this, 1, Ingredient.fromItems(Items.POTATO), false));
-			this.goalSelector.addGoal(6, new PanicGoal(this, 1.2));
-			this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1));
-			this.goalSelector.addGoal(8, new SwimGoal(this));
-			this.goalSelector.addGoal(9, new LookRandomlyGoal(this));
-		}
+	@Override
+	public SoundEvent getHurtSound(DamageSource ds) {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.hurt"));
+	}
 
-		@Override
-		public CreatureAttribute getCreatureAttribute() {
-			return CreatureAttribute.UNDEFINED;
-		}
+	@Override
+	public SoundEvent getDeathSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.death"));
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getAmbientSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.ambient"));
-		}
+	@Override
+	public void die(DamageSource source) {
+		super.die(source);
+		CheckMuddyPigOnFireProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+	}
 
-		@Override
-		public void playStepSound(BlockPos pos, BlockState blockIn) {
-			this.playSound((net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.step")), 0.15f, 1);
-		}
+	@Override
+	public InteractionResult mobInteract(Player sourceentity, InteractionHand hand) {
+		ItemStack itemstack = sourceentity.getItemInHand(hand);
+		InteractionResult retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+		super.mobInteract(sourceentity, hand);
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
 
-		@Override
-		public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.hurt"));
-		}
+		CleanMuddyPigProcedure.execute(world, x, y, z, entity, sourceentity);
+		return retval;
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getDeathSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.pig.death"));
-		}
+	@Override
+	public AgeableMob getBreedOffspring(ServerLevel serverWorld, AgeableMob ageable) {
+		MuddyPigEntity retval = MinecraftEarthModModEntities.MUDDY_PIG.get().create(serverWorld);
+		retval.finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(retval.blockPosition()), MobSpawnType.BREEDING, null, null);
+		return retval;
+	}
 
-		@Override
-		public void onDeath(DamageSource source) {
-			super.onDeath(source);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity sourceentity = source.getTrueSource();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				CheckMuddyPigOnFireProcedure.executeProcedure($_dependencies);
-			}
-		}
+	@Override
+	public boolean isFood(ItemStack stack) {
+		return List.of(Blocks.WHEAT.asItem(), Items.CARROT, Items.POTATO).contains(stack.getItem());
+	}
 
-		@Override
-		public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageable) {
-			CustomEntity retval = (CustomEntity) entity.create(serverWorld);
-			retval.onInitialSpawn(serverWorld, serverWorld.getDifficultyForLocation(new BlockPos(retval.getPosition())), SpawnReason.BREEDING,
-					(ILivingEntityData) null, (CompoundNBT) null);
-			return retval;
-		}
+	public static void init() {
+		SpawnPlacements.register(MinecraftEarthModModEntities.MUDDY_PIG.get(), SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos,
+						random) -> (world.getBlockState(pos.below()).getMaterial() == Material.GRASS && world.getRawBrightness(pos, 0) > 8));
+	}
 
-		@Override
-		public boolean isBreedingItem(ItemStack stack) {
-			if (stack == null)
-				return false;
-			if (Blocks.WHEAT.asItem() == stack.getItem())
-				return true;
-			if (Items.CARROT == stack.getItem())
-				return true;
-			if (Items.POTATO == stack.getItem())
-				return true;
-			return false;
-		}
+	public static AttributeSupplier.Builder createAttributes() {
+		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MAX_HEALTH, 10);
+		builder = builder.add(Attributes.ARMOR, 0);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 0);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		return builder;
 	}
 }

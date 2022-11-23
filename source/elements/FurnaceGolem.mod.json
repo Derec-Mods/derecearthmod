@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Furnace Golem",
@@ -52,6 +52,7 @@
     "movementSpeed": 0.19999999999999998,
     "armorBaseValue": 3.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 100,
     "xpAmount": 10,
     "waterMob": false,
@@ -120,6 +121,9 @@
     "rangedItemType": "Default item",
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
+    "spawningCondition": {
+      "name": "GetSpawnGolems"
+    },
     "spawningProbability": 3,
     "mobSpawningType": "creature",
     "minNumberOfMobsPerGroup": 1,

@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "spawners": {
+    "type": "minecraft_earth_mod:moobloom",
+    "weight": 3,
+    "minCount": 2,
+    "maxCount": 3
+  }
+}

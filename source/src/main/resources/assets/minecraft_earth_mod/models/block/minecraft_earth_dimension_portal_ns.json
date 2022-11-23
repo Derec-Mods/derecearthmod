@@ -36,5 +36,6 @@
         }
       }
     }
-  ]
+  ],
+  "render_type": "translucent"
 }

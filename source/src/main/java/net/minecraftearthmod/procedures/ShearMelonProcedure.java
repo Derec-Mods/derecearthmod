@@ -3,140 +3,98 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
-import net.minecraftearthmod.block.CarvedMelonBlock;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Direction;
-import net.minecraft.state.Property;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.item.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.util.RandomSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
-import java.util.Random;
+import javax.annotation.Nullable;
+
 import java.util.Map;
-import java.util.HashMap;
 
+@Mod.EventBusSubscriber
 public class ShearMelonProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-			PlayerEntity entity = event.getPlayer();
-			if (event.getHand() != entity.getActiveHand()) {
-				return;
-			}
-			double i = event.getPos().getX();
-			double j = event.getPos().getY();
-			double k = event.getPos().getZ();
-			IWorld world = event.getWorld();
-			BlockState state = world.getBlockState(event.getPos());
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", i);
-			dependencies.put("y", j);
-			dependencies.put("z", k);
-			dependencies.put("world", world);
-			dependencies.put("entity", entity);
-			dependencies.put("direction", event.getFace());
-			dependencies.put("blockstate", state);
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
+	@SubscribeEvent
+	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		if (event.getHand() != event.getEntity().getUsedItemHand())
+			return;
+		execute(event, event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), event.getEntity());
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure ShearMelon!");
+
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		execute(null, world, x, y, z, entity);
+	}
+
+	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure ShearMelon!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure ShearMelon!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure ShearMelon!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure ShearMelon!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if (((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.MELON)) {
-			if ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY).getItem() == Items.SHEARS)) {
+		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.MELON) {
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.SHEARS) {
 				{
-					ItemStack _ist = ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY);
-					if (_ist.attemptDamageItem((int) 1, new Random(), null)) {
+					ItemStack _ist = (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
+					if (_ist.hurt(1, RandomSource.create(), null)) {
 						_ist.shrink(1);
-						_ist.setDamage(0);
+						_ist.setDamageValue(0);
 					}
 				}
-				if (world instanceof World && !world.isRemote()) {
-					((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1);
-				} else {
-					((World) world).playSound(x, y, z,
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
+				if (world instanceof Level _level) {
+					if (!_level.isClientSide()) {
+						_level.playSound(null, new BlockPos(x, y, z),
+								ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")), SoundSource.NEUTRAL, 1, 1);
+					} else {
+						_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.sheep.shear")),
+								SoundSource.NEUTRAL, 1, 1, false);
+					}
 				}
 				{
-					BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
-					BlockState _bs = CarvedMelonBlock.block.getDefaultState();
+					BlockPos _bp = new BlockPos(x, y, z);
+					BlockState _bs = MinecraftEarthModModBlocks.CARVED_MELON.get().defaultBlockState();
 					BlockState _bso = world.getBlockState(_bp);
 					for (Map.Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {
-						Property _property = _bs.getBlock().getStateContainer().getProperty(entry.getKey().getName());
-						if (_property != null && _bs.get(_property) != null)
+						Property _property = _bs.getBlock().getStateDefinition().getProperty(entry.getKey().getName());
+						if (_property != null && _bs.getValue(_property) != null)
 							try {
-								_bs = _bs.with(_property, (Comparable) entry.getValue());
+								_bs = _bs.setValue(_property, (Comparable) entry.getValue());
 							} catch (Exception e) {
 							}
 					}
-					world.setBlockState(_bp, _bs, 3);
+					world.setBlock(_bp, _bs, 3);
 				}
-				try {
-					BlockState _bs = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
-					DirectionProperty _property = (DirectionProperty) _bs.getBlock().getStateContainer().getProperty("facing");
-					if (_property != null) {
-						world.setBlockState(new BlockPos((int) x, (int) y, (int) z),
-								_bs.with(_property, ((entity.getHorizontalFacing()).getOpposite())), 3);
+				{
+					Direction _dir = ((entity.getDirection()).getOpposite());
+					BlockPos _pos = new BlockPos(x, y, z);
+					BlockState _bs = world.getBlockState(_pos);
+					Property<?> _property = _bs.getBlock().getStateDefinition().getProperty("facing");
+					if (_property instanceof DirectionProperty _dp && _dp.getPossibleValues().contains(_dir)) {
+						world.setBlock(_pos, _bs.setValue(_dp, _dir), 3);
 					} else {
-						world.setBlockState(new BlockPos((int) x, (int) y, (int) z),
-								_bs.with((EnumProperty<Direction.Axis>) _bs.getBlock().getStateContainer().getProperty("axis"),
-										((entity.getHorizontalFacing()).getOpposite()).getAxis()),
-								3);
+						_property = _bs.getBlock().getStateDefinition().getProperty("axis");
+						if (_property instanceof EnumProperty _ap && _ap.getPossibleValues().contains(_dir.getAxis()))
+							world.setBlock(_pos, _bs.setValue(_ap, _dir.getAxis()), 3);
 					}
-				} catch (Exception e) {
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(Items.MELON_SEEDS));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.MELON_SEEDS));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
 				}
 			}
 		}

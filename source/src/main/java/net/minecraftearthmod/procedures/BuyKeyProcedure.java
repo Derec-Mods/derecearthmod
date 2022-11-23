@@ -3,108 +3,68 @@ package net.minecraftearthmod.procedures;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import net.minecraftearthmod.item.MinecraftEarthDimensionItem;
-import net.minecraftearthmod.MinecraftEarthModModVariables;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.network.MinecraftEarthModModVariables;
+import net.minecraftearthmod.init.MinecraftEarthModModItems;
 
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.item.ItemStack;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 import java.util.function.Supplier;
 import java.util.Map;
 
 public class BuyKeyProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure BuyKey!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure BuyKey!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure BuyKey!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure BuyKey!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure BuyKey!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if (((new Object() {
+		if (new Object() {
 			public int getAmount(int sltid) {
-				if (entity instanceof ServerPlayerEntity) {
-					Container _current = ((ServerPlayerEntity) entity).openContainer;
-					if (_current instanceof Supplier) {
-						Object invobj = ((Supplier) _current).get();
-						if (invobj instanceof Map) {
-							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
-							if (stack != null)
-								return stack.getCount();
-						}
-					}
+				if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
+						&& _current.get() instanceof Map _slots) {
+					ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
+					if (stack != null)
+						return stack.getCount();
 				}
 				return 0;
 			}
-		}.getAmount((int) (0))) == 32)) {
-			MinecraftEarthModModVariables.MapVariables.get(world).boughtkey = (double) 1;
+		}.getAmount(0) == 32) {
+			MinecraftEarthModModVariables.MapVariables.get(world).boughtkey = 1;
 			MinecraftEarthModModVariables.MapVariables.get(world).syncData(world);
-			if (entity instanceof ServerPlayerEntity) {
-				Container _current = ((ServerPlayerEntity) entity).openContainer;
-				if (_current instanceof Supplier) {
-					Object invobj = ((Supplier) _current).get();
-					if (invobj instanceof Map) {
-						((Slot) ((Map) invobj).get((int) (0))).putStack(ItemStack.EMPTY);
-						_current.detectAndSendChanges();
-					}
+			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
+					&& _current.get() instanceof Map _slots) {
+				((Slot) _slots.get(0)).set(ItemStack.EMPTY);
+				_player.containerMenu.broadcastChanges();
+			}
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
+							SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
+							SoundSource.NEUTRAL, 1, 1, false);
 				}
 			}
-			if (world instanceof World && !world.isRemote()) {
-				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1);
-			} else {
-				((World) world).playSound(x, y, z,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
-			}
-			if (entity instanceof PlayerEntity) {
-				ItemStack _setstack = new ItemStack(MinecraftEarthDimensionItem.block);
-				_setstack.setCount((int) 1);
-				ItemHandlerHelper.giveItemToPlayer(((PlayerEntity) entity), _setstack);
+			if (entity instanceof Player _player) {
+				ItemStack _setstack = new ItemStack(MinecraftEarthModModItems.MINECRAFT_EARTH_DIMENSION.get());
+				_setstack.setCount(1);
+				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
 			}
 		} else {
-			if (world instanceof World && !world.isRemote()) {
-				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1);
-			} else {
-				((World) world).playSound(x, y, z,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
+							SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
+							SoundSource.NEUTRAL, 1, 1, false);
+				}
 			}
 		}
 	}

@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/spruce_log",
     "west": "minecraft_earth_mod:blocks/spruce_log",
     "particle": "minecraft_earth_mod:blocks/spruce_log_top"
-  }
+  },
+  "render_type": "solid"
 }

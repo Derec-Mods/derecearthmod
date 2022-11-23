@@ -2,84 +2,42 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 import net.minecraftearthmod.entity.BoulderZombieEntity;
-import net.minecraftearthmod.block.BoulderZombieClimbingBlockBlock;
-import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.core.BlockPos;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.annotation.Nullable;
 
+@Mod.EventBusSubscriber
 public class PlaceBoulderBlockProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
-			LivingEntity entity = event.getTarget();
-			LivingEntity sourceentity = event.getEntityLiving();
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", sourceentity.getPosX());
-			dependencies.put("y", sourceentity.getPosY());
-			dependencies.put("z", sourceentity.getPosZ());
-			dependencies.put("world", sourceentity.getEntityWorld());
-			dependencies.put("entity", entity);
-			dependencies.put("sourceentity", sourceentity);
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
+	@SubscribeEvent
+	public static void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
+		execute(event, event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), event.getTarget(),
+				event.getEntity());
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure PlaceBoulderBlock!");
+
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
+		execute(null, world, x, y, z, entity, sourceentity);
+	}
+
+	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
+		if (entity == null || sourceentity == null)
 			return;
-		}
-		if (dependencies.get("sourceentity") == null) {
-			if (!dependencies.containsKey("sourceentity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency sourceentity for procedure PlaceBoulderBlock!");
-			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure PlaceBoulderBlock!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure PlaceBoulderBlock!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure PlaceBoulderBlock!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure PlaceBoulderBlock!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		Entity sourceentity = (Entity) dependencies.get("sourceentity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if ((sourceentity instanceof BoulderZombieEntity.CustomEntity)) {
-			if ((entity instanceof PlayerEntity)) {
-				if ((!((world.getBlockState(new BlockPos((int) (x + 1), (int) y, (int) z))).getBlock() == Blocks.AIR))) {
-					world.setBlockState(new BlockPos((int) x, (int) y, (int) z), BoulderZombieClimbingBlockBlock.block.getDefaultState(), 3);
+		if (sourceentity instanceof BoulderZombieEntity) {
+			if (entity instanceof Player) {
+				if (!((world.getBlockState(new BlockPos(x + 1, y, z))).getBlock() == Blocks.AIR)) {
+					world.setBlock(new BlockPos(x, y, z), MinecraftEarthModModBlocks.BOULDER_ZOMBIE_CLIMBING_BLOCK.get().defaultBlockState(), 3);
 				}
-				if ((!((world.getBlockState(new BlockPos((int) x, (int) y, (int) (z + 1)))).getBlock() == Blocks.AIR))) {
-					world.setBlockState(new BlockPos((int) x, (int) y, (int) z), BoulderZombieClimbingBlockBlock.block.getDefaultState(), 3);
+				if (!((world.getBlockState(new BlockPos(x, y, z + 1))).getBlock() == Blocks.AIR)) {
+					world.setBlock(new BlockPos(x, y, z), MinecraftEarthModModBlocks.BOULDER_ZOMBIE_CLIMBING_BLOCK.get().defaultBlockState(), 3);
 				}
 			}
 		}

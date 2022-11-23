@@ -2,210 +2,155 @@
 package net.minecraftearthmod.entity;
 
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.NetworkHooks;
 
 import net.minecraftearthmod.procedures.SetPissedProcedure;
 import net.minecraftearthmod.procedures.IfFurnaceGolemAngryProcedure;
+import net.minecraftearthmod.procedures.GetSpawnGolemsProcedure;
 import net.minecraftearthmod.procedures.FurnaceGolemOnEntityTickUpdateProcedure;
-import net.minecraftearthmod.itemgroup.DerecEarthMobsSpawnEggsItemGroup;
-import net.minecraftearthmod.entity.renderer.FurnaceGolemRenderer;
-import net.minecraftearthmod.MinecraftEarthModModElements;
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.DamageSource;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.network.IPacket;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.Item;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.BlockState;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
-import java.util.Random;
-import java.util.Map;
-import java.util.HashMap;
+public class FurnaceGolemEntity extends IronGolem {
+	public FurnaceGolemEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(MinecraftEarthModModEntities.FURNACE_GOLEM.get(), world);
+	}
 
-import com.google.common.collect.ImmutableMap;
-
-@MinecraftEarthModModElements.ModElement.Tag
-public class FurnaceGolemEntity extends MinecraftEarthModModElements.ModElement {
-	public static EntityType entity = (EntityType.Builder.<CustomEntity>create(CustomEntity::new, EntityClassification.CREATURE)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CustomEntity::new)
-			.size(1.4f, 2.7f)).build("furnace_golem").setRegistryName("furnace_golem");
-	public FurnaceGolemEntity(MinecraftEarthModModElements instance) {
-		super(instance, 12);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new FurnaceGolemRenderer.ModelRegisterHandler());
-		FMLJavaModLoadingContext.get().getModEventBus().register(new EntityAttributesRegisterHandler());
-		MinecraftForge.EVENT_BUS.register(this);
+	public FurnaceGolemEntity(EntityType<FurnaceGolemEntity> type, Level world) {
+		super(type, world);
+		xpReward = 10;
+		setNoAi(false);
 	}
 
 	@Override
-	public void initElements() {
-		elements.entities.add(() -> entity);
-		elements.items.add(() -> new SpawnEggItem(entity, -9079435, -30184, new Item.Properties().group(DerecEarthMobsSpawnEggsItemGroup.tab))
-				.setRegistryName("furnace_golem_spawn_egg"));
-	}
-
-	@SubscribeEvent
-	public void addFeatureToBiomes(BiomeLoadingEvent event) {
-		event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(entity, 3, 1, 1));
+	public Packet<?> getAddEntityPacket() {
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	public void init(FMLCommonSetupEvent event) {
-		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos,
-						random) -> (world.getBlockState(pos.down()).getMaterial() == Material.ORGANIC && world.getLightSubtracted(pos, 0) > 8));
-	}
-	private static class EntityAttributesRegisterHandler {
-		@SubscribeEvent
-		public void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-			AttributeModifierMap.MutableAttribute ammma = MobEntity.func_233666_p_();
-			ammma = ammma.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2);
-			ammma = ammma.createMutableAttribute(Attributes.MAX_HEALTH, 100);
-			ammma = ammma.createMutableAttribute(Attributes.ARMOR, 3);
-			ammma = ammma.createMutableAttribute(Attributes.ATTACK_DAMAGE, 10);
-			ammma = ammma.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 10);
-			ammma = ammma.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.5);
-			event.put(entity, ammma.create());
-		}
+	protected void registerGoals() {
+		super.registerGoals();
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setAlertOthers());
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2, true) {
+			@Override
+			protected double getAttackReachSqr(LivingEntity entity) {
+				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+			}
+		});
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.9));
+		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(5, new FloatGoal(this));
 	}
 
-	public static class CustomEntity extends IronGolemEntity {
-		public CustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			this(entity, world);
-		}
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEFINED;
+	}
 
-		public CustomEntity(EntityType<CustomEntity> type, World world) {
-			super(type, world);
-			experienceValue = 10;
-			setNoAI(false);
-		}
+	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.step")), 0.15f, 1);
+	}
 
-		@Override
-		public IPacket<?> createSpawnPacket() {
-			return NetworkHooks.getEntitySpawningPacket(this);
-		}
+	@Override
+	public SoundEvent getHurtSound(DamageSource ds) {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.hurt"));
+	}
 
-		@Override
-		protected void registerGoals() {
-			super.registerGoals();
-			this.targetSelector.addGoal(1, new HurtByTargetGoal(this).setCallsForHelp(this.getClass()));
-			this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2, true));
-			this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.9));
-			this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-			this.goalSelector.addGoal(5, new SwimGoal(this));
-		}
+	@Override
+	public SoundEvent getDeathSound() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.death"));
+	}
 
-		@Override
-		public CreatureAttribute getCreatureAttribute() {
-			return CreatureAttribute.UNDEFINED;
-		}
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source == DamageSource.FALL)
+			return false;
+		if (source == DamageSource.DROWN)
+			return false;
+		return super.hurt(source, amount);
+	}
 
-		@Override
-		public void playStepSound(BlockPos pos, BlockState blockIn) {
-			this.playSound((net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.step")),
-					0.15f, 1);
-		}
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
+			@Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+		SetPissedProcedure.execute(this);
+		return retval;
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getHurtSound(DamageSource ds) {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.hurt"));
-		}
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		FurnaceGolemOnEntityTickUpdateProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+	}
 
-		@Override
-		public net.minecraft.util.SoundEvent getDeathSound() {
-			return (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.iron_golem.death"));
-		}
-
-		@Override
-		public boolean attackEntityFrom(DamageSource source, float amount) {
-			if (source == DamageSource.FALL)
-				return false;
-			if (source == DamageSource.DROWN)
-				return false;
-			return super.attackEntityFrom(source, amount);
-		}
-
-		@Override
-		public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason,
-				@Nullable ILivingEntityData livingdata, @Nullable CompoundNBT tag) {
-			ILivingEntityData retval = super.onInitialSpawn(world, difficulty, reason, livingdata, tag);
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				SetPissedProcedure.executeProcedure($_dependencies);
+	public void aiStep() {
+		super.aiStep();
+		double x = this.getX();
+		double y = this.getY();
+		double z = this.getZ();
+		Entity entity = this;
+		Level world = this.level;
+		if (IfFurnaceGolemAngryProcedure.execute(entity))
+			for (int l = 0; l < 5; ++l) {
+				double x0 = x + 0.5 + (random.nextFloat() - 0.5) * 0.5D;
+				double y0 = y + 1.2 + (random.nextFloat() - 0.5) * 0.5D;
+				double z0 = z + 0.5 + (random.nextFloat() - 0.5) * 0.5D;
+				world.addParticle(ParticleTypes.SMOKE, x0, y0, z0, 0, 0, 0);
 			}
-			return retval;
-		}
+	}
 
-		@Override
-		public void baseTick() {
-			super.baseTick();
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Entity entity = this;
-			{
-				Map<String, Object> $_dependencies = new HashMap<>();
-				$_dependencies.put("entity", entity);
-				$_dependencies.put("x", x);
-				$_dependencies.put("y", y);
-				$_dependencies.put("z", z);
-				$_dependencies.put("world", world);
-				FurnaceGolemOnEntityTickUpdateProcedure.executeProcedure($_dependencies);
-			}
-		}
+	public static void init() {
+		SpawnPlacements.register(MinecraftEarthModModEntities.FURNACE_GOLEM.get(), SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
+					int x = pos.getX();
+					int y = pos.getY();
+					int z = pos.getZ();
+					return GetSpawnGolemsProcedure.execute(world);
+				});
+	}
 
-		public void livingTick() {
-			super.livingTick();
-			double x = this.getPosX();
-			double y = this.getPosY();
-			double z = this.getPosZ();
-			Random random = this.rand;
-			Entity entity = this;
-			if (IfFurnaceGolemAngryProcedure.executeProcedure(ImmutableMap.of("entity", entity)))
-				for (int l = 0; l < 5; ++l) {
-					double d0 = (double) ((float) x + 0.5) + (double) (random.nextFloat() - 0.5) * 0.5D;
-					double d1 = ((double) ((float) y + 0.7) + (double) (random.nextFloat() - 0.5) * 0.5D) + 0.5;
-					double d2 = (double) ((float) z + 0.5) + (double) (random.nextFloat() - 0.5) * 0.5D;
-					world.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0, 0, 0);
-				}
-		}
+	public static AttributeSupplier.Builder createAttributes() {
+		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.2);
+		builder = builder.add(Attributes.MAX_HEALTH, 100);
+		builder = builder.add(Attributes.ARMOR, 3);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 10);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 10);
+		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.5);
+		return builder;
 	}
 }

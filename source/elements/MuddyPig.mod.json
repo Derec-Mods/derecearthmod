@@ -1,14 +1,14 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Muddy Pig",
     "mobLabel": "",
-    "mobModelName": "Modelmuddypig",
+    "mobModelName": "Modelmuddypig_new",
     "mobModelTexture": "muddypig.png",
     "mobModelGlowTexture": "",
-    "modelWidth": 0.9,
-    "modelHeight": 0.9,
+    "modelWidth": 0.6,
+    "modelHeight": 1.8,
     "modelShadowSize": 0.5,
     "mountedYOffset": 0.0,
     "hasSpawnEgg": true,
@@ -52,6 +52,7 @@
     "movementSpeed": 0.30000000000000004,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 10,
     "xpAmount": 3,
     "waterMob": false,
@@ -100,6 +101,9 @@
     "particleAmount": 4,
     "whenMobDies": {
       "name": "CheckMuddyPigOnFire"
+    },
+    "onRightClickedOn": {
+      "name": "CleanMuddyPig"
     },
     "hasAI": true,
     "aiBase": "(none)",

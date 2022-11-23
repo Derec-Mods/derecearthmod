@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/ruby_block",
     "west": "minecraft_earth_mod:blocks/ruby_block",
     "particle": "minecraft_earth_mod:blocks/missingtexture"
-  }
+  },
+  "render_type": "solid"
 }

@@ -1,0 +1,7 @@
+{
+  "_fv": 34,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"return_logic\"><value name=\"return\"><block type=\"variables_get_logic\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" has_entity=\"false\" is_player_var=\"false\"/><field name=\"VAR\">global:SpawnGolems</field></block></value></block></next></block><block type=\"return_number\" x=\"103\" y=\"216\"/></xml>"
+  }
+}

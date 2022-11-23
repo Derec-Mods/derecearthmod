@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/oak_log",
     "west": "minecraft_earth_mod:blocks/oak_log",
     "particle": "minecraft_earth_mod:blocks/oak_log_top"
-  }
+  },
+  "render_type": "solid"
 }

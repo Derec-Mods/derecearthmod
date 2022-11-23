@@ -33,7 +33,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft_earth_mod:notbutterbeer",
+          "name": "minecraft_earth_mod:butterbeer",
           "weight": 1,
           "functions": [
             {

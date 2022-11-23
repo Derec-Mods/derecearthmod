@@ -2,88 +2,49 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.event.level.BlockEvent;
 
+import net.minecraftearthmod.init.MinecraftEarthModModEntities;
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 import net.minecraftearthmod.entity.MelonGolemEntity;
-import net.minecraftearthmod.block.CarvedMelonBlock;
-import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.Entity;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.annotation.Nullable;
 
+@Mod.EventBusSubscriber
 public class CreateMelonGolemProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
-			Entity entity = event.getEntity();
-			IWorld world = event.getWorld();
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", event.getPos().getX());
-			dependencies.put("y", event.getPos().getY());
-			dependencies.put("z", event.getPos().getZ());
-			dependencies.put("px", entity.getPosX());
-			dependencies.put("py", entity.getPosY());
-			dependencies.put("pz", entity.getPosZ());
-			dependencies.put("world", world);
-			dependencies.put("entity", entity);
-			dependencies.put("blockstate", event.getState());
-			dependencies.put("placedagainst", event.getPlacedAgainst());
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
+	@SubscribeEvent
+	public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+		execute(event, event.getLevel(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure CreateMelonGolem!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure CreateMelonGolem!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure CreateMelonGolem!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure CreateMelonGolem!");
-			return;
-		}
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
-		if ((((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == Blocks.MELON)
-				|| ((world.getBlockState(new BlockPos((int) x, (int) y, (int) z))).getBlock() == CarvedMelonBlock.block))) {
-			if (((world.getBlockState(new BlockPos((int) x, (int) (y - 1), (int) z))).getBlock() == Blocks.SNOW_BLOCK)) {
-				if (((world.getBlockState(new BlockPos((int) x, (int) (y - 2), (int) z))).getBlock() == Blocks.SNOW_BLOCK)) {
-					world.destroyBlock(new BlockPos((int) x, (int) y, (int) z), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 1), (int) z), false);
-					world.destroyBlock(new BlockPos((int) x, (int) (y - 2), (int) z), false);
-					if (world instanceof ServerWorld) {
-						Entity entityToSpawn = new MelonGolemEntity.CustomEntity(MelonGolemEntity.entity, (World) world);
-						entityToSpawn.setLocationAndAngles(x, y, z, world.getRandom().nextFloat() * 360F, 0);
-						if (entityToSpawn instanceof MobEntity)
-							((MobEntity) entityToSpawn).onInitialSpawn((ServerWorld) world,
-									world.getDifficultyForLocation(entityToSpawn.getPosition()), SpawnReason.MOB_SUMMONED, (ILivingEntityData) null,
-									(CompoundNBT) null);
-						world.addEntity(entityToSpawn);
+
+	public static void execute(LevelAccessor world, double x, double y, double z) {
+		execute(null, world, x, y, z);
+	}
+
+	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z) {
+		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.MELON
+				|| (world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.CARVED_MELON.get()) {
+			if ((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock() == Blocks.SNOW_BLOCK) {
+				if ((world.getBlockState(new BlockPos(x, y - 2, z))).getBlock() == Blocks.SNOW_BLOCK) {
+					world.destroyBlock(new BlockPos(x, y, z), false);
+					world.destroyBlock(new BlockPos(x, y - 1, z), false);
+					world.destroyBlock(new BlockPos(x, y - 2, z), false);
+					if (world instanceof ServerLevel _level) {
+						Entity entityToSpawn = new MelonGolemEntity(MinecraftEarthModModEntities.MELON_GOLEM.get(), _level);
+						entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+						if (entityToSpawn instanceof Mob _mobToSpawn)
+							_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED,
+									null, null);
+						world.addFreshEntity(entityToSpawn);
 					}
 				}
 			}

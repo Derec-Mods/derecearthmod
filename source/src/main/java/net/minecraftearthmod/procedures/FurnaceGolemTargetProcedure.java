@@ -2,49 +2,30 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 
 import net.minecraftearthmod.entity.FurnaceGolemEntity;
-import net.minecraftearthmod.MinecraftEarthModMod;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.annotation.Nullable;
 
+@Mod.EventBusSubscriber
 public class FurnaceGolemTargetProcedure {
-	@Mod.EventBusSubscriber
-	private static class GlobalTrigger {
-		@SubscribeEvent
-		public static void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
-			LivingEntity entity = event.getTarget();
-			LivingEntity sourceentity = event.getEntityLiving();
-			Map<String, Object> dependencies = new HashMap<>();
-			dependencies.put("x", sourceentity.getPosX());
-			dependencies.put("y", sourceentity.getPosY());
-			dependencies.put("z", sourceentity.getPosZ());
-			dependencies.put("world", sourceentity.getEntityWorld());
-			dependencies.put("entity", entity);
-			dependencies.put("sourceentity", sourceentity);
-			dependencies.put("event", event);
-			executeProcedure(dependencies);
-		}
+	@SubscribeEvent
+	public static void onEntitySetsAttackTarget(LivingSetAttackTargetEvent event) {
+		execute(event, event.getTarget(), event.getEntity());
 	}
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure FurnaceGolemTarget!");
+
+	public static void execute(Entity entity, Entity sourceentity) {
+		execute(null, entity, sourceentity);
+	}
+
+	private static void execute(@Nullable Event event, Entity entity, Entity sourceentity) {
+		if (entity == null || sourceentity == null)
 			return;
-		}
-		if (dependencies.get("sourceentity") == null) {
-			if (!dependencies.containsKey("sourceentity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency sourceentity for procedure FurnaceGolemTarget!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		Entity sourceentity = (Entity) dependencies.get("sourceentity");
-		if ((sourceentity instanceof FurnaceGolemEntity.CustomEntity)) {
+		if (sourceentity instanceof FurnaceGolemEntity) {
 			entity.getPersistentData().putBoolean("pissed", (true));
 			entity.getPersistentData().putDouble("calmtimer", 0);
 		}

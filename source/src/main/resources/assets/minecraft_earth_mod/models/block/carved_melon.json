@@ -8,5 +8,6 @@
     "south": "minecraft_earth_mod:blocks/melonside",
     "west": "minecraft_earth_mod:blocks/melonside",
     "particle": "minecraft_earth_mod:blocks/melon_top"
-  }
+  },
+  "render_type": "solid"
 }

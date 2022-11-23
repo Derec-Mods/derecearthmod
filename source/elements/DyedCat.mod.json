@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "livingentity",
   "definition": {
     "mobName": "Dyed Cat",
@@ -52,6 +52,7 @@
     "movementSpeed": 0.30000000000000004,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
+    "followRange": 16,
     "health": 10,
     "xpAmount": 2,
     "waterMob": false,

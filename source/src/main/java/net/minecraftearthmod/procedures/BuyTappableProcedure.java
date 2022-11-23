@@ -2,146 +2,112 @@ package net.minecraftearthmod.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
-import net.minecraftearthmod.item.RubyItem;
-import net.minecraftearthmod.block.StoneTappableBlock;
-import net.minecraftearthmod.block.SpruceTappableBlock;
-import net.minecraftearthmod.block.OakTappableBlock;
-import net.minecraftearthmod.block.GrassTappableBlock;
-import net.minecraftearthmod.block.ChestTappableBlock;
-import net.minecraftearthmod.block.BirchTappableBlock;
-import net.minecraftearthmod.MinecraftEarthModModVariables;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.network.MinecraftEarthModModVariables;
+import net.minecraftearthmod.init.MinecraftEarthModModItems;
+import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
-import net.minecraft.world.World;
-import net.minecraft.world.IWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.item.ItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.Entity;
-
-import java.util.Map;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 public class BuyTappableProcedure {
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("entity") == null) {
-			if (!dependencies.containsKey("entity"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency entity for procedure BuyTappable!");
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+		if (entity == null)
 			return;
-		}
-		if (dependencies.get("x") == null) {
-			if (!dependencies.containsKey("x"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency x for procedure BuyTappable!");
-			return;
-		}
-		if (dependencies.get("y") == null) {
-			if (!dependencies.containsKey("y"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency y for procedure BuyTappable!");
-			return;
-		}
-		if (dependencies.get("z") == null) {
-			if (!dependencies.containsKey("z"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency z for procedure BuyTappable!");
-			return;
-		}
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure BuyTappable!");
-			return;
-		}
-		Entity entity = (Entity) dependencies.get("entity");
-		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
-		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
-		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
-		IWorld world = (IWorld) dependencies.get("world");
 		double ran = 0;
-		if (((entity instanceof PlayerEntity) ? ((PlayerEntity) entity).inventory.hasItemStack(new ItemStack(RubyItem.block)) : false)) {
-			ran = (double) (Math.random() * 100);
-			MinecraftEarthModModVariables.MapVariables.get(world).paidyet = (String) "yes";
+		if (entity instanceof Player _playerHasItem
+				? _playerHasItem.getInventory().contains(new ItemStack(MinecraftEarthModModItems.RUBY.get()))
+				: false) {
+			ran = Math.random() * 100;
+			MinecraftEarthModModVariables.MapVariables.get(world).paidyet = "yes";
 			MinecraftEarthModModVariables.MapVariables.get(world).syncData(world);
-			if ((ran <= 17)) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+			if (ran <= 17) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(ChestTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
-				}
-			}
-			if (((ran > 17) && (ran <= 34))) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
-				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(GrassTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.CHEST_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
 				}
 			}
-			if (((ran > 34) && (ran <= 51))) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+			if (ran > 17 && ran <= 34) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(StoneTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
-				}
-			}
-			if (((ran > 51) && (ran <= 68))) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
-				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(BirchTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.GRASS_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
 				}
 			}
-			if (((ran > 68) && (ran <= 85))) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+			if (ran > 34 && ran <= 51) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(OakTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.STONE_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
 				}
 			}
-			if (((ran > 85) && (ran <= 100))) {
-				if (entity instanceof PlayerEntity) {
-					ItemStack _stktoremove = new ItemStack(RubyItem.block);
-					((PlayerEntity) entity).inventory.func_234564_a_(p -> _stktoremove.getItem() == p.getItem(), (int) 1,
-							((PlayerEntity) entity).container.func_234641_j_());
+			if (ran > 51 && ran <= 68) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof World && !world.isRemote()) {
-					ItemEntity entityToSpawn = new ItemEntity((World) world, x, y, z, new ItemStack(SpruceTappableBlock.block));
-					entityToSpawn.setPickupDelay((int) 10);
-					world.addEntity(entityToSpawn);
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.BIRCH_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
+				}
+			}
+			if (ran > 68 && ran <= 85) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
+				}
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.OAK_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
+				}
+			}
+			if (ran > 85 && ran <= 100) {
+				if (entity instanceof Player _player) {
+					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
+							_player.inventoryMenu.getCraftSlots());
+				}
+				if (world instanceof Level _level && !_level.isClientSide()) {
+					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.SPRUCE_TAPPABLE.get()));
+					entityToSpawn.setPickUpDelay(10);
+					_level.addFreshEntity(entityToSpawn);
 				}
 			}
 		} else {
-			if (world instanceof World && !world.isRemote()) {
-				((World) world).playSound(null, new BlockPos((int) x, (int) y, (int) z),
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1);
-			} else {
-				((World) world).playSound(x, y, z,
-						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-						SoundCategory.NEUTRAL, (float) 1, (float) 1, false);
+			if (world instanceof Level _level) {
+				if (!_level.isClientSide()) {
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
+							SoundSource.NEUTRAL, 1, 1);
+				} else {
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
+							SoundSource.NEUTRAL, 1, 1, false);
+				}
 			}
 		}
 	}

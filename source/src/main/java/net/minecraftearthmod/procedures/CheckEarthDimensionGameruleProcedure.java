@@ -1,20 +1,11 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraftearthmod.world.DoEarthDimensionGameRule;
-import net.minecraftearthmod.MinecraftEarthModMod;
+import net.minecraftearthmod.init.MinecraftEarthModModGameRules;
 
-import net.minecraft.world.IWorld;
-
-import java.util.Map;
+import net.minecraft.world.level.LevelAccessor;
 
 public class CheckEarthDimensionGameruleProcedure {
-	public static boolean executeProcedure(Map<String, Object> dependencies) {
-		if (dependencies.get("world") == null) {
-			if (!dependencies.containsKey("world"))
-				MinecraftEarthModMod.LOGGER.warn("Failed to load dependency world for procedure CheckEarthDimensionGamerule!");
-			return false;
-		}
-		IWorld world = (IWorld) dependencies.get("world");
-		return (world.getWorldInfo().getGameRulesInstance().getBoolean(DoEarthDimensionGameRule.gamerule));
+	public static boolean execute(LevelAccessor world) {
+		return world.getLevelData().getGameRules().getBoolean(MinecraftEarthModModGameRules.DOEARTHDIMENSION);
 	}
 }

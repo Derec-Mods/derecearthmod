@@ -1,0 +1,20 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "forest",
+    "windswept_hills",
+    "snowy_plains",
+    "plains",
+    "beach",
+    "savanna",
+    "jungle",
+    "desert",
+    "swamp"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:boulder_zombie",
+    "weight": 10,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

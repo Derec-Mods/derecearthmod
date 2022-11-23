@@ -1,5 +1,5 @@
 {
-  "_fv": 24,
+  "_fv": 34,
   "_type": "plant",
   "definition": {
     "renderType": 12,
@@ -29,6 +29,7 @@
     "resistance": 0.0,
     "luminance": 0,
     "unbreakable": false,
+    "isSolid": false,
     "isCustomSoundType": false,
     "soundOnStep": {
       "value": "PLANT"
@@ -58,6 +59,7 @@
       "Surface"
     ],
     "restrictionBiomes": [],
-    "patchSize": 64
+    "patchSize": 64,
+    "generateAtAnyHeight": false
   }
 }
