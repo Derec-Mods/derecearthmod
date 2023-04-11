@@ -6,10 +6,8 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.DungeonHooks;
 
-import net.minecraftearthmod.procedures.CheckExperimentalProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -24,7 +22,6 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
@@ -60,14 +57,14 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
-				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
 		this.goalSelector.addGoal(5, new RandomStrollGoal(this, 1));
 		this.targetSelector.addGoal(6, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(8, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10) {
+		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10f) {
 			@Override
 			public boolean canContinueToUse() {
 				return this.canUse();
@@ -102,8 +99,7 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float flval) {
-		LobberZombieEntityProjectile entityarrow = new LobberZombieEntityProjectile(MinecraftEarthModModEntities.LOBBER_ZOMBIE_PROJECTILE.get(), this,
-				this.level);
+		LobberZombieEntityProjectile entityarrow = new LobberZombieEntityProjectile(MinecraftEarthModModEntities.LOBBER_ZOMBIE_PROJECTILE.get(), this, this.level);
 		double d0 = target.getY() + target.getEyeHeight() - 1.1;
 		double d1 = target.getX() - this.getX();
 		double d3 = target.getZ() - this.getZ();
@@ -112,19 +108,12 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(MinecraftEarthModModEntities.LOBBER_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-					int x = pos.getX();
-					int y = pos.getY();
-					int z = pos.getZ();
-					return CheckExperimentalProcedure.execute(world);
-				});
 		DungeonHooks.addDungeonMob(MinecraftEarthModModEntities.LOBBER_ZOMBIE.get(), 180);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.2);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.19999999999999998);
 		builder = builder.add(Attributes.MAX_HEALTH, 20);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);

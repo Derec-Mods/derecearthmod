@@ -19,10 +19,9 @@ import java.util.List;
 
 public class MudFormulaItem extends Item {
 	public MudFormulaItem() {
-		super(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).stacksTo(1).rarity(Rarity.COMMON)
-				.food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.1f).alwaysEat()
+		super(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).stacksTo(1).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.1f).alwaysEat()
 
-						.build()));
+				.build()));
 	}
 
 	@Override

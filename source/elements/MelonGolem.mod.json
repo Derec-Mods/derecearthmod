@@ -1,12 +1,15 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Melon Golem",
     "mobLabel": "",
-    "mobModelName": "Modelmelongolem",
+    "mobModelName": "Modelmelongolem_NEW",
     "mobModelTexture": "melongolem.png",
     "mobModelGlowTexture": "",
+    "solidBoundingBox": {
+      "fixedValue": false
+    },
     "modelWidth": 0.7,
     "modelHeight": 1.9000000000000001,
     "modelShadowSize": 0.5,
@@ -90,15 +93,8 @@
       "value": "block.wood.break"
     },
     "stepSound": {
-      "value": ""
+      "value": "block.snow.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "hasAI": true,
     "aiBase": "(none)",
     "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityMonster</field><field name=\"condition\">null,null</field><next><block type=\"wander_avoid_water\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></xml>",
@@ -109,7 +105,9 @@
     "rangedAttackItem": {
       "value": "Items.MELON_SEEDS"
     },
-    "rangedItemType": "Default item",
+    "rangedItemType": "MelonGolemProjectile",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningCondition": {

@@ -10,6 +10,7 @@ import net.minecraftearthmod.procedures.CheckHostileMobSpawnsProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -33,6 +34,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.BlockPos;
 
 public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 	public BoneSpiderEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -59,13 +61,13 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
-				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
 		this.goalSelector.addGoal(5, new RestrictSunGoal(this));
 		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10) {
+		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10f) {
 			@Override
 			public boolean canContinueToUse() {
 				return this.canUse();
@@ -84,6 +86,11 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.step")), 0.15f, 1);
+	}
+
+	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.spider.hurt"));
 	}
@@ -99,19 +106,18 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(MinecraftEarthModModEntities.BONE_SPIDER.get(), SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-					int x = pos.getX();
-					int y = pos.getY();
-					int z = pos.getZ();
-					return CheckHostileMobSpawnsProcedure.execute(world);
-				});
+		SpawnPlacements.register(MinecraftEarthModModEntities.BONE_SPIDER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			return CheckHostileMobSpawnsProcedure.execute(world);
+		});
 		DungeonHooks.addDungeonMob(MinecraftEarthModModEntities.BONE_SPIDER.get(), 180);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.2);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.19999999999999998);
 		builder = builder.add(Attributes.MAX_HEALTH, 32);
 		builder = builder.add(Attributes.ARMOR, 1);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);

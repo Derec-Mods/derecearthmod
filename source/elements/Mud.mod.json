@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "fluid",
   "definition": {
     "name": "Mud",
@@ -7,7 +7,7 @@
     "textureStill": "mud",
     "textureFlowing": "mud",
     "tintType": "No tint",
-    "canMultiply": false,
+    "canMultiply": true,
     "flowRate": 5,
     "levelDecrease": 1,
     "slopeFindDistance": 4,
@@ -35,37 +35,12 @@
     "luminance": 0,
     "lightOpacity": 1,
     "emissiveRendering": false,
-    "tickRate": 10,
+    "tickRate": 20,
     "flammability": 0,
     "fireSpreadSpeed": 0,
     "colorOnMap": "DEFAULT",
-    "frequencyOnChunks": 1,
-    "spawnWorldTypes": [
-      "Surface",
-      "CUSTOM:MinecraftEarthDimension"
-    ],
-    "restrictionBiomes": [
-      {
-        "value": "CUSTOM:PlainsBuildPlate"
-      },
-      {
-        "value": "CUSTOM:ForestBuildPlate"
-      },
-      {
-        "value": "swamp"
-      },
-      {
-        "value": "jungle"
-      }
-    ],
-    "onBlockAdded": {
-      "name": "MudUpdateTick"
-    },
-    "onNeighbourChanges": {
-      "name": "MudUpdateTick"
-    },
     "onTickUpdate": {
-      "name": "MudUpdateTick"
+      "name": "ConvertToMud"
     }
   }
 }

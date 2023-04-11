@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "biome",
   "definition": {
     "name": "Forest Build Plate",
@@ -9,12 +9,15 @@
     "undergroundBlock": {
       "value": "Blocks.DIRT#0"
     },
+    "underwaterBlock": {
+      "value": ""
+    },
     "grassColor": {
-      "value": -10777806,
+      "value": -8857051,
       "falpha": 0.0
     },
     "foliageColor": {
-      "value": -10777806,
+      "value": -8857051,
       "falpha": 0.0
     },
     "ambientSound": {
@@ -37,12 +40,29 @@
     "particlesProbability": 0.0,
     "rainingPossibility": 0.0,
     "temperature": 0.5,
-    "baseHeight": 0.1,
-    "heightVariation": 0.1,
     "spawnBiome": false,
-    "spawnBiomeNether": false,
     "spawnInCaves": false,
-    "biomeWeight": 10,
+    "spawnBiomeNether": false,
+    "genTemperature": {
+      "min": -0.2,
+      "max": 0.2
+    },
+    "genHumidity": {
+      "min": -1.2,
+      "max": -0.8
+    },
+    "genContinentalness": {
+      "min": 0.31,
+      "max": 0.71
+    },
+    "genErosion": {
+      "min": 0.7,
+      "max": 1.0999999999999999
+    },
+    "genWeirdness": {
+      "min": -1.1705115363306802,
+      "max": -0.7705115363306803
+    },
     "grassPerChunk": 3,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 3,

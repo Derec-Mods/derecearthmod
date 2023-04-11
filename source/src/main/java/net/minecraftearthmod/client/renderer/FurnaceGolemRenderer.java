@@ -2,23 +2,19 @@
 package net.minecraftearthmod.client.renderer;
 
 import net.minecraftearthmod.entity.FurnaceGolemEntity;
+import net.minecraftearthmod.client.model.Modelfurnacegolem_new;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.HumanoidModel;
 
-public class FurnaceGolemRenderer extends HumanoidMobRenderer<FurnaceGolemEntity, HumanoidModel<FurnaceGolemEntity>> {
+public class FurnaceGolemRenderer extends MobRenderer<FurnaceGolemEntity, Modelfurnacegolem_new<FurnaceGolemEntity>> {
 	public FurnaceGolemRenderer(EntityRendererProvider.Context context) {
-		super(context, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-		this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
-				new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+		super(context, new Modelfurnacegolem_new(context.bakeLayer(Modelfurnacegolem_new.LAYER_LOCATION)), 0.5f);
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(FurnaceGolemEntity entity) {
-		return new ResourceLocation("minecraft_earth_mod:textures/entities/furnacegolemalt.png");
+		return new ResourceLocation("minecraft_earth_mod:textures/entities/furnacegolem.png");
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "biome",
   "definition": {
     "name": "Jungle Build Plate",
@@ -9,8 +9,15 @@
     "undergroundBlock": {
       "value": "Blocks.STONE#0"
     },
+    "underwaterBlock": {
+      "value": ""
+    },
     "grassColor": {
       "value": -10777806,
+      "falpha": 0.0
+    },
+    "foliageColor": {
+      "value": -14714610,
       "falpha": 0.0
     },
     "ambientSound": {
@@ -33,12 +40,29 @@
     "particlesProbability": 0.0,
     "rainingPossibility": 0.6,
     "temperature": 0.95,
-    "baseHeight": 0.1,
-    "heightVariation": 0.30000000000000004,
     "spawnBiome": false,
-    "spawnBiomeNether": false,
     "spawnInCaves": false,
-    "biomeWeight": 7,
+    "spawnBiomeNether": false,
+    "genTemperature": {
+      "min": 0.16000000000000003,
+      "max": 0.44000000000000006
+    },
+    "genHumidity": {
+      "min": 0.05999999999999994,
+      "max": 0.33999999999999997
+    },
+    "genContinentalness": {
+      "min": 0.37,
+      "max": 0.65
+    },
+    "genErosion": {
+      "min": 0.5599999999999999,
+      "max": 0.84
+    },
+    "genWeirdness": {
+      "min": 0.3670463124386566,
+      "max": 0.6470463124386566
+    },
     "grassPerChunk": 6,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 5,
@@ -89,7 +113,7 @@
       "JungleGrass",
       "JungleTreeForest",
       "Bamboo",
-      "FrozenTopLayer"
+      "AmethystGeodes"
     ],
     "spawnEntries": [
       {

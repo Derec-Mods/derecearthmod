@@ -32,8 +32,7 @@ public class FurnaceGolemOnEntityTickUpdateProcedure {
 				_level.addFreshEntity(entityToSpawn);
 			}
 		}
-		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.WATER
-				|| (world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.WATER) {
+		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.WATER || (world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.WATER) {
 			if (!world.getLevelData().getGameRules().getBoolean(MinecraftEarthModModGameRules.WATERPROOFGOLEMS)) {
 				entity.hurt(DamageSource.GENERIC, (float) 0.5);
 			}

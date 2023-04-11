@@ -31,8 +31,7 @@ public class CreateMelonGolemProcedure {
 	}
 
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z) {
-		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.MELON
-				|| (world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.CARVED_MELON.get()) {
+		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == Blocks.MELON || (world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.CARVED_MELON.get()) {
 			if ((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock() == Blocks.SNOW_BLOCK) {
 				if ((world.getBlockState(new BlockPos(x, y - 2, z))).getBlock() == Blocks.SNOW_BLOCK) {
 					world.destroyBlock(new BlockPos(x, y, z), false);
@@ -42,8 +41,7 @@ public class CreateMelonGolemProcedure {
 						Entity entityToSpawn = new MelonGolemEntity(MinecraftEarthModModEntities.MELON_GOLEM.get(), _level);
 						entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
 						if (entityToSpawn instanceof Mob _mobToSpawn)
-							_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED,
-									null, null);
+							_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 						world.addFreshEntity(entityToSpawn);
 					}
 				}

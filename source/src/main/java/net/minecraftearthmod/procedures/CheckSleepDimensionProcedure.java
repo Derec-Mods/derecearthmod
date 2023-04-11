@@ -29,8 +29,7 @@ public class CheckSleepDimensionProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity.level.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY,
-				new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
+		if (entity.level.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
 			if (!(world instanceof Level _lvl && _lvl.isDay())) {
 				if (world instanceof ServerLevel _level)
 					_level.setDayTime(1);

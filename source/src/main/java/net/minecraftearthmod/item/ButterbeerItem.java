@@ -19,10 +19,9 @@ import java.util.List;
 
 public class ButterbeerItem extends Item {
 	public ButterbeerItem() {
-		super(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).stacksTo(1).rarity(Rarity.COMMON)
-				.food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.6f).alwaysEat()
+		super(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).stacksTo(1).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.6f).alwaysEat()
 
-						.build()));
+				.build()));
 	}
 
 	@Override

@@ -5,8 +5,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
 
-import net.minecraftearthmod.procedures.CleanMuddyPigProcedure;
+import net.minecraftearthmod.procedures.CleanPigWaterProcedure;
 import net.minecraftearthmod.procedures.CheckMuddyPigOnFireProcedure;
+import net.minecraftearthmod.procedures.CheckMuddyPigCleanProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModItems;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
@@ -118,8 +119,14 @@ public class MuddyPigEntity extends Animal {
 		Entity entity = this;
 		Level world = this.level;
 
-		CleanMuddyPigProcedure.execute(world, x, y, z, entity, sourceentity);
+		CleanPigWaterProcedure.execute(world, x, y, z, entity, sourceentity);
 		return retval;
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		CheckMuddyPigCleanProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
 
 	@Override
@@ -135,14 +142,13 @@ public class MuddyPigEntity extends Animal {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(MinecraftEarthModModEntities.MUDDY_PIG.get(), SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos,
-						random) -> (world.getBlockState(pos.below()).getMaterial() == Material.GRASS && world.getRawBrightness(pos, 0) > 8));
+		SpawnPlacements.register(MinecraftEarthModModEntities.MUDDY_PIG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				(entityType, world, reason, pos, random) -> (world.getBlockState(pos.below()).getMaterial() == Material.GRASS && world.getRawBrightness(pos, 0) > 8));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.30000000000000004);
 		builder = builder.add(Attributes.MAX_HEALTH, 10);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 0);

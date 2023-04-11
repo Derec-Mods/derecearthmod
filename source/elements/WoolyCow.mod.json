@@ -1,10 +1,10 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Wooly Cow",
     "mobLabel": "",
-    "mobModelName": "Modelwoolycow",
+    "mobModelName": "ModelwoolycowNEW",
     "mobModelTexture": "woolycow.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.9,
@@ -90,15 +90,8 @@
       "value": "entity.cow.death"
     },
     "stepSound": {
-      "value": ""
+      "value": "entity.cow.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "onRightClickedOn": {
       "name": "MilkCow"
     },
@@ -123,6 +116,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 4,

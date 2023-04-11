@@ -1,0 +1,37 @@
+{
+  "_fv": 39,
+  "_type": "rangeditem",
+  "definition": {
+    "renderType": 0,
+    "texture": "missingtexture",
+    "customModelName": "Normal",
+    "name": "melon.golem.projectile",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "No creative tab entry"
+    },
+    "stackSize": 1,
+    "ammoItem": {
+      "value": ""
+    },
+    "shootConstantly": false,
+    "usageCount": 0,
+    "actionSound": {
+      "value": "entity.snowman.shoot"
+    },
+    "hasGlow": false,
+    "animation": "bow",
+    "enableMeleeDamage": false,
+    "damageVsEntity": 3.0,
+    "bulletPower": 1.0,
+    "bulletDamage": 2.0,
+    "bulletKnockback": 1,
+    "bulletParticles": false,
+    "bulletIgnitesFire": false,
+    "bulletItemTexture": {
+      "value": "Items.MELON_SEEDS"
+    },
+    "bulletModel": "Default",
+    "customBulletModelTexture": ""
+  }
+}

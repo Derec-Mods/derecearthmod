@@ -24,8 +24,7 @@ import java.util.Collections;
 
 public class ButtercupBlock extends FlowerBlock {
 	public ButtercupBlock() {
-		super(MobEffects.SATURATION, 0,
-				BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_YELLOW).sound(SoundType.GRASS).instabreak().noCollission());
+		super(MobEffects.SATURATION, 0, BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_YELLOW).sound(SoundType.GRASS).instabreak().noCollission());
 	}
 
 	@Override

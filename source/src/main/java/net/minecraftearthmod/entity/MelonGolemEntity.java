@@ -10,6 +10,7 @@ import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -32,6 +33,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.BlockPos;
 
 public class MelonGolemEntity extends PathfinderMob implements RangedAttackMob {
 	public MelonGolemEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -57,7 +59,7 @@ public class MelonGolemEntity extends PathfinderMob implements RangedAttackMob {
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(4, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10) {
+		this.goalSelector.addGoal(1, new RangedAttackGoal(this, 1.25, 20, 10f) {
 			@Override
 			public boolean canContinueToUse() {
 				return this.canUse();
@@ -76,6 +78,11 @@ public class MelonGolemEntity extends PathfinderMob implements RangedAttackMob {
 	}
 
 	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.snow.step")), 0.15f, 1);
+	}
+
+	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.snow_golem.hurt"));
 	}
@@ -87,23 +94,16 @@ public class MelonGolemEntity extends PathfinderMob implements RangedAttackMob {
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float flval) {
-		MelonGolemEntityProjectile entityarrow = new MelonGolemEntityProjectile(MinecraftEarthModModEntities.MELON_GOLEM_PROJECTILE.get(), this,
-				this.level);
-		double d0 = target.getY() + target.getEyeHeight() - 1.1;
-		double d1 = target.getX() - this.getX();
-		double d3 = target.getZ() - this.getZ();
-		entityarrow.shoot(d1, d0 - entityarrow.getY() + Math.sqrt(d1 * d1 + d3 * d3) * 0.2F, d3, 1.6F, 12.0F);
-		level.addFreshEntity(entityarrow);
+		MelonGolemProjectileEntity.shoot(this, target);
 	}
 
 	public static void init() {
-		SpawnPlacements.register(MinecraftEarthModModEntities.MELON_GOLEM.get(), SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-					int x = pos.getX();
-					int y = pos.getY();
-					int z = pos.getZ();
-					return GetSpawnGolemsProcedure.execute(world);
-				});
+		SpawnPlacements.register(MinecraftEarthModModEntities.MELON_GOLEM.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			return GetSpawnGolemsProcedure.execute(world);
+		});
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

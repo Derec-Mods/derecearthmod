@@ -65,17 +65,16 @@ public class RubyShop3ButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			GotoPage2Procedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 2) {
-
 			BuyKeyProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 1) {
+
+			GotoPage2Procedure.execute(world, x, y, z, entity);
 		}
 	}
 
 	@SubscribeEvent
 	public static void registerMessage(FMLCommonSetupEvent event) {
-		MinecraftEarthModMod.addNetworkMessage(RubyShop3ButtonMessage.class, RubyShop3ButtonMessage::buffer, RubyShop3ButtonMessage::new,
-				RubyShop3ButtonMessage::handler);
+		MinecraftEarthModMod.addNetworkMessage(RubyShop3ButtonMessage.class, RubyShop3ButtonMessage::buffer, RubyShop3ButtonMessage::new, RubyShop3ButtonMessage::handler);
 	}
 }

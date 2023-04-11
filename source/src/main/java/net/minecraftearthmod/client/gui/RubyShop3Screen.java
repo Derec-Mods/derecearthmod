@@ -1,4 +1,3 @@
-
 package net.minecraftearthmod.client.gui;
 
 import net.minecraftearthmod.world.inventory.RubyShop3Menu;
@@ -24,6 +23,8 @@ public class RubyShop3Screen extends AbstractContainerScreen<RubyShop3Menu> {
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
+	Button button_purchase_32;
+	Button button_empty;
 
 	public RubyShop3Screen(RubyShop3Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -35,8 +36,6 @@ public class RubyShop3Screen extends AbstractContainerScreen<RubyShop3Menu> {
 		this.imageWidth = 176;
 		this.imageHeight = 166;
 	}
-
-	private static final ResourceLocation texture = new ResourceLocation("minecraft_earth_mod:textures/screens/ruby_shop_3.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -50,8 +49,10 @@ public class RubyShop3Screen extends AbstractContainerScreen<RubyShop3Menu> {
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShaderTexture(0, texture);
-		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("minecraft_earth_mod:textures/screens/critterpedia_gui_blank.png"));
+		this.blit(ms, this.leftPos + -29, this.topPos + -2, 0, 0, 236, 157, 236, 157);
+
 		RenderSystem.disableBlend();
 	}
 
@@ -71,7 +72,7 @@ public class RubyShop3Screen extends AbstractContainerScreen<RubyShop3Menu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, "Suspicious Item", 6, 33, -3407872);
+		this.font.draw(poseStack, Component.translatable("gui.minecraft_earth_mod.ruby_shop_3.label_empty"), -11, 25, -3407872);
 	}
 
 	@Override
@@ -84,19 +85,21 @@ public class RubyShop3Screen extends AbstractContainerScreen<RubyShop3Menu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		this.addRenderableWidget(new Button(this.leftPos + 6, this.topPos + 2, 80, 20, Component.literal("Previous"), e -> {
+		button_purchase_32 = new Button(this.leftPos + 42, this.topPos + 16, 72, 20, Component.translatable("gui.minecraft_earth_mod.ruby_shop_3.button_purchase_32"), e -> {
 			if (true) {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new RubyShop3ButtonMessage(0, x, y, z));
 				RubyShop3ButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}));
-		this.addRenderableWidget(new Button(this.leftPos + 105, this.topPos + 2, 40, 20, Component.literal("Next"), e -> {
-		}));
-		this.addRenderableWidget(new Button(this.leftPos + 51, this.topPos + 47, 99, 20, Component.literal("Price: 32 Rubies"), e -> {
+		});
+		guistate.put("button:button_purchase_32", button_purchase_32);
+		this.addRenderableWidget(button_purchase_32);
+		button_empty = new Button(this.leftPos + 150, this.topPos + 106, 18, 20, Component.translatable("gui.minecraft_earth_mod.ruby_shop_3.button_empty"), e -> {
 			if (true) {
-				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new RubyShop3ButtonMessage(2, x, y, z));
-				RubyShop3ButtonMessage.handleButtonAction(entity, 2, x, y, z);
+				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new RubyShop3ButtonMessage(1, x, y, z));
+				RubyShop3ButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
-		}));
+		});
+		guistate.put("button:button_empty", button_empty);
+		this.addRenderableWidget(button_empty);
 	}
 }

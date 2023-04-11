@@ -1,11 +1,11 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Furnace Golem",
     "mobLabel": "",
-    "mobModelName": "Modelfurnacegolemalt",
-    "mobModelTexture": "furnacegolemalt.png",
+    "mobModelName": "Modelfurnacegolem_new",
+    "mobModelTexture": "furnacegolem.png",
     "mobModelGlowTexture": "",
     "modelWidth": 1.4,
     "modelHeight": 2.7,
@@ -92,16 +92,6 @@
     "stepSound": {
       "value": "entity.irongolem.step"
     },
-    "spawnParticles": true,
-    "particleToSpawn": {
-      "value": "SMOKE_NORMAL"
-    },
-    "particleSpawningShape": "Top",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 5,
-    "particleCondition": {
-      "name": "IfFurnaceGolemAngry"
-    },
     "onMobTickUpdate": {
       "name": "FurnaceGolemOnEntityTickUpdate"
     },
@@ -119,6 +109,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningCondition": {

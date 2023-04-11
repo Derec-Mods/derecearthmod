@@ -26,8 +26,7 @@ public class BuyKeyProcedure {
 			return;
 		if (new Object() {
 			public int getAmount(int sltid) {
-				if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-						&& _current.get() instanceof Map _slots) {
+				if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get() instanceof Map _slots) {
 					ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
 					if (stack != null)
 						return stack.getCount();
@@ -37,18 +36,15 @@ public class BuyKeyProcedure {
 		}.getAmount(0) == 32) {
 			MinecraftEarthModModVariables.MapVariables.get(world).boughtkey = 1;
 			MinecraftEarthModModVariables.MapVariables.get(world).syncData(world);
-			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-					&& _current.get() instanceof Map _slots) {
+			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get() instanceof Map _slots) {
 				((Slot) _slots.get(0)).set(ItemStack.EMPTY);
 				_player.containerMenu.broadcastChanges();
 			}
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
-							SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")), SoundSource.NEUTRAL, 1, 1);
 				} else {
-					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")),
-							SoundSource.NEUTRAL, 1, 1, false);
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.portal.travel")), SoundSource.NEUTRAL, 1, 1, false);
 				}
 			}
 			if (entity instanceof Player _player) {
@@ -59,11 +55,9 @@ public class BuyKeyProcedure {
 		} else {
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-							SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1);
 				} else {
-					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-							SoundSource.NEUTRAL, 1, 1, false);
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1, false);
 				}
 			}
 		}

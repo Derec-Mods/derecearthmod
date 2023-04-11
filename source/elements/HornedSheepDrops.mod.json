@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "loottable",
   "definition": {
     "type": "Entity",
@@ -14,7 +14,7 @@
           {
             "type": "item",
             "item": {
-              "value": "CUSTOM:Horn"
+              "value": "Items.GOAT_HORN"
             },
             "weight": 1,
             "minCount": 1,

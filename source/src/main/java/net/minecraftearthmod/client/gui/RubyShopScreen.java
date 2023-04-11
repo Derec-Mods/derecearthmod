@@ -1,4 +1,3 @@
-
 package net.minecraftearthmod.client.gui;
 
 import net.minecraftearthmod.world.inventory.RubyShopMenu;
@@ -24,6 +23,8 @@ public class RubyShopScreen extends AbstractContainerScreen<RubyShopMenu> {
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
+	Button button_purchase;
+	Button button_empty;
 
 	public RubyShopScreen(RubyShopMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -35,8 +36,6 @@ public class RubyShopScreen extends AbstractContainerScreen<RubyShopMenu> {
 		this.imageWidth = 176;
 		this.imageHeight = 166;
 	}
-
-	private static final ResourceLocation texture = new ResourceLocation("minecraft_earth_mod:textures/screens/ruby_shop.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -50,17 +49,18 @@ public class RubyShopScreen extends AbstractContainerScreen<RubyShopMenu> {
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShaderTexture(0, texture);
-		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("minecraft_earth_mod:textures/screens/critterpedia_gui_blank.png"));
+		this.blit(ms, this.leftPos + -29, this.topPos + -2, 0, 0, 236, 157, 236, 157);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("minecraft_earth_mod:textures/screens/rubyblock.png"));
-		this.blit(ms, this.leftPos + 178, this.topPos + -33, 0, 0, 256, 256, 256, 256);
+		this.blit(ms, this.leftPos + 159, this.topPos + 70, 0, 0, 256, 256, 256, 256);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("minecraft_earth_mod:textures/screens/ruby.png"));
-		this.blit(ms, this.leftPos + 6, this.topPos + 11, 0, 0, 256, 256, 256, 256);
+		this.blit(ms, this.leftPos + 132, this.topPos + -2, 0, 0, 256, 256, 256, 256);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("minecraft_earth_mod:textures/screens/ruby.png"));
-		this.blit(ms, this.leftPos + 159, this.topPos + 11, 0, 0, 256, 256, 256, 256);
+		this.blit(ms, this.leftPos + -29, this.topPos + -2, 0, 0, 256, 256, 256, 256);
 
 		RenderSystem.disableBlend();
 	}
@@ -81,8 +81,8 @@ public class RubyShopScreen extends AbstractContainerScreen<RubyShopMenu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, "Welcome to the Ruby Shop!", 24, 11, -3407872);
-		this.font.draw(poseStack, "Random Plant", 6, 38, -6750208);
+		this.font.draw(poseStack, Component.translatable("gui.minecraft_earth_mod.ruby_shop.label_welcome_to_the_ruby_shop"), -11, 16, -3407872);
+		this.font.draw(poseStack, Component.translatable("gui.minecraft_earth_mod.ruby_shop.label_random_plant"), -11, 43, -6750208);
 	}
 
 	@Override
@@ -95,17 +95,21 @@ public class RubyShopScreen extends AbstractContainerScreen<RubyShopMenu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		this.addRenderableWidget(new Button(this.leftPos + 78, this.topPos + 29, 90, 20, Component.literal("Buy Random Plant"), e -> {
+		button_purchase = new Button(this.leftPos + 60, this.topPos + 34, 63, 20, Component.translatable("gui.minecraft_earth_mod.ruby_shop.button_purchase"), e -> {
 			if (true) {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new RubyShopButtonMessage(0, x, y, z));
 				RubyShopButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
-		}));
-		this.addRenderableWidget(new Button(this.leftPos + 43, this.topPos + 58, 90, 20, Component.literal("Next Page"), e -> {
+		});
+		guistate.put("button:button_purchase", button_purchase);
+		this.addRenderableWidget(button_purchase);
+		button_empty = new Button(this.leftPos + 177, this.topPos + 106, 18, 20, Component.translatable("gui.minecraft_earth_mod.ruby_shop.button_empty"), e -> {
 			if (true) {
 				MinecraftEarthModMod.PACKET_HANDLER.sendToServer(new RubyShopButtonMessage(1, x, y, z));
 				RubyShopButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
-		}));
+		});
+		guistate.put("button:button_empty", button_empty);
+		this.addRenderableWidget(button_empty);
 	}
 }

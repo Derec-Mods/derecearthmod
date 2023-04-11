@@ -1,0 +1,15 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "forest",
+    "plains",
+    "swamp",
+    "mangrove_swamp"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:viller_witch",
+    "weight": 1,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

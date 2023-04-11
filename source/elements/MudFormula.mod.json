@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "item",
   "definition": {
     "renderType": 0,
@@ -15,6 +15,9 @@
     "useDuration": 10,
     "toolType": 0.0,
     "damageCount": 0,
+    "recipeRemainder": {
+      "value": ""
+    },
     "destroyAnyBlock": false,
     "immuneToFire": false,
     "stayInGridWhenCrafting": false,
@@ -25,6 +28,7 @@
       "Everything in this bottle is edible."
     ],
     "hasGlow": false,
+    "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "onFinishUsingItem": {
@@ -33,6 +37,9 @@
     "isFood": true,
     "nutritionalValue": 2,
     "saturation": 0.1,
+    "eatResultItem": {
+      "value": ""
+    },
     "isMeat": false,
     "isAlwaysEdible": true,
     "animation": "drink"

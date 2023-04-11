@@ -28,8 +28,7 @@ public class CowBeefDropsProcedure {
 				_level.addFreshEntity(entityToSpawn);
 			}
 		}
-		for (int index0 = 0; index0 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-				(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index0++) {
+		for (int index0 = 0; index0 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index0++) {
 			if (Math.random() * 100 <= 50) {
 				if (world instanceof Level _level && !_level.isClientSide()) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.LEATHER));
@@ -58,8 +57,7 @@ public class CowBeefDropsProcedure {
 					_level.addFreshEntity(entityToSpawn);
 				}
 			}
-			for (int index1 = 0; index1 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-					(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index1++) {
+			for (int index1 = 0; index1 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index1++) {
 				if (Math.random() * 100 <= 50) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_BEEF));
@@ -88,8 +86,7 @@ public class CowBeefDropsProcedure {
 					_level.addFreshEntity(entityToSpawn);
 				}
 			}
-			for (int index2 = 0; index2 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-					(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index2++) {
+			for (int index2 = 0; index2 < (int) (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY))); index2++) {
 				if (Math.random() * 100 <= 50) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.BEEF));

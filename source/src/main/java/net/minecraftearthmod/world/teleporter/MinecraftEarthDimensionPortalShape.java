@@ -39,17 +39,14 @@ public class MinecraftEarthDimensionPortalShape {
 	private int height;
 	private final int width;
 
-	public static Optional<MinecraftEarthDimensionPortalShape> findEmptyPortalShape(LevelAccessor p_77709_, BlockPos p_77710_,
-			Direction.Axis p_77711_) {
+	public static Optional<MinecraftEarthDimensionPortalShape> findEmptyPortalShape(LevelAccessor p_77709_, BlockPos p_77710_, Direction.Axis p_77711_) {
 		return findPortalShape(p_77709_, p_77710_, (p_77727_) -> {
 			return p_77727_.isValid() && p_77727_.numPortalBlocks == 0;
 		}, p_77711_);
 	}
 
-	public static Optional<MinecraftEarthDimensionPortalShape> findPortalShape(LevelAccessor p_77713_, BlockPos p_77714_,
-			Predicate<MinecraftEarthDimensionPortalShape> p_77715_, Direction.Axis p_77716_) {
-		Optional<MinecraftEarthDimensionPortalShape> optional = Optional.of(new MinecraftEarthDimensionPortalShape(p_77713_, p_77714_, p_77716_))
-				.filter(p_77715_);
+	public static Optional<MinecraftEarthDimensionPortalShape> findPortalShape(LevelAccessor p_77713_, BlockPos p_77714_, Predicate<MinecraftEarthDimensionPortalShape> p_77715_, Direction.Axis p_77716_) {
+		Optional<MinecraftEarthDimensionPortalShape> optional = Optional.of(new MinecraftEarthDimensionPortalShape(p_77713_, p_77714_, p_77716_)).filter(p_77715_);
 		if (optional.isPresent()) {
 			return optional;
 		} else {
@@ -77,8 +74,7 @@ public class MinecraftEarthDimensionPortalShape {
 
 	@Nullable
 	private BlockPos calculateBottomLeft(BlockPos p_77734_) {
-		for (int i = Math.max(this.level.getMinBuildHeight(), p_77734_.getY() - 21); p_77734_.getY() > i
-				&& isEmpty(this.level.getBlockState(p_77734_.below())); p_77734_ = p_77734_.below()) {
+		for (int i = Math.max(this.level.getMinBuildHeight(), p_77734_.getY() - 21); p_77734_.getY() > i && isEmpty(this.level.getBlockState(p_77734_.below())); p_77734_ = p_77734_.below()) {
 		}
 		Direction direction = this.rightDir.getOpposite();
 		int j = this.getDistanceUntilEdgeAboveFrame(p_77734_, direction) - 1;
@@ -158,14 +154,12 @@ public class MinecraftEarthDimensionPortalShape {
 	}
 
 	public void createPortalBlocks() {
-		BlockState blockstate = MinecraftEarthModModBlocks.MINECRAFT_EARTH_DIMENSION_PORTAL.get().defaultBlockState().setValue(NetherPortalBlock.AXIS,
-				this.axis);
-		BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1))
-				.forEach((p_77725_) -> {
-					this.level.setBlock(p_77725_, blockstate, 18);
-					if (this.level instanceof ServerLevel)
-						((ServerLevel) this.level).getPoiManager().add(p_77725_, MinecraftEarthDimensionTeleporter.poi);
-				});
+		BlockState blockstate = MinecraftEarthModModBlocks.MINECRAFT_EARTH_DIMENSION_PORTAL.get().defaultBlockState().setValue(NetherPortalBlock.AXIS, this.axis);
+		BlockPos.betweenClosed(this.bottomLeft, this.bottomLeft.relative(Direction.UP, this.height - 1).relative(this.rightDir, this.width - 1)).forEach((p_77725_) -> {
+			this.level.setBlock(p_77725_, blockstate, 18);
+			if (this.level instanceof ServerLevel)
+				((ServerLevel) this.level).getPoiManager().add(p_77725_, MinecraftEarthDimensionTeleporter.poi);
+		});
 	}
 
 	public boolean isComplete() {
@@ -195,8 +189,7 @@ public class MinecraftEarthDimensionPortalShape {
 		return new Vec3(d2, d4, d3);
 	}
 
-	public static PortalInfo createPortalInfo(ServerLevel p_77700_, BlockUtil.FoundRectangle p_77701_, Direction.Axis p_77702_, Vec3 p_77703_,
-			EntityDimensions p_77704_, Vec3 p_77705_, float p_77706_, float p_77707_) {
+	public static PortalInfo createPortalInfo(ServerLevel p_77700_, BlockUtil.FoundRectangle p_77701_, Direction.Axis p_77702_, Vec3 p_77703_, EntityDimensions p_77704_, Vec3 p_77705_, float p_77706_, float p_77707_) {
 		BlockPos blockpos = p_77701_.minCorner;
 		BlockState blockstate = p_77700_.getBlockState(blockpos);
 		Direction.Axis direction$axis = blockstate.getOptionalValue(BlockStateProperties.HORIZONTAL_AXIS).orElse(Direction.Axis.X);
@@ -208,8 +201,7 @@ public class MinecraftEarthDimensionPortalShape {
 		double d3 = (d1 - (double) p_77704_.height) * p_77703_.y();
 		double d4 = 0.5D + p_77703_.z();
 		boolean flag = direction$axis == Direction.Axis.X;
-		Vec3 vec31 = new Vec3((double) blockpos.getX() + (flag ? d2 : d4), (double) blockpos.getY() + d3,
-				(double) blockpos.getZ() + (flag ? d4 : d2));
+		Vec3 vec31 = new Vec3((double) blockpos.getX() + (flag ? d2 : d4), (double) blockpos.getY() + d3, (double) blockpos.getZ() + (flag ? d4 : d2));
 		return new PortalInfo(vec31, vec3, p_77706_ + (float) i, p_77707_);
 	}
 }

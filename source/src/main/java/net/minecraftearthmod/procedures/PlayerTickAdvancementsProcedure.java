@@ -38,9 +38,7 @@ public class PlayerTickAdvancementsProcedure {
 		if (entity == null)
 			return;
 		if (!(entity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
-				? _plr.getAdvancements()
-						.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft_earth_mod:experimenter")))
-						.isDone()
+				? _plr.getAdvancements().getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft_earth_mod:experimenter"))).isDone()
 				: false)) {
 			if (world.getLevelData().getGameRules().getBoolean(MinecraftEarthModModGameRules.EXPERIMENTALMODE)) {
 				if (entity instanceof ServerPlayer _player) {
@@ -56,9 +54,7 @@ public class PlayerTickAdvancementsProcedure {
 		}
 		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.MUD.get()) {
 			if (!(entity instanceof ServerPlayer _plr && _plr.level instanceof ServerLevel
-					? _plr.getAdvancements()
-							.getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft_earth_mod:get_mud")))
-							.isDone()
+					? _plr.getAdvancements().getOrStartProgress(_plr.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft_earth_mod:get_mud"))).isDone()
 					: false)) {
 				if (entity instanceof ServerPlayer _player) {
 					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("minecraft_earth_mod:get_mud"));

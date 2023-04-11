@@ -1,10 +1,10 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Tropical Slime",
     "mobLabel": "",
-    "mobModelName": "Modeltropicalslime",
+    "mobModelName": "Slime",
     "mobModelTexture": "tropical_slime.png",
     "mobModelGlowTexture": "",
     "modelWidth": 1.0,
@@ -92,13 +92,6 @@
     "stepSound": {
       "value": "entity.slime.squish"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "whenMobFalls": {
       "name": "TropicalSlimeSmallEntityFalls"
     },
@@ -113,7 +106,9 @@
       "value": ""
     },
     "rangedItemType": "Default item",
-    "spawnThisMob": true,
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
+    "spawnThisMob": false,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 5,
     "mobSpawningType": "monster",

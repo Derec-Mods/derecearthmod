@@ -1,14 +1,14 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Rainbow Sheep",
     "mobLabel": "",
-    "mobModelName": "Modelrainbowsheepwool",
+    "mobModelName": "Modelrainbowsheepwool_NEW",
     "mobModelTexture": "rainbowsheepwool.png",
     "mobModelGlowTexture": "",
-    "modelWidth": 0.9,
-    "modelHeight": 1.3,
+    "modelWidth": 0.7,
+    "modelHeight": 0.4,
     "modelShadowSize": 0.5,
     "mountedYOffset": 0.0,
     "hasSpawnEgg": true,
@@ -92,13 +92,6 @@
     "stepSound": {
       "value": "entity.sheep.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "onRightClickedOn": {
       "name": "ShearWoolyCow"
     },
@@ -123,6 +116,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 1,

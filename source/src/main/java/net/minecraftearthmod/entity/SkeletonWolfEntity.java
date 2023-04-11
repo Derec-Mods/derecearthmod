@@ -16,6 +16,7 @@ import net.minecraftearthmod.procedures.CheckHostileMobSpawnsProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.SpawnEggItem;
@@ -52,6 +53,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
@@ -143,7 +145,7 @@ public class SkeletonWolfEntity extends TamableAnimal {
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
-				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
 		this.goalSelector.addGoal(6, new FollowMobGoal(this, (float) 1, 10, 5));
@@ -159,6 +161,11 @@ public class SkeletonWolfEntity extends TamableAnimal {
 	@Override
 	public SoundEvent getAmbientSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.ambient"));
+	}
+
+	@Override
+	public void playStepSound(BlockPos pos, BlockState blockIn) {
+		this.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.skeleton.step")), 0.15f, 1);
 	}
 
 	@Override
@@ -184,8 +191,7 @@ public class SkeletonWolfEntity extends TamableAnimal {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
-			@Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
 		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
 		WolfySpawnProcedure.execute(this);
 		return retval;
@@ -199,9 +205,7 @@ public class SkeletonWolfEntity extends TamableAnimal {
 		if (itemstack.getItem() instanceof SpawnEggItem) {
 			retval = super.mobInteract(sourceentity, hand);
 		} else if (this.level.isClientSide()) {
-			retval = (this.isTame() && this.isOwnedBy(sourceentity) || this.isFood(itemstack))
-					? InteractionResult.sidedSuccess(this.level.isClientSide())
-					: InteractionResult.PASS;
+			retval = (this.isTame() && this.isOwnedBy(sourceentity) || this.isFood(itemstack)) ? InteractionResult.sidedSuccess(this.level.isClientSide()) : InteractionResult.PASS;
 		} else {
 			if (this.isTame()) {
 				if (this.isOwnedBy(sourceentity)) {
@@ -268,13 +272,12 @@ public class SkeletonWolfEntity extends TamableAnimal {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(MinecraftEarthModModEntities.SKELETON_WOLF.get(), SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
-					int x = pos.getX();
-					int y = pos.getY();
-					int z = pos.getZ();
-					return CheckHostileMobSpawnsProcedure.execute(world);
-				});
+		SpawnPlacements.register(MinecraftEarthModModEntities.SKELETON_WOLF.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (entityType, world, reason, pos, random) -> {
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			return CheckHostileMobSpawnsProcedure.execute(world);
+		});
 		DungeonHooks.addDungeonMob(MinecraftEarthModModEntities.SKELETON_WOLF.get(), 180);
 	}
 

@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "biome",
   "definition": {
     "name": "Icy Build Plate",
@@ -9,17 +9,64 @@
     "undergroundBlock": {
       "value": "Blocks.PACKED_ICE"
     },
+    "underwaterBlock": {
+      "value": ""
+    },
+    "grassColor": {
+      "value": -8856833,
+      "falpha": 0.0
+    },
+    "foliageColor": {
+      "value": -8856848,
+      "falpha": 0.0
+    },
+    "waterColor": {
+      "value": -8856848,
+      "falpha": 0.0
+    },
+    "ambientSound": {
+      "value": ""
+    },
+    "additionsSound": {
+      "value": ""
+    },
+    "music": {
+      "value": ""
+    },
+    "moodSound": {
+      "value": ""
+    },
     "moodSoundDelay": 0,
-    "spawnParticles": false,
+    "spawnParticles": true,
+    "particleToSpawn": {
+      "value": "SNOWFLAKE"
+    },
     "particlesProbability": 0.0,
     "rainingPossibility": 0.7,
     "temperature": 0.1,
-    "baseHeight": 0.1,
-    "heightVariation": 0.1,
     "spawnBiome": false,
-    "spawnBiomeNether": false,
     "spawnInCaves": false,
-    "biomeWeight": 5,
+    "spawnBiomeNether": false,
+    "genTemperature": {
+      "min": -0.3666666666666666,
+      "max": -0.1666666666666666
+    },
+    "genHumidity": {
+      "min": 0.29999999999999993,
+      "max": 0.4999999999999999
+    },
+    "genContinentalness": {
+      "min": 0.41000000000000003,
+      "max": 0.61
+    },
+    "genErosion": {
+      "min": 0.7999999999999999,
+      "max": 0.9999999999999999
+    },
+    "genWeirdness": {
+      "min": 0.30820533027919617,
+      "max": 0.5082053302791961
+    },
     "grassPerChunk": 1,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 1,

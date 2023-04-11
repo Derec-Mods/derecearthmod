@@ -1,26 +1,37 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "gui",
   "definition": {
-    "type": 1,
+    "type": 0,
     "width": 176,
     "height": 166,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 0,
-    "renderBgLayer": true,
+    "renderBgLayer": false,
     "doesPauseGame": false,
     "components": [
       {
+        "type": "image",
+        "data": {
+          "image": "critterpedia_gui_blank.png",
+          "use1Xscale": false,
+          "x": 96,
+          "y": 35
+        }
+      },
+      {
         "type": "label",
         "data": {
-          "text": "Welcome to the Ruby Shop!",
+          "name": "label_welcome_to_the_ruby_shop",
+          "text": {
+            "fixedValue": "Welcome to the Ruby Shop!"
+          },
           "color": {
             "value": -3407872,
             "falpha": 0.0
           },
-          "name": "Welcome to the Ruby Shop!",
-          "x": 150,
-          "y": 48
+          "x": 114,
+          "y": 53
         }
       },
       {
@@ -28,82 +39,78 @@
         "data": {
           "image": "rubyblock.png",
           "use1Xscale": false,
-          "name": "rubyblock.png",
-          "x": 304,
-          "y": 4
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "ruby.png",
-          "use1Xscale": false,
-          "name": "ruby.png",
-          "x": 132,
-          "y": 48
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "ruby.png",
-          "use1Xscale": false,
-          "name": "ruby.png",
           "x": 285,
-          "y": 48
+          "y": 107
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ruby.png",
+          "use1Xscale": false,
+          "x": 258,
+          "y": 35
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ruby.png",
+          "use1Xscale": false,
+          "x": 96,
+          "y": 35
         }
       },
       {
         "type": "label",
         "data": {
-          "text": "Random Plant",
+          "name": "label_random_plant",
+          "text": {
+            "fixedValue": "Random Plant"
+          },
           "color": {
             "value": -6750208,
             "falpha": 0.0
           },
-          "name": "Random Plant",
-          "x": 132,
-          "y": 75
+          "x": 114,
+          "y": 80
         }
       },
       {
         "type": "button",
         "data": {
-          "text": "Buy Random Plant",
+          "name": "button_purchase",
+          "text": "Purchase",
           "onClick": {
             "name": "BuyRandomPotion"
           },
-          "width": 90,
+          "width": 63,
           "height": 20,
-          "name": "Buy Random Plant",
-          "x": 204,
-          "y": 66
+          "x": 186,
+          "y": 71
         }
       },
       {
         "type": "button",
         "data": {
-          "text": "Next Page",
+          "name": "button_empty",
+          "text": "->",
           "onClick": {
             "name": "GotoPage2"
           },
-          "width": 90,
+          "width": 18,
           "height": 20,
-          "name": "Next Page",
-          "x": 169,
-          "y": 95
+          "x": 303,
+          "y": 143
         }
       }
     ],
-    "onOpen": {
-      "name": "PlayOpenSound"
-    },
     "gridSettings": {
       "sx": 18,
       "sy": 18,
       "ox": 11,
       "oy": 15,
-      "snapOnGrid": false
+      "snapOnGrid": true
     }
   }
 }

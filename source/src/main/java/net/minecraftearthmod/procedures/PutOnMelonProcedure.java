@@ -32,10 +32,8 @@ public class PutOnMelonProcedure {
 	private static void execute(@Nullable Event event, Entity entity) {
 		if (entity == null)
 			return;
-		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
-				.getItem() == MinecraftEarthModModBlocks.CARVED_MELON.get().asItem()) {
-			if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY)
-					.getItem() == Blocks.AIR.asItem()) {
+		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == MinecraftEarthModModBlocks.CARVED_MELON.get().asItem()) {
+			if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
 				{
 					Entity _entity = entity;
 					if (_entity instanceof Player _player) {
@@ -47,8 +45,7 @@ public class PutOnMelonProcedure {
 				}
 				if (entity instanceof Player _player) {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModBlocks.CARVED_MELON.get());
-					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
-							_player.inventoryMenu.getCraftSlots());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
 			}
 		}

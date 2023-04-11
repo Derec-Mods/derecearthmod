@@ -36,16 +36,13 @@ public class RubyBlockFeature extends OreFeature {
 	public static Feature<?> feature() {
 		FEATURE = new RubyBlockFeature();
 		CONFIGURED_FEATURE = FeatureUtils.register("minecraft_earth_mod:ruby_block", FEATURE,
-				new OreConfiguration(List.of(OreConfiguration.target(new BlockStateMatchTest(Blocks.STONE.defaultBlockState()),
-						MinecraftEarthModModBlocks.RUBY_BLOCK.get().defaultBlockState())), 1));
+				new OreConfiguration(List.of(OreConfiguration.target(new BlockStateMatchTest(Blocks.STONE.defaultBlockState()), MinecraftEarthModModBlocks.RUBY_BLOCK.get().defaultBlockState())), 1));
 		PLACED_FEATURE = PlacementUtils.register("minecraft_earth_mod:ruby_block", CONFIGURED_FEATURE,
-				List.of(CountPlacement.of(1), InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(12)), BiomeFilter.biome()));
+				List.of(CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(12)), BiomeFilter.biome()));
 		return FEATURE;
 	}
 
-	private final Set<ResourceKey<Level>> generate_dimensions = Set
-			.of(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
+	private final Set<ResourceKey<Level>> generate_dimensions = Set.of(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
 
 	public RubyBlockFeature() {
 		super(OreConfiguration.CODEC);

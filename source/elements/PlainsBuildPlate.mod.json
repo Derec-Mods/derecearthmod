@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "biome",
   "definition": {
     "name": "Plains Buildplate",
@@ -9,12 +9,15 @@
     "undergroundBlock": {
       "value": "Blocks.DIRT#0"
     },
+    "underwaterBlock": {
+      "value": ""
+    },
     "grassColor": {
-      "value": -10777806,
+      "value": -5836737,
       "falpha": 0.0
     },
     "foliageColor": {
-      "value": -10777806,
+      "value": -5843849,
       "falpha": 0.0
     },
     "ambientSound": {
@@ -37,12 +40,29 @@
     "particlesProbability": 0.0,
     "rainingPossibility": 0.5,
     "temperature": 0.5,
-    "baseHeight": 0.1,
-    "heightVariation": 0.0,
     "spawnBiome": false,
-    "spawnBiomeNether": false,
     "spawnInCaves": false,
-    "biomeWeight": 10,
+    "spawnBiomeNether": false,
+    "genTemperature": {
+      "min": -0.2,
+      "max": 0.2
+    },
+    "genHumidity": {
+      "min": -0.2,
+      "max": 0.2
+    },
+    "genContinentalness": {
+      "min": 0.31,
+      "max": 0.71
+    },
+    "genErosion": {
+      "min": 0.8,
+      "max": 1.2
+    },
+    "genWeirdness": {
+      "min": 0.053219530143053084,
+      "max": 0.4532195301430531
+    },
     "grassPerChunk": 3,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 3,

@@ -16,19 +16,13 @@
   },
   "criteria": {
     "eat_mud_formula": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "minecraft:consume_item",
       "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft_earth_mod:mud_formula"
-            ],
-            "count": {
-              "min": 1,
-              "max": 64
-            }
-          }
-        ]
+        "item": {
+          "items": [
+            "minecraft_earth_mod:mud_formula"
+          ]
+        }
       }
     }
   },

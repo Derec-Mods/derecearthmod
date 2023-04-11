@@ -1,10 +1,10 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Rocky Sheep",
     "mobLabel": "",
-    "mobModelName": "Modelrockysheep",
+    "mobModelName": "ModelrockysheepNEW",
     "mobModelTexture": "rockysheep.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.9,
@@ -92,13 +92,6 @@
     "stepSound": {
       "value": "entity.sheep.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "onRightClickedOn": {
       "name": "ShearWoolyCow"
     },
@@ -123,6 +116,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 5,

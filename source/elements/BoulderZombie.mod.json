@@ -1,14 +1,13 @@
 {
-  "_fv": 34,
-  "_type": "livingentity",
+  "_fv": 39,
+  "_type": "animatedentity",
   "definition": {
-    "mobName": "Bouldering Zombie",
+    "mobName": "Boulder Zombie",
     "mobLabel": "",
-    "mobModelName": "Modelboulderingzombie",
-    "mobModelTexture": "boulderingzombie.png",
+    "mobModelTexture": "boulderzombie.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.6,
-    "modelHeight": 1.9000000000000001,
+    "modelHeight": 1.8,
     "modelShadowSize": 0.5,
     "mountedYOffset": 0.0,
     "hasSpawnEgg": true,
@@ -46,20 +45,22 @@
     },
     "mobBehaviourType": "Mob",
     "mobCreatureType": "UNDEAD",
-    "attackStrength": 3,
-    "attackKnockback": 0.1,
+    "attackStrength": 4,
+    "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
     "followRange": 16,
-    "health": 20,
-    "xpAmount": 5,
+    "health": 25,
+    "xpAmount": 15,
     "waterMob": false,
     "flyingMob": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
+    "deathTime": 20,
+    "lerp": 4,
     "disableCollisions": false,
     "ridable": false,
     "canControlForward": false,
@@ -90,70 +91,78 @@
       "value": "entity.zombie.death"
     },
     "stepSound": {
-      "value": "entity.zombie.step"
+      "value": "entity.zombie_villager.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "onMobTickUpdate": {
-      "name": "BoulderZombieCheckClimb"
+      "name": "BoulderZombBoulderr"
     },
     "hasAI": true,
     "aiBase": "(none)",
-    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayer</field><field name=\"condition\">null,null</field><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayerMP</field><field name=\"condition\">null,null</field><next><block type=\"attack_on_collide\"><field name=\"speed\">1.2</field><field name=\"longmemory\">TRUE</field><field name=\"condition\">null,null</field><next><block type=\"restrict_sun\"><field name=\"condition\">null,null</field><next><block type=\"wander\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_on_collide\"><field name=\"speed\">1.2</field><field name=\"longmemory\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"wander\"><field name=\"speed\">0.8</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayer</field><field name=\"condition\">null,null</field><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayerMP</field><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "model": "boulderzombienew.geo.json",
+    "groupName": "",
+    "animation1": "animation.boulderZombieNEW.idle",
+    "animation2": "animation.boulderZombieNEW.walkAttack",
+    "animation3": "",
+    "animation4": "animation.boulderZombieNEW.walkAttack",
+    "animation5": "",
+    "animation6": "",
+    "animation7": "animation.boulderZombieNEW.walkAttack",
+    "animation8": "animation.boulderZombieNEW.boulder",
+    "animation9": "",
+    "animation10": "",
+    "enable2": true,
+    "enable3": false,
+    "enable4": true,
+    "enable5": false,
+    "enable6": false,
+    "enable7": true,
+    "enable8": false,
+    "enable9": false,
+    "enable10": false,
     "breedable": false,
     "tameable": false,
+    "disableDeathRotation": false,
+    "headMovement": false,
+    "eyeHeight": false,
     "breedTriggerItems": [],
     "ranged": false,
     "rangedAttackItem": {
-      "value": "Items.ROTTEN_FLESH"
+      "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
+    "height": 1.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
-    "spawningCondition": {
-      "name": "CheckExperimental"
-    },
-    "spawningProbability": 10,
+    "spawningProbability": 2,
     "mobSpawningType": "monster",
     "minNumberOfMobsPerGroup": 1,
     "maxNumberOfMobsPerGroup": 1,
     "restrictionBiomes": [
       {
-        "value": "plains"
-      },
-      {
-        "value": "desert"
-      },
-      {
-        "value": "mountains"
+        "value": "birch_forest"
       },
       {
         "value": "forest"
       },
       {
-        "value": "swamp"
-      },
-      {
-        "value": "snowy_tundra"
-      },
-      {
-        "value": "beaches"
-      },
-      {
-        "value": "desert_hills"
+        "value": "badlands"
       },
       {
         "value": "jungle"
       },
       {
+        "value": "desert"
+      },
+      {
+        "value": "plains"
+      },
+      {
         "value": "savanna"
       }
     ],
-    "spawnInDungeons": true
+    "spawnInDungeons": false
   }
 }

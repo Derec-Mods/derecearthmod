@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft_earth_mod:horn",
+          "name": "minecraft:goat_horn",
           "weight": 1,
           "functions": [
             {

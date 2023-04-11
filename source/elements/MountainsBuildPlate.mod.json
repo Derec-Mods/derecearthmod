@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "biome",
   "definition": {
     "name": "Mountains Build Plate",
@@ -37,12 +37,29 @@
     "particlesProbability": 0.0,
     "rainingPossibility": 0.5,
     "temperature": 0.1,
-    "baseHeight": 0.1,
-    "heightVariation": 0.5,
     "spawnBiome": false,
-    "spawnBiomeNether": false,
     "spawnInCaves": false,
-    "biomeWeight": 5,
+    "spawnBiomeNether": false,
+    "genTemperature": {
+      "min": -0.3666666666666666,
+      "max": -0.1666666666666666
+    },
+    "genHumidity": {
+      "min": -0.1,
+      "max": 0.1
+    },
+    "genContinentalness": {
+      "min": 0.41000000000000003,
+      "max": 0.61
+    },
+    "genErosion": {
+      "min": 0.4,
+      "max": 0.6
+    },
+    "genWeirdness": {
+      "min": -0.5640883328414455,
+      "max": -0.3640883328414456
+    },
     "grassPerChunk": 1,
     "seagrassPerChunk": 0,
     "flowersPerChunk": 2,

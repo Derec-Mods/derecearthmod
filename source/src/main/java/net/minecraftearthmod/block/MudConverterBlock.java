@@ -39,10 +39,7 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 import java.util.Collections;
 
-public class MudConverterBlock extends Block
-		implements
-
-			EntityBlock {
+public class MudConverterBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 	public MudConverterBlock() {
@@ -103,7 +100,6 @@ public class MudConverterBlock extends Block
 		double hitY = hit.getLocation().y;
 		double hitZ = hit.getLocation().z;
 		Direction direction = hit.getDirection();
-
 		MudConverterBucketTakeProcedure.execute(world, x, y, z, entity);
 		return InteractionResult.SUCCESS;
 	}

@@ -39,22 +39,18 @@ public class MakeMudFormulaProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.MUD.get()
-				|| (world.getBlockState(new BlockPos(x, y - 1, z))).getBlock() == MinecraftEarthModModBlocks.MUD.get()) {
+		if ((world.getBlockState(new BlockPos(x, y, z))).getBlock() == MinecraftEarthModModBlocks.MUD.get() || (world.getBlockState(new BlockPos(x, y - 1, z))).getBlock() == MinecraftEarthModModBlocks.MUD.get()) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Items.GLASS_BOTTLE) {
 				if (world instanceof Level _level) {
 					if (!_level.isClientSide()) {
-						_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
-								SoundSource.NEUTRAL, 1, 1);
+						_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")), SoundSource.NEUTRAL, 1, 1);
 					} else {
-						_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")),
-								SoundSource.NEUTRAL, 1, 1, false);
+						_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bottle.fill")), SoundSource.NEUTRAL, 1, 1, false);
 					}
 				}
 				if (entity instanceof Player _player) {
 					ItemStack _stktoremove = new ItemStack(Items.GLASS_BOTTLE);
-					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
-							_player.inventoryMenu.getCraftSlots());
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
 				if (entity instanceof Player _player) {
 					ItemStack _setstack = new ItemStack(MinecraftEarthModModItems.MUD_FORMULA.get());

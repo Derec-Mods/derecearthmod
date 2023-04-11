@@ -23,13 +23,10 @@ public class BuyRandomPotionProcedure {
 		if (entity == null)
 			return;
 		double Random = 0;
-		if (entity instanceof Player _playerHasItem
-				? _playerHasItem.getInventory().contains(new ItemStack(MinecraftEarthModModItems.RUBY.get()))
-				: false) {
+		if (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(MinecraftEarthModModItems.RUBY.get())) : false) {
 			if (entity instanceof Player _player) {
 				ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
-				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1,
-						_player.inventoryMenu.getCraftSlots());
+				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 			}
 			Random = Math.random() * 100;
 			if (Random > 0 && Random <= 3) {
@@ -266,11 +263,9 @@ public class BuyRandomPotionProcedure {
 		} else {
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-							SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1);
 				} else {
-					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")),
-							SoundSource.NEUTRAL, 1, 1, false);
+					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1, false);
 				}
 			}
 		}

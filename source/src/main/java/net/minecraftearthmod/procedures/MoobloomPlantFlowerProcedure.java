@@ -34,11 +34,9 @@ public class MoobloomPlantFlowerProcedure {
 					if (ran2 <= 0.05 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						world.setBlock(new BlockPos(x, y, z), MinecraftEarthModModBlocks.BUTTERCUP.get().defaultBlockState(), 3);
@@ -46,34 +44,24 @@ public class MoobloomPlantFlowerProcedure {
 					if (ran2 > 0.05 && ran2 <= 0.25 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						if (world instanceof ServerLevel _level)
-							_level.getServer().getCommands()
-									.performPrefixedCommand(
-											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "",
-													Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-											"setblock ~ ~ ~ minecraft:sunflower[half=lower]");
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									"setblock ~ ~ ~ minecraft:sunflower[half=lower]");
 						if (world instanceof ServerLevel _level)
-							_level.getServer().getCommands()
-									.performPrefixedCommand(
-											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "",
-													Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-											"setblock ~ ~1 ~ minecraft:sunflower[half=upper]");
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									"setblock ~ ~1 ~ minecraft:sunflower[half=upper]");
 					}
 					if (ran2 > 0.25 && ran2 <= 1 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						world.setBlock(new BlockPos(x, y, z), Blocks.DANDELION.defaultBlockState(), 3);
@@ -88,11 +76,9 @@ public class MoobloomPlantFlowerProcedure {
 					if (ran2 <= 0.05 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						world.setBlock(new BlockPos(x, y, z), MinecraftEarthModModBlocks.PINK_DAISY.get().defaultBlockState(), 3);
@@ -100,34 +86,24 @@ public class MoobloomPlantFlowerProcedure {
 					if (ran2 > 0.05 && ran2 <= 0.25 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						if (world instanceof ServerLevel _level)
-							_level.getServer().getCommands()
-									.performPrefixedCommand(
-											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "",
-													Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-											"setblock ~ ~ ~ minecraft:lilac[half=lower]");
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									"setblock ~ ~ ~ minecraft:lilac[half=lower]");
 						if (world instanceof ServerLevel _level)
-							_level.getServer().getCommands()
-									.performPrefixedCommand(
-											new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "",
-													Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
-											"setblock ~ ~1 ~ minecraft:lilac[half=upper]");
+							_level.getServer().getCommands().performPrefixedCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
+									"setblock ~ ~1 ~ minecraft:lilac[half=upper]");
 					}
 					if (ran2 > 0.25 && ran2 <= 1 && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
 						if (world instanceof Level _level) {
 							if (!_level.isClientSide()) {
-								_level.playSound(null, new BlockPos(x, y, z),
-										ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
+								_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1);
 							} else {
-								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")),
-										SoundSource.NEUTRAL, 1, 1, false);
+								_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.glass.place")), SoundSource.NEUTRAL, 1, 1, false);
 							}
 						}
 						world.setBlock(new BlockPos(x, y, z), Blocks.PINK_TULIP.defaultBlockState(), 3);

@@ -14,10 +14,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.LiquidBlock;
 
 public abstract class MudFluid extends ForgeFlowingFluid {
-	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(
-			() -> MinecraftEarthModModFluidTypes.MUD_TYPE.get(), () -> MinecraftEarthModModFluids.MUD.get(),
-			() -> MinecraftEarthModModFluids.FLOWING_MUD.get()).explosionResistance(100f).bucket(() -> MinecraftEarthModModItems.MUD_BUCKET.get())
-			.block(() -> (LiquidBlock) MinecraftEarthModModBlocks.MUD.get());
+	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(() -> MinecraftEarthModModFluidTypes.MUD_TYPE.get(), () -> MinecraftEarthModModFluids.MUD.get(), () -> MinecraftEarthModModFluids.FLOWING_MUD.get())
+			.explosionResistance(100f).bucket(() -> MinecraftEarthModModItems.MUD_BUCKET.get()).block(() -> (LiquidBlock) MinecraftEarthModModBlocks.MUD.get());
 
 	private MudFluid() {
 		super(PROPERTIES);

@@ -1,10 +1,10 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Gold Crested Chicken",
     "mobLabel": "",
-    "mobModelName": "Modelamberchicken",
+    "mobModelName": "Modeldefaultchicken_new",
     "mobModelTexture": "gold_crested_chicken.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.4,
@@ -92,13 +92,6 @@
     "stepSound": {
       "value": "entity.chicken.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "whenMobDies": {
       "name": "ChickenEnchantmentsDeath"
     },
@@ -123,6 +116,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 5,

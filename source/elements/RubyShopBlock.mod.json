@@ -1,5 +1,5 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "block",
   "definition": {
     "texture": "missingtexture",
@@ -81,13 +81,7 @@
     "luminance": 0,
     "unbreakable": false,
     "breakHarvestLevel": 2,
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
+    "isBonemealable": false,
     "hasInventory": false,
     "guiBoundTo": "RubyShop",
     "openGUIOnRightClick": true,

@@ -34,8 +34,7 @@ import java.util.Optional;
 
 public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 	public MinecraftEarthDimensionPortalBlock() {
-		super(BlockBehaviour.Properties.of(Material.PORTAL).noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(s -> 15)
-				.noLootTable());
+		super(BlockBehaviour.Properties.of(Material.PORTAL).noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(s -> 15).noLootTable());
 	}
 
 	@Override
@@ -50,8 +49,7 @@ public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState p_54928_, Direction p_54929_, BlockState p_54930_, LevelAccessor p_54931_, BlockPos p_54932_,
-			BlockPos p_54933_) {
+	public BlockState updateShape(BlockState p_54928_, Direction p_54929_, BlockState p_54930_, LevelAccessor p_54931_, BlockPos p_54932_, BlockPos p_54933_) {
 		Direction.Axis direction$axis = p_54929_.getAxis();
 		Direction.Axis direction$axis1 = p_54928_.getValue(AXIS);
 		boolean flag = direction$axis1 != direction$axis && direction$axis.isHorizontal();
@@ -81,22 +79,17 @@ public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 			world.addParticle(ParticleTypes.HAPPY_VILLAGER, px, py, pz, vx, vy, vz);
 		}
 		if (random.nextInt(110) == 0)
-			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
-					ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(("block.wet_grass.step"))), SoundSource.BLOCKS, 0.5f,
-					random.nextFloat() * 0.4f + 0.8f);
+			world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(("block.wet_grass.step"))), SoundSource.BLOCKS, 0.5f, random.nextFloat() * 0.4f + 0.8f);
 	}
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level.isClientSide()
-				&& CheckEarthDimensionGameruleProcedure.execute(world)) {
+		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level.isClientSide() && CheckEarthDimensionGameruleProcedure.execute(world)) {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
-			} else if (entity.level.dimension() != ResourceKey.create(Registry.DIMENSION_REGISTRY,
-					new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
+			} else if (entity.level.dimension() != ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
 				entity.setPortalCooldown();
-				teleportToDimension(entity, pos,
-						ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
+				teleportToDimension(entity, pos, ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
 			} else {
 				entity.setPortalCooldown();
 				teleportToDimension(entity, pos, Level.OVERWORLD);
@@ -105,7 +98,6 @@ public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 	}
 
 	private void teleportToDimension(Entity entity, BlockPos pos, ResourceKey<Level> destinationType) {
-		entity.changeDimension(entity.getServer().getLevel(destinationType),
-				new MinecraftEarthDimensionTeleporter(entity.getServer().getLevel(destinationType), pos));
+		entity.changeDimension(entity.getServer().getLevel(destinationType), new MinecraftEarthDimensionTeleporter(entity.getServer().getLevel(destinationType), pos));
 	}
 }

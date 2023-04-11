@@ -7,6 +7,9 @@ import net.minecraftearthmod.procedures.SetTickProcedure;
 import net.minecraftearthmod.procedures.RemoveLightProcedure;
 import net.minecraftearthmod.block.entity.FurnaceGolemLightBlockEntity;
 
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -39,13 +42,9 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 import java.util.Collections;
 
-public class FurnaceGolemLightBlock extends Block
-		implements
-
-			EntityBlock {
+public class FurnaceGolemLightBlock extends Block implements EntityBlock {
 	public FurnaceGolemLightBlock() {
-		super(BlockBehaviour.Properties.of(Material.BARRIER).sound(SoundType.GRAVEL).strength(-1, 3600000).lightLevel(s -> 15).noCollission()
-				.noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
+		super(BlockBehaviour.Properties.of(Material.BARRIER).sound(SoundType.GRAVEL).strength(-1, 3600000).lightLevel(s -> 15).noCollission().noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
 	}
 
 	@Override
@@ -67,6 +66,11 @@ public class FurnaceGolemLightBlock extends Block
 	@Override
 	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 0;
+	}
+
+	@Override
+	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return Shapes.empty();
 	}
 
 	@Override
@@ -111,7 +115,6 @@ public class FurnaceGolemLightBlock extends Block
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-
 		RemoveLightProcedure.execute(world, x, y, z);
 		world.scheduleTick(pos, this, 10);
 	}
@@ -138,7 +141,6 @@ public class FurnaceGolemLightBlock extends Block
 		double hitY = hit.getLocation().y;
 		double hitZ = hit.getLocation().z;
 		Direction direction = hit.getDirection();
-
 		RemoveLightProcedure.execute(world, x, y, z);
 		return InteractionResult.SUCCESS;
 	}

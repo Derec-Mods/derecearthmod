@@ -1,24 +1,27 @@
 
 package net.minecraftearthmod.client.renderer;
 
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
+import net.minecraftearthmod.entity.model.BoulderZombieModel;
 import net.minecraftearthmod.entity.BoulderZombieEntity;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.MultiBufferSource;
 
-public class BoulderZombieRenderer extends HumanoidMobRenderer<BoulderZombieEntity, HumanoidModel<BoulderZombieEntity>> {
-	public BoulderZombieRenderer(EntityRendererProvider.Context context) {
-		super(context, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-		this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
-				new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.PoseStack;
+
+public class BoulderZombieRenderer extends GeoEntityRenderer<BoulderZombieEntity> {
+	public BoulderZombieRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new BoulderZombieModel());
+		this.shadowRadius = 0.5f;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(BoulderZombieEntity entity) {
-		return new ResourceLocation("minecraft_earth_mod:textures/entities/boulderingzombie.png");
+	public RenderType getRenderType(BoulderZombieEntity entity, float partialTicks, PoseStack stack, MultiBufferSource renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+		return RenderType.entityTranslucent(getTextureLocation(entity));
 	}
 }

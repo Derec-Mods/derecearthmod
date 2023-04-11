@@ -59,7 +59,7 @@ public class TropicalSlimeBigEntity extends Monster {
 		this.goalSelector.addGoal(7, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
-				return (double) (4.0 + entity.getBbWidth() * entity.getBbWidth());
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
 		this.targetSelector.addGoal(8, new HurtByTargetGoal(this).setAlertOthers());

@@ -1,11 +1,11 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Horned Sheep",
     "mobLabel": "",
-    "mobModelName": "Modelhornedsheep",
-    "mobModelTexture": "hornedsheep.png",
+    "mobModelName": "ModelhornedsheepNEW",
+    "mobModelTexture": "hornedsheepnew.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.9,
     "modelHeight": 1.3,
@@ -81,7 +81,7 @@
       "value": ""
     },
     "livingSound": {
-      "value": "entity.sheep.ambient"
+      "value": "entity.goat.ambient"
     },
     "hurtSound": {
       "value": "entity.sheep.hurt"
@@ -90,15 +90,8 @@
       "value": "entity.sheep.death"
     },
     "stepSound": {
-      "value": ""
+      "value": "entity.goat.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "onRightClickedOn": {
       "name": "ShearWoolyCow"
     },
@@ -126,6 +119,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningProbability": 5,

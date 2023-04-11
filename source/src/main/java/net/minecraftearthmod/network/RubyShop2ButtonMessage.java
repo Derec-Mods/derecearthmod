@@ -85,7 +85,6 @@ public class RubyShop2ButtonMessage {
 
 	@SubscribeEvent
 	public static void registerMessage(FMLCommonSetupEvent event) {
-		MinecraftEarthModMod.addNetworkMessage(RubyShop2ButtonMessage.class, RubyShop2ButtonMessage::buffer, RubyShop2ButtonMessage::new,
-				RubyShop2ButtonMessage::handler);
+		MinecraftEarthModMod.addNetworkMessage(RubyShop2ButtonMessage.class, RubyShop2ButtonMessage::buffer, RubyShop2ButtonMessage::new, RubyShop2ButtonMessage::handler);
 	}
 }

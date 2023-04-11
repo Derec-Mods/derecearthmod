@@ -28,8 +28,7 @@ public class DropPorkchopProcedure {
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
 				}
-				if (rand >= 0 && rand <= 0.16 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-						(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
+				if (rand >= 0 && rand <= 0.16 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickUpDelay(10);
@@ -43,8 +42,7 @@ public class DropPorkchopProcedure {
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
 				}
-				if (rand >= 0.33 && rand <= 0.49 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-						(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
+				if (rand >= 0.33 && rand <= 0.49 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.COOKED_PORKCHOP));
 						entityToSpawn.setPickUpDelay(10);
@@ -64,8 +62,7 @@ public class DropPorkchopProcedure {
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
 				}
-				if (rand >= 0 && rand <= 0.16 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-						(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
+				if (rand >= 0 && rand <= 0.16 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.PORKCHOP));
 						entityToSpawn.setPickUpDelay(10);
@@ -79,8 +76,7 @@ public class DropPorkchopProcedure {
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
 				}
-				if (rand >= 0.33 && rand <= 0.49 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING,
-						(sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
+				if (rand >= 0.33 && rand <= 0.49 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) >= 1) {
 					if (world instanceof Level _level && !_level.isClientSide()) {
 						ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(Items.PORKCHOP));
 						entityToSpawn.setPickUpDelay(10);

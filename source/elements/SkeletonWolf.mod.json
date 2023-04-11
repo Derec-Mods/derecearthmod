@@ -1,10 +1,10 @@
 {
-  "_fv": 34,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Skeleton Wolf",
     "mobLabel": "",
-    "mobModelName": "Modelskeletonwolf",
+    "mobModelName": "Modelskeletonwolf_new",
     "mobModelTexture": "skeletonwolf.png",
     "mobModelGlowTexture": "",
     "modelWidth": 0.6,
@@ -90,15 +90,8 @@
       "value": "entity.wolf.death"
     },
     "stepSound": {
-      "value": ""
+      "value": "entity.skeleton.step"
     },
-    "spawnParticles": false,
-    "particleToSpawn": {
-      "value": "EXPLOSION_NORMAL"
-    },
-    "particleSpawningShape": "Spread",
-    "particleSpawningRadious": 0.5,
-    "particleAmount": 4,
     "whenMobDies": {
       "name": "Howl"
     },
@@ -132,6 +125,8 @@
       "value": ""
     },
     "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
     "doesDespawnWhenIdle": true,
     "spawningCondition": {

@@ -29,8 +29,7 @@ public class MinecraftEarthDimensionDimension {
 					return false;
 				}
 			};
-			event.enqueueWork(
-					() -> DimensionSpecialEffects.EFFECTS.put(new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"), customEffect));
+			event.enqueueWork(() -> DimensionSpecialEffects.EFFECTS.put(new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"), customEffect));
 		}
 	}
 }
