@@ -1,0 +1,108 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.1,
+  "downfall": 0.5,
+  "effects": {
+    "foliage_color": -7686519,
+    "grass_color": -7686519,
+    "sky_color": 7972607,
+    "fog_color": 12638463,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {
+    "monster": [],
+    "creature": [
+      {
+        "type": "minecraft_earth_mod:ashen_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:rocky_sheep",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:wooly_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:horned_sheep",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft_earth_mod:melon_golem",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 3
+      },
+      {
+        "type": "sheep",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground"
+    ],
+    [],
+    [
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma"
+    ],
+    [],
+    [],
+    [
+      "minecraft_earth_mod:mountains_build_plate_tree",
+      "minecraft:patch_grass_forest"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ]
+}

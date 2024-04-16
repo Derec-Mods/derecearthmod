@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "biome",
   "definition": {
     "name": "Jungle Build Plate",
@@ -63,15 +63,6 @@
       "min": 0.3670463124386566,
       "max": 0.6470463124386566
     },
-    "grassPerChunk": 6,
-    "seagrassPerChunk": 0,
-    "flowersPerChunk": 5,
-    "mushroomsPerChunk": 0,
-    "bigMushroomsChunk": 0,
-    "sandPatchesPerChunk": 0,
-    "gravelPatchesPerChunk": 0,
-    "reedsPerChunk": 0,
-    "cactiPerChunk": 0,
     "treesPerChunk": 1,
     "vanillaTreeType": "Default",
     "treeType": 1,
@@ -88,6 +79,15 @@
     "treeFruits": {
       "value": "Blocks.AIR"
     },
+    "defaultFeatures": [
+      "Caves",
+      "JungleGrass",
+      "JungleTreeForest",
+      "Bamboo",
+      "AmethystGeodes",
+      "ForestGrass",
+      "DefaultFlowers"
+    ],
     "spawnStronghold": false,
     "spawnMineshaft": false,
     "spawnMineshaftMesa": false,
@@ -108,13 +108,6 @@
     "spawnBastionRemnant": false,
     "spawnEndCity": false,
     "spawnRuinedPortal": "NONE",
-    "defaultFeatures": [
-      "Caves",
-      "JungleGrass",
-      "JungleTreeForest",
-      "Bamboo",
-      "AmethystGeodes"
-    ],
     "spawnEntries": [
       {
         "entity": {

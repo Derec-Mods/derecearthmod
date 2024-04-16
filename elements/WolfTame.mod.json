@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "procedure",
   "definition": {
     "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"return_logic\"><value name=\"return\"><block type=\"logic_negate\"><value name=\"BOOL\"><block type=\"text_binary_ops\"><value name=\"A\"><block type=\"entity_nbt_text_get\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"tagName\"><block type=\"text\"><field name=\"TEXT\">isTame</field></block></value></block></value><value name=\"B\"><block type=\"text\"><field name=\"TEXT\">yes</field></block></value></block></value></block></value></block></next></block></xml>"

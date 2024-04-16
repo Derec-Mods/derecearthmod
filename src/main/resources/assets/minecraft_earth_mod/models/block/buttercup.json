@@ -1,8 +1,8 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "minecraft_earth_mod:blocks/buttercup",
-    "particle": "minecraft_earth_mod:blocks/buttercup"
+    "cross": "minecraft_earth_mod:block/buttercup",
+    "particle": "minecraft_earth_mod:block/buttercup"
   },
   "render_type": "cutout"
 }

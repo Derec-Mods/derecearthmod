@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 public class CheckSleepDimensionProcedure {
 	@SubscribeEvent
 	public static void onPlayerInBed(PlayerSleepInBedEvent event) {
-		execute(event, event.getEntity().level, event.getEntity());
+		execute(event, event.getEntity().level(), event.getEntity());
 	}
 
 	public static void execute(LevelAccessor world, Entity entity) {
@@ -29,8 +29,8 @@ public class CheckSleepDimensionProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity.level.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
-			if (!(world instanceof Level _lvl && _lvl.isDay())) {
+		if (entity.level().dimension() == ResourceKey.create(Registries.DIMENSION, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
+			if (!(world instanceof Level _lvl2 && _lvl2.isDay())) {
 				if (world instanceof ServerLevel _level)
 					_level.setDayTime(1);
 			}

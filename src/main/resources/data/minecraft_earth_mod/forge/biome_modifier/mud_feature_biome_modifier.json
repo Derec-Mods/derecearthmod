@@ -2,9 +2,9 @@
   "type": "forge:add_features",
   "biomes": [
     "minecraft_earth_mod:plains_build_plate",
-    "jungle",
     "minecraft_earth_mod:forest_build_plate",
-    "swamp"
+    "swamp",
+    "jungle"
   ],
   "features": "minecraft_earth_mod:mud_feature",
   "step": "lakes"

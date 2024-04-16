@@ -13,7 +13,7 @@ import java.util.List;
 
 public class PailItem extends Item {
 	public PailItem() {
-		super(new Item.Properties().tab(null).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

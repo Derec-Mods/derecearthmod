@@ -1,0 +1,31 @@
+{
+  "_fv": 57,
+  "_type": "feature",
+  "definition": {
+    "generationStep": "SURFACE_STRUCTURES",
+    "restrictionBiomes": [
+      {
+        "value": "forest"
+      },
+      {
+        "value": "swamp"
+      },
+      {
+        "value": "savanna"
+      },
+      {
+        "value": "badlands"
+      },
+      {
+        "value": "beaches"
+      },
+      {
+        "value": "desert"
+      }
+    ],
+    "generateCondition": {
+      "name": "GetSpawnMudFountain"
+    },
+    "featurexml": "<xml><block type=\"feature_container\" deletable=\"false\" x=\"40\" y=\"40\">\n<value name=\"feature\"><block type=\"feature_custom_structure\">\n\t<field name=\"structure\">mudfountain2</field>\n\t<field name=\"x\">0</field>\n\t<field name=\"y\">-1</field>\n\t<field name=\"z\">0</field>\n\t<field name=\"random_rotation\">TRUE</field>\n\t<field name=\"random_mirror\">TRUE</field>\n\t<value name=\"ignored_blocks\">\n\t\t<block type=\"block_holderset_list\"><mutation inputs=\"1\"></mutation><field name=\"block0\">Blocks.STRUCTURE_BLOCK</field></block>\n\t</value>\n</block>\n</value>\n<next><block type=\"placement_rarity\">\n\t<field name=\"rarity\">1000</field>\n\t<next><block type=\"placement_in_square\"><next><block type=\"placement_heightmap\">\n\t<field name=\"heightmap\">OCEAN_FLOOR_WG</field>\n\t<next><block type=\"placement_biome_filter\"></block></next></block></next></block></next></block></next></block></xml>\n"
+  }
+}

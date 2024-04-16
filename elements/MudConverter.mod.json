@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "block",
   "definition": {
     "texture": "mudconverter_2",
@@ -34,9 +34,11 @@
       }
     ],
     "name": "Mud Converter",
-    "specialInfo": [
-      "Convert mud into energy!"
-    ],
+    "specialInformation": {
+      "fixedValue": [
+        "Convert mud into energy!"
+      ]
+    },
     "hardness": 3.0,
     "resistance": 50.0,
     "hasGravity": false,
@@ -107,11 +109,20 @@
     "onNeighbourBlockChanges": {
       "name": "CheckForMudonTop"
     },
-    "spawnWorldTypes": [],
+    "generateFeature": false,
     "restrictionBiomes": [],
     "blocksToReplace": [
       {
-        "value": "Blocks.STONE"
+        "value": "Blocks.STONE#0"
+      },
+      {
+        "value": "Blocks.STONE#1"
+      },
+      {
+        "value": "Blocks.STONE#3"
+      },
+      {
+        "value": "Blocks.STONE#5"
       }
     ],
     "generationShape": "UNIFORM",

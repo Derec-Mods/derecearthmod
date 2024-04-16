@@ -1,6 +1,10 @@
+
 package net.minecraftearthmod.world.features.treedecorators;
 
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
@@ -8,14 +12,16 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecora
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 
+import com.mojang.serialization.Codec;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class JungleBuildPlateLeaveDecorator extends LeaveVineDecorator {
-	public static final JungleBuildPlateLeaveDecorator INSTANCE = new JungleBuildPlateLeaveDecorator();
-	public static com.mojang.serialization.Codec<LeaveVineDecorator> codec;
-	public static TreeDecoratorType<?> tdt;
-	static {
-		codec = com.mojang.serialization.Codec.unit(() -> INSTANCE);
-		tdt = new TreeDecoratorType<>(codec);
-		ForgeRegistries.TREE_DECORATOR_TYPES.register("jungle_build_plate_tree_leave_decorator", tdt);
+	public static Codec<LeaveVineDecorator> CODEC = Codec.unit(JungleBuildPlateLeaveDecorator::new);
+	public static TreeDecoratorType<?> DECORATOR_TYPE = new TreeDecoratorType<>(CODEC);
+
+	@SubscribeEvent
+	public static void registerPointOfInterest(RegisterEvent event) {
+		event.register(ForgeRegistries.Keys.TREE_DECORATOR_TYPES, registerHelper -> registerHelper.register("jungle_build_plate_tree_leave_decorator", DECORATOR_TYPE));
 	}
 
 	public JungleBuildPlateLeaveDecorator() {
@@ -24,7 +30,7 @@ public class JungleBuildPlateLeaveDecorator extends LeaveVineDecorator {
 
 	@Override
 	protected TreeDecoratorType<?> type() {
-		return tdt;
+		return DECORATOR_TYPE;
 	}
 
 	@Override

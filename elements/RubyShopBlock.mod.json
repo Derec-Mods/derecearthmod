@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "block",
   "definition": {
     "texture": "missingtexture",
@@ -32,9 +32,11 @@
       }
     ],
     "name": "Ruby Shop Block",
-    "specialInfo": [
-      "Right click on me to open the Ruby Shop!"
-    ],
+    "specialInformation": {
+      "fixedValue": [
+        "Right click on me to open the Ruby Shop!"
+      ]
+    },
     "hardness": 5.0,
     "resistance": 10.0,
     "hasGravity": false,
@@ -98,11 +100,20 @@
     "energyMaxExtract": 200,
     "isFluidTank": false,
     "fluidCapacity": 8000,
-    "spawnWorldTypes": [],
+    "generateFeature": false,
     "restrictionBiomes": [],
     "blocksToReplace": [
       {
-        "value": "Blocks.STONE"
+        "value": "Blocks.STONE#0"
+      },
+      {
+        "value": "Blocks.STONE#1"
+      },
+      {
+        "value": "Blocks.STONE#3"
+      },
+      {
+        "value": "Blocks.STONE#5"
       }
     ],
     "generationShape": "UNIFORM",

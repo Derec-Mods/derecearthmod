@@ -11,7 +11,6 @@ import net.minecraftearthmod.procedures.CheckMuddyPigCleanProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModItems;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -39,13 +38,13 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.BlockPos;
-
-import java.util.List;
 
 public class MuddyPigEntity extends Animal {
 	public MuddyPigEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -54,12 +53,13 @@ public class MuddyPigEntity extends Animal {
 
 	public MuddyPigEntity(EntityType<MuddyPigEntity> type, Level world) {
 		super(type, world);
+		setMaxUpStep(0.6f);
 		xpReward = 3;
 		setNoAi(false);
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -105,19 +105,19 @@ public class MuddyPigEntity extends Animal {
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
-		CheckMuddyPigOnFireProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		CheckMuddyPigOnFireProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
 	}
 
 	@Override
 	public InteractionResult mobInteract(Player sourceentity, InteractionHand hand) {
 		ItemStack itemstack = sourceentity.getItemInHand(hand);
-		InteractionResult retval = InteractionResult.sidedSuccess(this.level.isClientSide());
+		InteractionResult retval = InteractionResult.sidedSuccess(this.level().isClientSide());
 		super.mobInteract(sourceentity, hand);
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
 		Entity entity = this;
-		Level world = this.level;
+		Level world = this.level();
 
 		CleanPigWaterProcedure.execute(world, x, y, z, entity, sourceentity);
 		return retval;
@@ -126,7 +126,7 @@ public class MuddyPigEntity extends Animal {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		CheckMuddyPigCleanProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		CheckMuddyPigCleanProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ(), this);
 	}
 
 	@Override
@@ -138,17 +138,17 @@ public class MuddyPigEntity extends Animal {
 
 	@Override
 	public boolean isFood(ItemStack stack) {
-		return List.of(Blocks.WHEAT.asItem(), Items.CARROT, Items.POTATO).contains(stack.getItem());
+		return Ingredient.of(new ItemStack(Blocks.WHEAT), new ItemStack(Items.CARROT), new ItemStack(Items.POTATO)).test(stack);
 	}
 
 	public static void init() {
 		SpawnPlacements.register(MinecraftEarthModModEntities.MUDDY_PIG.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getBlockState(pos.below()).getMaterial() == Material.GRASS && world.getRawBrightness(pos, 0) > 8));
+				(entityType, world, reason, pos, random) -> (world.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && world.getRawBrightness(pos, 0) > 8));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.30000000000000004);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 10);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 0);

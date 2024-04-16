@@ -11,7 +11,7 @@ import net.minecraftearthmod.world.teleporter.MinecraftEarthDimensionTeleporter;
 import net.minecraftearthmod.world.teleporter.MinecraftEarthDimensionPortalShape;
 import net.minecraftearthmod.procedures.CheckEarthDimensionGameruleProcedure;
 
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.SoundType;
@@ -25,8 +25,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.Registry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 	public MinecraftEarthDimensionPortalBlock() {
-		super(BlockBehaviour.Properties.of(Material.PORTAL).noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS).lightLevel(s -> 15).noLootTable());
+		super(BlockBehaviour.Properties.of().noCollission().randomTicks().pushReaction(PushReaction.BLOCK).strength(-1.0F).sound(SoundType.GLASS).lightLevel(s -> 15).noLootTable());
 	}
 
 	@Override
@@ -84,12 +84,12 @@ public class MinecraftEarthDimensionPortalBlock extends NetherPortalBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level.isClientSide() && CheckEarthDimensionGameruleProcedure.execute(world)) {
+		if (entity.canChangeDimensions() && !entity.level().isClientSide() && CheckEarthDimensionGameruleProcedure.execute(world)) {
 			if (entity.isOnPortalCooldown()) {
 				entity.setPortalCooldown();
-			} else if (entity.level.dimension() != ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
+			} else if (entity.level().dimension() != ResourceKey.create(Registries.DIMENSION, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension"))) {
 				entity.setPortalCooldown();
-				teleportToDimension(entity, pos, ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
+				teleportToDimension(entity, pos, ResourceKey.create(Registries.DIMENSION, new ResourceLocation("minecraft_earth_mod:minecraft_earth_dimension")));
 			} else {
 				entity.setPortalCooldown();
 				teleportToDimension(entity, pos, Level.OVERWORLD);

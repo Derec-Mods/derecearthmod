@@ -1,31 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "pattern": [
-    " 1 ",
-    "345",
-    "678"
+    " a ",
+    "bcb",
+    "bbb"
   ],
   "key": {
-    "1": {
+    "a": {
       "item": "minecraft:dirt"
     },
-    "3": {
+    "b": {
       "item": "minecraft:iron_block"
     },
-    "4": {
+    "c": {
       "item": "minecraft:hopper"
-    },
-    "5": {
-      "item": "minecraft:iron_block"
-    },
-    "6": {
-      "item": "minecraft:iron_block"
-    },
-    "7": {
-      "item": "minecraft:iron_block"
-    },
-    "8": {
-      "item": "minecraft:iron_block"
     }
   },
   "result": {

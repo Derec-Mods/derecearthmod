@@ -1,8 +1,9 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "command",
   "definition": {
     "commandName": "shop",
+    "type": "STANDARD",
     "permissionLevel": "3",
     "argsxml": "<xml><block type=\"args_start\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"old_command\"><field name=\"procedure\">RubyShopCommandCommandExecuted</field></block></next></block></xml>"
   }

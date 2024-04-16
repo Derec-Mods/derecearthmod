@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "fluid",
   "definition": {
     "name": "Mud",
@@ -30,7 +30,9 @@
       "value": ""
     },
     "rarity": "COMMON",
-    "specialInfo": [],
+    "specialInformation": {
+      "fixedValue": []
+    },
     "resistance": 100.0,
     "luminance": 0,
     "lightOpacity": 1,

@@ -1,0 +1,19 @@
+{
+  "_fv": 57,
+  "_type": "projectile",
+  "definition": {
+    "projectileItem": {
+      "value": "Items.MELON_SEEDS"
+    },
+    "showParticles": false,
+    "actionSound": {
+      "value": "entity.snowman.shoot"
+    },
+    "igniteFire": false,
+    "power": 1.0,
+    "damage": 2.0,
+    "knockback": 1,
+    "entityModel": "Default",
+    "customModelTexture": ""
+  }
+}

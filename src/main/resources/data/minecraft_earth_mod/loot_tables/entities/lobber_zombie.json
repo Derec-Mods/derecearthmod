@@ -37,5 +37,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "minecraft_earth_mod:entities/lobber_zombie"
 }

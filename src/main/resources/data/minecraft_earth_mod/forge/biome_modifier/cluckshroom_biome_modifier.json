@@ -2,6 +2,7 @@
   "type": "forge:add_spawns",
   "biomes": [
     "mushroom_fields",
+    "plains",
     "dark_forest"
   ],
   "spawners": {

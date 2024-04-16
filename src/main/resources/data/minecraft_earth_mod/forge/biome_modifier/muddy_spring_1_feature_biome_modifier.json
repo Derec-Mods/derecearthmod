@@ -1,0 +1,13 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "forest",
+    "swamp",
+    "savanna",
+    "badlands",
+    "beach",
+    "desert"
+  ],
+  "features": "minecraft_earth_mod:muddy_spring_1_feature",
+  "step": "surface_structures"
+}

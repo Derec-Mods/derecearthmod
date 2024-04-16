@@ -3,8 +3,8 @@
   "values": [
     "minecraft:stone",
     "minecraft:grass_block",
+    "minecraft:dirt",
     "minecraft:ice",
-    "minecraft:packed_ice",
-    "minecraft:dirt"
+    "minecraft:packed_ice"
   ]
 }

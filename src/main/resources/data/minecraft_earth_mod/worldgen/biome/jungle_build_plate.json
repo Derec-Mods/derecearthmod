@@ -1,0 +1,79 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.95,
+  "downfall": 0.6,
+  "effects": {
+    "foliage_color": -14714610,
+    "grass_color": -10777806,
+    "sky_color": 7972607,
+    "fog_color": 12638463,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {
+    "monster": [],
+    "creature": [
+      {
+        "type": "minecraft_earth_mod:melon_golem",
+        "weight": 20,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:rainbow_sheep",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "parrot",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "ocelot",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground"
+    ],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft_earth_mod:jungle_build_plate_tree",
+      "minecraft:patch_grass_forest",
+      "minecraft:bamboo_light",
+      "minecraft:trees_jungle",
+      "minecraft:patch_grass_jungle"
+    ],
+    []
+  ]
+}

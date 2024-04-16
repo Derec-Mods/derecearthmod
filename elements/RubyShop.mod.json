@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "gui",
   "definition": {
     "type": 0,
@@ -81,6 +81,7 @@
         "data": {
           "name": "button_purchase",
           "text": "Purchase",
+          "isUndecorated": false,
           "onClick": {
             "name": "BuyRandomPotion"
           },
@@ -95,6 +96,7 @@
         "data": {
           "name": "button_empty",
           "text": "->",
+          "isUndecorated": false,
           "onClick": {
             "name": "GotoPage2"
           },

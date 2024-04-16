@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "block",
   "definition": {
     "texture": "rainbowwooltop2",
@@ -32,9 +32,11 @@
       }
     ],
     "name": "Rainbow Wool",
-    "specialInfo": [
-      "So colorful!"
-    ],
+    "specialInformation": {
+      "fixedValue": [
+        "So colorful!"
+      ]
+    },
     "hardness": 0.8,
     "resistance": 0.8,
     "hasGravity": false,
@@ -98,11 +100,20 @@
     "energyMaxExtract": 200,
     "isFluidTank": false,
     "fluidCapacity": 8000,
-    "spawnWorldTypes": [],
+    "generateFeature": false,
     "restrictionBiomes": [],
     "blocksToReplace": [
       {
-        "value": "Blocks.STONE"
+        "value": "Blocks.STONE#0"
+      },
+      {
+        "value": "Blocks.STONE#1"
+      },
+      {
+        "value": "Blocks.STONE#3"
+      },
+      {
+        "value": "Blocks.STONE#5"
       }
     ],
     "generationShape": "UNIFORM",

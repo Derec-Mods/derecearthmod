@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "plant",
   "definition": {
     "renderType": 12,
@@ -8,17 +8,17 @@
     "tintType": "No tint",
     "isItemTinted": false,
     "plantType": "normal",
-    "staticPlantGenerationType": "Flower",
     "suspiciousStewEffect": "SATURATION",
     "suspiciousStewDuration": 0,
     "growapableSpawnType": "Plains",
     "growapableMaxHeight": 3,
-    "doublePlantGenerationType": "Flower",
     "customBoundingBox": false,
     "disableOffset": false,
     "boundingBoxes": [],
     "name": "Buttercup",
-    "specialInfo": [],
+    "specialInformation": {
+      "fixedValue": []
+    },
     "creativeTab": {
       "value": "DECORATIONS"
     },
@@ -53,9 +53,7 @@
     "canBePlacedOn": [],
     "isBonemealable": false,
     "frequencyOnChunks": 1,
-    "spawnWorldTypes": [
-      "Surface"
-    ],
+    "generateFeature": true,
     "restrictionBiomes": [
       {
         "value": "plains"
@@ -85,6 +83,7 @@
         "value": "birch_forest"
       }
     ],
+    "generationType": "Flower",
     "patchSize": 64,
     "generateAtAnyHeight": false,
     "onRightClicked": {
