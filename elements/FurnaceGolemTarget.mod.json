@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "procedure",
   "definition": {
     "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">entity_sets_attack_target</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"logic_entity_compare\"><field name=\"entity\">CUSTOM:FurnaceGolem</field><value name=\"compareTo\"><block type=\"source_entity_from_deps\"/></value></block></value><statement name=\"DO0\"><block type=\"entity_nbt_logic_set\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"tagName\"><block type=\"text\"><field name=\"TEXT\">pissed</field></block></value><value name=\"tagValue\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><next><block type=\"entity_nbt_num_set\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"tagName\"><block type=\"text\"><field name=\"TEXT\">calmtimer</field></block></value><value name=\"tagValue\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></next></block></statement></block></next></block></xml>"

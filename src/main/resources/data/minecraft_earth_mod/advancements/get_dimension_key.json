@@ -1,0 +1,39 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft_earth_mod:minecraft_earth_dimension"
+    },
+    "title": {
+      "translate": "advancements.get_dimension_key.title"
+    },
+    "description": {
+      "translate": "advancements.get_dimension_key.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "get_dimension_key": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft_earth_mod:minecraft_earth_dimension"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "parent": "minecraft_earth_mod:p_2_p"
+}

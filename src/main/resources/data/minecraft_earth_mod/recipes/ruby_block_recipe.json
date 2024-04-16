@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    {
+      "item": "minecraft_earth_mod:ruby"
+    }
+  ],
+  "result": {
+    "item": "minecraft_earth_mod:ruby_block",
+    "count": 1
+  }
+}

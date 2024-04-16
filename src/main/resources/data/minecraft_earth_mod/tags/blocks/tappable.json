@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft_earth_mod:grass_tappable",
+    "minecraft_earth_mod:chest_tappable",
+    "minecraft_earth_mod:stone_tappable",
+    "minecraft_earth_mod:birch_tappable",
+    "minecraft_earth_mod:oak_tappable",
+    "minecraft_earth_mod:spruce_tappable"
+  ]
+}

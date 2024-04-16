@@ -1,0 +1,19 @@
+{
+  "feature": "minecraft_earth_mod:muddy_spring_1_feature",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 1000
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

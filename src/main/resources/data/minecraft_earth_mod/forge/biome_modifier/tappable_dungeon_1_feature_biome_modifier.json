@@ -1,0 +1,8 @@
+{
+  "type": "forge:add_features",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "features": "minecraft_earth_mod:tappable_dungeon_1_feature",
+  "step": "underground_structures"
+}

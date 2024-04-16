@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " a ",
+    "bcb",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft_earth_mod:ruby_block"
+    },
+    "b": {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    "c": {
+      "item": "minecraft:dispenser"
+    }
+  },
+  "result": {
+    "item": "minecraft_earth_mod:ruby_shop_block",
+    "count": 1
+  }
+}

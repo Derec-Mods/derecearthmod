@@ -1,0 +1,25 @@
+{
+  "_fv": 57,
+  "_type": "projectile",
+  "definition": {
+    "projectileItem": {
+      "value": "Items.GLASS_BOTTLE"
+    },
+    "showParticles": false,
+    "actionSound": {
+      "value": "entity.splash_potion.throw"
+    },
+    "igniteFire": false,
+    "power": 1.0,
+    "damage": 0.5,
+    "knockback": 0,
+    "entityModel": "Default",
+    "customModelTexture": "",
+    "onHitsBlock": {
+      "name": "ChooseSplashEffect"
+    },
+    "onHitsEntity": {
+      "name": "ChooseSplashEffect"
+    }
+  }
+}

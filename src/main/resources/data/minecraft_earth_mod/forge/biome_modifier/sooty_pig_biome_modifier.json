@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": {
+    "type": "forge:any"
+  },
+  "spawners": {
+    "type": "minecraft_earth_mod:sooty_pig",
+    "weight": 5,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}

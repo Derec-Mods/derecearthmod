@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft_earth_mod:buttercup"
+    }
+  ],
+  "result": {
+    "item": "minecraft:yellow_dye",
+    "count": 1
+  }
+}

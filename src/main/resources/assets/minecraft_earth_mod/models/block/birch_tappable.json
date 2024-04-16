@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:block/birch_log_top",
+    "up": "minecraft_earth_mod:block/birchtappabletop",
+    "north": "minecraft_earth_mod:block/birch_log",
+    "east": "minecraft_earth_mod:block/birch_log",
+    "south": "minecraft_earth_mod:block/birch_log",
+    "west": "minecraft_earth_mod:block/birch_log",
+    "particle": "minecraft_earth_mod:block/birch_log_top"
+  },
+  "render_type": "solid"
+}

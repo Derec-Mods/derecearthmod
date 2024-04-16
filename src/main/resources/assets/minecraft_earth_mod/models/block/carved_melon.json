@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:block/melon_top",
+    "up": "minecraft_earth_mod:block/melon_top",
+    "north": "minecraft_earth_mod:block/carvedmelonfront",
+    "east": "minecraft_earth_mod:block/melonside",
+    "south": "minecraft_earth_mod:block/melonside",
+    "west": "minecraft_earth_mod:block/melonside",
+    "particle": "minecraft_earth_mod:block/melon_top"
+  },
+  "render_type": "solid"
+}

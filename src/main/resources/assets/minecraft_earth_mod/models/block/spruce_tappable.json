@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:block/spruce_log_top",
+    "up": "minecraft_earth_mod:block/sprucetaptop",
+    "north": "minecraft_earth_mod:block/spruce_log",
+    "east": "minecraft_earth_mod:block/spruce_log",
+    "south": "minecraft_earth_mod:block/spruce_log",
+    "west": "minecraft_earth_mod:block/spruce_log",
+    "particle": "minecraft_earth_mod:block/spruce_log_top"
+  },
+  "render_type": "solid"
+}

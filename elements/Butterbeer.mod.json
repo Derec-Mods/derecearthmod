@@ -1,10 +1,12 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "buttercupdrink",
     "customModelName": "Normal",
+    "customProperties": {},
+    "states": [],
     "name": "Not Butterbeer",
     "rarity": "COMMON",
     "creativeTab": {
@@ -21,15 +23,18 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [
-      "It's not butterbeer m'kay"
-    ],
-    "hasGlow": false,
+    "specialInformation": {
+      "fixedValue": [
+        "It's not butterbeer m'kay"
+      ]
+    },
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "onFinishUsingItem": {
       "name": "EatButtercup"
     },
+    "enableRanged": false,
+    "shootConstantly": false,
     "isFood": true,
     "nutritionalValue": 4,
     "saturation": 0.6,

@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:block/rainbowwooltop2",
+    "up": "minecraft_earth_mod:block/rainbowwoolbot",
+    "north": "minecraft_earth_mod:block/rainbowwoolfront",
+    "east": "minecraft_earth_mod:block/rainbowwoolside2",
+    "south": "minecraft_earth_mod:block/rainbowwoolback",
+    "west": "minecraft_earth_mod:block/rainbowwoolside",
+    "particle": "minecraft_earth_mod:block/rainbowwooltop2"
+  },
+  "render_type": "solid"
+}

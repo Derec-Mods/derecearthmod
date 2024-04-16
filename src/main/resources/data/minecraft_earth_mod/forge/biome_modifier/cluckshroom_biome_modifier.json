@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "mushroom_fields",
+    "plains",
+    "dark_forest"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:cluckshroom",
+    "weight": 2,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

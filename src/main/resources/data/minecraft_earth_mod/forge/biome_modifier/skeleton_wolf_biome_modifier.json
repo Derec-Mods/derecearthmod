@@ -1,0 +1,16 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "forest",
+    "taiga",
+    "plains",
+    "old_growth_pine_taiga",
+    "snowy_taiga"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:skeleton_wolf",
+    "weight": 10,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

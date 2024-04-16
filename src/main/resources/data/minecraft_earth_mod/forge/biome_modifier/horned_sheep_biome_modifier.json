@@ -1,0 +1,14 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "windswept_hills",
+    "plains",
+    "windswept_gravelly_hills"
+  ],
+  "spawners": {
+    "type": "minecraft_earth_mod:horned_sheep",
+    "weight": 5,
+    "minCount": 2,
+    "maxCount": 3
+  }
+}

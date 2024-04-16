@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "minecraft_earth_mod:block/grasstappableside",
+    "up": "minecraft_earth_mod:block/grasstappableside",
+    "north": "minecraft_earth_mod:block/grasstappabletop",
+    "east": "minecraft_earth_mod:block/grasstappableside",
+    "south": "minecraft_earth_mod:block/grasstappableside",
+    "west": "minecraft_earth_mod:block/grasstappableside",
+    "particle": "minecraft_earth_mod:block/grasstappableside"
+  },
+  "render_type": "solid"
+}
