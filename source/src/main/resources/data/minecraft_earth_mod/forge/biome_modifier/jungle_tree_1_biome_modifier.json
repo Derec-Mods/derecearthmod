@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "minecraft_earth_mod:jungle_build_plate",
-  "features": "minecraft_earth_mod:jungle_tree_1",
-  "step": "surface_structures"
-}

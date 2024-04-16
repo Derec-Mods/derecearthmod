@@ -1,9 +1,0 @@
-{
-  "_fv": 34,
-  "_type": "command",
-  "definition": {
-    "commandName": "toggleexperimental",
-    "permissionLevel": "1",
-    "argsxml": "<xml><block type=\"args_start\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"old_command\"><field name=\"procedure\">ToggleExperimentalMode</field></block></next></block></xml>"
-  }
-}
