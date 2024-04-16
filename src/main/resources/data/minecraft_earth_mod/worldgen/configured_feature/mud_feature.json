@@ -1,5 +1,5 @@
 {
-  "type": "minecraft_earth_mod:mud_feature",
+  "type": "minecraft:lake",
   "config": {
     "fluid": {
       "type": "minecraft:simple_state_provider",

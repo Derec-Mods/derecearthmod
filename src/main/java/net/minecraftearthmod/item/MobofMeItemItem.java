@@ -5,18 +5,22 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraftearthmod.procedures.SpawnMobofMeProcedure;
-import net.minecraftearthmod.init.MinecraftEarthModModTabs;
 
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.network.chat.Component;
+
+import java.util.List;
 
 public class MobofMeItemItem extends Item {
 	public MobofMeItemItem() {
-		super(new Item.Properties().tab(MinecraftEarthModModTabs.TAB_DEREC_EARTH_MOBS_SPAWN_EGGS).stacksTo(1).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override
@@ -28,6 +32,11 @@ public class MobofMeItemItem extends Item {
 	@OnlyIn(Dist.CLIENT)
 	public boolean isFoil(ItemStack itemstack) {
 		return true;
+	}
+
+	@Override
+	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
 	}
 
 	@Override

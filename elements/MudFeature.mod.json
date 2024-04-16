@@ -1,12 +1,8 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "feature",
   "definition": {
     "generationStep": "LAKES",
-    "restrictionDimensions": [
-      "Surface",
-      "CUSTOM:MinecraftEarthDimension"
-    ],
     "restrictionBiomes": [
       {
         "value": "CUSTOM:PlainsBuildPlate"
@@ -21,6 +17,6 @@
         "value": "jungle"
       }
     ],
-    "featurexml": "<xml><block type=\"feature_container\" deletable=\"false\" x=\"40\" y=\"40\">\n\t<value name=\"feature\"><block type=\"feature_lake\">\n\t\t<value name=\"fluid\"><block type=\"mcitem_allblocks\"><field name=\"value\">CUSTOM:Mud</field></block></value>\n\t\t<value name=\"border\"><block type=\"mcitem_allblocks\"><field name=\"value\">Blocks.AIR</field></block></value>\n\t</block></value>\n<next><block type=\"placement_rarity\"><field name=\"rarity\">1</field>\n<next><block type=\"placement_in_square\">\n<next><block type=\"placement_height_uniform\">\n\t<value name=\"min\"><block type=\"vertical_anchor_above_bottom\"><field name=\"value\">0</field></block></value>\n\t<value name=\"max\"><block type=\"vertical_anchor_absolute\"><field name=\"value\">256</field></block></value>\n<next><block type=\"placement_environment_scan\">\n\t<field name=\"maxSteps\">32</field><field name=\"direction\">DOWN</field>\n\t<value name=\"condition\"><block type=\"block_predicate_not\">\n\t\t<value name=\"condition\"><block type=\"block_predicate_is_air\"></block></value>\n\t</block></value>\n<next><block type=\"placement_biome_filter\">\n</block></next></block></next></block></next></block></next></block></next></block></xml>"
+    "featurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml><block deletable=\"false\" type=\"feature_container\" x=\"40\" y=\"40\">\r\n\t<value name=\"feature\"><block type=\"feature_lake\">\r\n\t\t<value name=\"fluid\"><block type=\"mcitem_allblocks\"><field name=\"value\">CUSTOM:Mud</field></block></value>\r\n\t\t<value name=\"border\"><block type=\"mcitem_allblocks\"><field name=\"value\">Blocks.AIR</field></block></value>\r\n\t</block></value>\r\n<next><block type=\"placement_rarity\"><field name=\"rarity\">1</field>\r\n<next><block type=\"placement_in_square\">\r\n<next><block type=\"placement_height_uniform\">\r\n\t<value name=\"min\"><block type=\"vertical_anchor_above_bottom\"><field name=\"value\">0</field></block></value>\r\n\t<value name=\"max\"><block type=\"vertical_anchor_absolute\"><field name=\"value\">256</field></block></value>\r\n<next><block type=\"placement_environment_scan\">\r\n\t<field name=\"maxSteps\">32</field><field name=\"direction\">DOWN</field>\r\n\t<value name=\"condition\"><block type=\"block_predicate_not\">\r\n\t\t<value name=\"condition\"><block type=\"block_predicate_is_air\"/></value>\r\n\t</block></value>\r\n<next><block type=\"placement_biome_filter\">\r\n</block></next></block></next></block></next></block></next></block></next></block></xml>"
   }
 }

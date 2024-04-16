@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "block",
   "definition": {
     "texture": "ruby_ore",
@@ -33,7 +33,9 @@
       }
     ],
     "name": "Ruby Ore",
-    "specialInfo": [],
+    "specialInformation": {
+      "fixedValue": []
+    },
     "hardness": 3.0,
     "resistance": 3.0,
     "hasGravity": false,
@@ -101,14 +103,20 @@
     "onDestroyedByPlayer": {
       "name": "RubyOreFortune"
     },
-    "spawnWorldTypes": [
-      "Surface",
-      "CUSTOM:MinecraftEarthDimension"
-    ],
+    "generateFeature": true,
     "restrictionBiomes": [],
     "blocksToReplace": [
       {
-        "value": "Blocks.STONE"
+        "value": "Blocks.STONE#0"
+      },
+      {
+        "value": "Blocks.STONE#1"
+      },
+      {
+        "value": "Blocks.STONE#3"
+      },
+      {
+        "value": "Blocks.STONE#5"
       }
     ],
     "generationShape": "UNIFORM",

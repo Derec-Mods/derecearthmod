@@ -2,6 +2,7 @@
   "type": "forge:add_spawns",
   "biomes": [
     "windswept_hills",
+    "plains",
     "windswept_gravelly_hills"
   ],
   "spawners": {

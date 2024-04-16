@@ -1,6 +1,10 @@
+
 package net.minecraftearthmod.world.features.treedecorators;
 
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
@@ -12,14 +16,16 @@ import net.minecraft.core.BlockPos;
 
 import java.util.List;
 
+import com.mojang.serialization.Codec;
+
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class JungleBuildPlateFruitDecorator extends CocoaDecorator {
-	public static final JungleBuildPlateFruitDecorator INSTANCE = new JungleBuildPlateFruitDecorator();
-	public static com.mojang.serialization.Codec<JungleBuildPlateFruitDecorator> codec;
-	public static TreeDecoratorType<?> tdt;
-	static {
-		codec = com.mojang.serialization.Codec.unit(() -> INSTANCE);
-		tdt = new TreeDecoratorType<>(codec);
-		ForgeRegistries.TREE_DECORATOR_TYPES.register("jungle_build_plate_tree_fruit_decorator", tdt);
+	public static Codec<JungleBuildPlateFruitDecorator> CODEC = Codec.unit(JungleBuildPlateFruitDecorator::new);
+	public static TreeDecoratorType<?> DECORATOR_TYPE = new TreeDecoratorType<>(CODEC);
+
+	@SubscribeEvent
+	public static void registerPointOfInterest(RegisterEvent event) {
+		event.register(ForgeRegistries.Keys.TREE_DECORATOR_TYPES, registerHelper -> registerHelper.register("jungle_build_plate_tree_fruit_decorator", DECORATOR_TYPE));
 	}
 
 	public JungleBuildPlateFruitDecorator() {
@@ -28,7 +34,7 @@ public class JungleBuildPlateFruitDecorator extends CocoaDecorator {
 
 	@Override
 	protected TreeDecoratorType<?> type() {
-		return tdt;
+		return DECORATOR_TYPE;
 	}
 
 	@Override

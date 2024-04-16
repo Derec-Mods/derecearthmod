@@ -13,7 +13,7 @@ import java.util.List;
 
 public class BucketOfMudItem extends Item {
 	public BucketOfMudItem() {
-		super(new Item.Properties().tab(null).stacksTo(1).rarity(Rarity.COMMON));
+		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
 
 	@Override

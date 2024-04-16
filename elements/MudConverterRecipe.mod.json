@@ -1,12 +1,14 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "recipe",
   "definition": {
     "recipeType": "Crafting",
-    "xpReward": 0.0,
-    "cookingTime": 200,
     "recipeRetstackSize": 1,
     "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
     "recipeShapeless": false,
     "recipeSlots": [
       {

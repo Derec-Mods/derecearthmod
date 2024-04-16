@@ -21,13 +21,13 @@ public class PassiveHealProcedure {
 		MinecraftEarthModMod.queueServerWork(60, () -> {
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.witch.drink")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.witch.drink")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.witch.drink")), SoundSource.NEUTRAL, 1, 1, false);
 				}
 			}
-			if (entity instanceof LivingEntity _entity)
-				_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1, (false), (true)));
+			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+				_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1, false, true));
 		});
 	}
 }

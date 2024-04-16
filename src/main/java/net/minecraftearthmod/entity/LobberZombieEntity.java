@@ -29,6 +29,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.BlockPos;
 
@@ -39,12 +40,13 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 
 	public LobberZombieEntity(EntityType<LobberZombieEntity> type, Level world) {
 		super(type, world);
+		setMaxUpStep(0.6f);
 		xpReward = 5;
 		setNoAi(false);
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -78,6 +80,11 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
+	public double getMyRidingOffset() {
+		return -0.35D;
+	}
+
+	@Override
 	public SoundEvent getAmbientSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.ambient"));
 	}
@@ -99,12 +106,12 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float flval) {
-		LobberZombieEntityProjectile entityarrow = new LobberZombieEntityProjectile(MinecraftEarthModModEntities.LOBBER_ZOMBIE_PROJECTILE.get(), this, this.level);
+		LobberZombieEntityProjectile entityarrow = new LobberZombieEntityProjectile(MinecraftEarthModModEntities.LOBBER_ZOMBIE_PROJECTILE.get(), this, this.level());
 		double d0 = target.getY() + target.getEyeHeight() - 1.1;
 		double d1 = target.getX() - this.getX();
 		double d3 = target.getZ() - this.getZ();
 		entityarrow.shoot(d1, d0 - entityarrow.getY() + Math.sqrt(d1 * d1 + d3 * d3) * 0.2F, d3, 1.6F, 12.0F);
-		level.addFreshEntity(entityarrow);
+		this.level().addFreshEntity(entityarrow);
 	}
 
 	public static void init() {
@@ -113,7 +120,7 @@ public class LobberZombieEntity extends Monster implements RangedAttackMob {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.19999999999999998);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.2);
 		builder = builder.add(Attributes.MAX_HEALTH, 20);
 		builder = builder.add(Attributes.ARMOR, 0);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);

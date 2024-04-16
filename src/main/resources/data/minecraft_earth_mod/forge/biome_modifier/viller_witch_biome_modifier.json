@@ -1,8 +1,8 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
-    "forest",
     "plains",
+    "forest",
     "swamp",
     "mangrove_swamp"
   ],

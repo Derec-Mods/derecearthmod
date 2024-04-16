@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "biome",
   "definition": {
     "name": "Mountains Build Plate",
@@ -60,15 +60,6 @@
       "min": -0.5640883328414455,
       "max": -0.3640883328414456
     },
-    "grassPerChunk": 1,
-    "seagrassPerChunk": 0,
-    "flowersPerChunk": 2,
-    "mushroomsPerChunk": 0,
-    "bigMushroomsChunk": 0,
-    "sandPatchesPerChunk": 0,
-    "gravelPatchesPerChunk": 0,
-    "reedsPerChunk": 0,
-    "cactiPerChunk": 0,
     "treesPerChunk": 2,
     "vanillaTreeType": "Mega spruce trees",
     "treeType": 0,
@@ -85,6 +76,17 @@
     "treeFruits": {
       "value": ""
     },
+    "defaultFeatures": [
+      "Caves",
+      "MonsterRooms",
+      "Structures",
+      "Ores",
+      "Lakes",
+      "ScatteredOakAndSpruceTrees",
+      "FrozenTopLayer",
+      "ForestGrass",
+      "DefaultFlowers"
+    ],
     "spawnStronghold": false,
     "spawnMineshaft": false,
     "spawnMineshaftMesa": false,
@@ -105,15 +107,6 @@
     "spawnBastionRemnant": false,
     "spawnEndCity": false,
     "spawnRuinedPortal": "NONE",
-    "defaultFeatures": [
-      "Caves",
-      "MonsterRooms",
-      "Structures",
-      "Ores",
-      "Lakes",
-      "ScatteredOakAndSpruceTrees",
-      "FrozenTopLayer"
-    ],
     "spawnEntries": [
       {
         "entity": {

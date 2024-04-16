@@ -1,0 +1,19 @@
+{
+  "_fv": 57,
+  "_type": "projectile",
+  "definition": {
+    "projectileItem": {
+      "value": "CUSTOM:Boneshard"
+    },
+    "showParticles": false,
+    "actionSound": {
+      "value": "entity.skeleton.ambient"
+    },
+    "igniteFire": false,
+    "power": 1.0,
+    "damage": 4.0,
+    "knockback": 1,
+    "entityModel": "Default",
+    "customModelTexture": ""
+  }
+}

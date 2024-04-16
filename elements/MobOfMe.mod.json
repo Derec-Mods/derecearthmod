@@ -1,12 +1,12 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "livingentity",
   "definition": {
     "mobName": "Mob Of Me",
     "mobLabel": "Mob of Me",
     "mobModelName": "Modelmobofme",
     "mobModelTexture": "mobofme.png",
-    "mobModelGlowTexture": "",
+    "modelLayers": [],
     "modelWidth": 0.6,
     "modelHeight": 1.8,
     "modelShadowSize": 0.5,
@@ -50,12 +50,16 @@
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
+    "stepHeight": 0.6,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
     "followRange": 16,
     "health": 20,
     "xpAmount": 0,
     "waterMob": false,
+    "pushedByFluids": {
+      "fixedValue": true
+    },
     "flyingMob": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
@@ -92,6 +96,7 @@
     "stepSound": {
       "value": ""
     },
+    "entityDataEntries": [],
     "whenMobDies": {
       "name": "MobOfMeEntityDies"
     },

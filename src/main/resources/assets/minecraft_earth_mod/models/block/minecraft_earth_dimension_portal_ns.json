@@ -1,7 +1,7 @@
 {
   "textures": {
-    "particle": "minecraft_earth_mod:blocks/weirdgrass",
-    "portal": "minecraft_earth_mod:blocks/weirdgrass"
+    "particle": "minecraft_earth_mod:block/weirdgrass",
+    "portal": "minecraft_earth_mod:block/weirdgrass"
   },
   "elements": [
     {

@@ -1,0 +1,19 @@
+{
+  "feature": "minecraft_earth_mod:jungle_tree_1_feature",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 2000
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "OCEAN_FLOOR_WG"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

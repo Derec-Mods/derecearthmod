@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "minecraft_earth_mod:blocks/buttercup"
+    "layer0": "minecraft_earth_mod:block/buttercup"
   }
 }

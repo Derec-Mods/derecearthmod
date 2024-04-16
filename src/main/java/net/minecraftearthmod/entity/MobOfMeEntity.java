@@ -8,7 +8,6 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftearthmod.procedures.MobOfMeEntityDiesProcedure;
 import net.minecraftearthmod.init.MinecraftEarthModModEntities;
 
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
@@ -25,8 +24,10 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.chat.Component;
 
@@ -37,6 +38,7 @@ public class MobOfMeEntity extends PathfinderMob {
 
 	public MobOfMeEntity(EntityType<MobOfMeEntity> type, Level world) {
 		super(type, world);
+		setMaxUpStep(0.6f);
 		xpReward = 0;
 		setNoAi(false);
 		setCustomName(Component.literal("Mob of Me"));
@@ -45,13 +47,14 @@ public class MobOfMeEntity extends PathfinderMob {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.2));
 		this.goalSelector.addGoal(2, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(3, new OpenDoorGoal(this, false));
@@ -84,12 +87,12 @@ public class MobOfMeEntity extends PathfinderMob {
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
-		MobOfMeEntityDiesProcedure.execute(this.level, this.getX(), this.getY(), this.getZ());
+		MobOfMeEntityDiesProcedure.execute(this.level(), this.getX(), this.getY(), this.getZ());
 	}
 
 	public static void init() {
 		SpawnPlacements.register(MinecraftEarthModModEntities.MOB_OF_ME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getBlockState(pos.below()).getMaterial() == Material.GRASS && world.getRawBrightness(pos, 0) > 8));
+				(entityType, world, reason, pos, random) -> (world.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && world.getRawBrightness(pos, 0) > 8));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

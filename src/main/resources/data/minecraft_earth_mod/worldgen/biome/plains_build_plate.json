@@ -1,0 +1,204 @@
+{
+  "has_precipitation": true,
+  "temperature": 0.5,
+  "downfall": 0.5,
+  "effects": {
+    "foliage_color": -5843849,
+    "grass_color": -5836737,
+    "sky_color": 7972607,
+    "fog_color": 12638463,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "spawners": {
+    "monster": [],
+    "creature": [
+      {
+        "type": "minecraft_earth_mod:muddy_pig",
+        "weight": 3,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft_earth_mod:cluckshroom",
+        "weight": 10,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft_earth_mod:furnace_golem",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft_earth_mod:melon_golem",
+        "weight": 10,
+        "minCount": 1,
+        "maxCount": 2
+      },
+      {
+        "type": "minecraft_earth_mod:moobloom",
+        "weight": 10,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:albino_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:amber_chicken",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:midnight_chicken",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:stormy_chicken",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:spotted_pig",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:pie_bald_pig",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:pale_pig",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:ashen_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:sunset_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:pink_footed_pig",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "chicken",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "cow",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "pig",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "sheep",
+        "weight": 15,
+        "minCount": 3,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft_earth_mod:cookie_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:pinto_cow",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      },
+      {
+        "type": "minecraft_earth_mod:moolip",
+        "weight": 15,
+        "minCount": 2,
+        "maxCount": 3
+      }
+    ],
+    "ambient": [],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "features": [
+    [],
+    [
+      "minecraft:lake_lava_underground"
+    ],
+    [],
+    [
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
+    ],
+    [],
+    [],
+    [
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma"
+    ],
+    [],
+    [],
+    [
+      "minecraft:patch_tall_grass",
+      "minecraft:patch_grass_forest"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ]
+}

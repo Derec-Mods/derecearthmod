@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 
@@ -30,7 +31,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.CHEST_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -41,7 +42,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.GRASS_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -52,7 +53,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.STONE_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -63,7 +64,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.BIRCH_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -74,7 +75,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.OAK_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -85,7 +86,7 @@ public class BuyTappableProcedure {
 					ItemStack _stktoremove = new ItemStack(MinecraftEarthModModItems.RUBY.get());
 					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 				}
-				if (world instanceof Level _level && !_level.isClientSide()) {
+				if (world instanceof ServerLevel _level) {
 					ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(MinecraftEarthModModBlocks.SPRUCE_TAPPABLE.get()));
 					entityToSpawn.setPickUpDelay(10);
 					_level.addFreshEntity(entityToSpawn);
@@ -94,7 +95,7 @@ public class BuyTappableProcedure {
 		} else {
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.chest.locked")), SoundSource.NEUTRAL, 1, 1, false);
 				}

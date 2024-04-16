@@ -33,6 +33,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.BlockPos;
 
@@ -43,12 +44,13 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 
 	public BoneSpiderEntity(EntityType<BoneSpiderEntity> type, Level world) {
 		super(type, world);
+		setMaxUpStep(0.6f);
 		xpReward = 12;
 		setNoAi(false);
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -102,7 +104,7 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float flval) {
-		BoneshardEntity.shoot(this, target);
+		BoneshardProjectileEntity.shoot(this, target);
 	}
 
 	public static void init() {
@@ -117,7 +119,7 @@ public class BoneSpiderEntity extends Monster implements RangedAttackMob {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.19999999999999998);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.2);
 		builder = builder.add(Attributes.MAX_HEALTH, 32);
 		builder = builder.add(Attributes.ARMOR, 1);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);

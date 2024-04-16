@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "minecraft_earth_mod:items/missingtexture"
+    "layer0": "minecraft_earth_mod:item/missingtexture"
   },
   "display": {
     "thirdperson_righthand": {

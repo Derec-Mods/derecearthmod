@@ -1,13 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "pattern": [
-    "01"
+    "aa"
   ],
   "key": {
-    "0": {
-      "item": "minecraft_earth_mod:rainbow_wool"
-    },
-    "1": {
+    "a": {
       "item": "minecraft_earth_mod:rainbow_wool"
     }
   },

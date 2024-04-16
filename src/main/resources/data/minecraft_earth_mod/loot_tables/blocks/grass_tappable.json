@@ -401,5 +401,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "minecraft_earth_mod:blocks/grass_tappable"
 }

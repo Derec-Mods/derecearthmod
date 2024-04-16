@@ -3,7 +3,10 @@ package net.minecraftearthmod.world.teleporter;
 
 import net.minecraftearthmod.init.MinecraftEarthModModBlocks;
 
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.NetherPortalBlock;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Direction;
@@ -30,6 +34,8 @@ public class MinecraftEarthDimensionPortalShape {
 	private static final BlockBehaviour.StatePredicate FRAME = (p_77720_, p_77721_, p_77722_) -> {
 		return p_77720_.getBlock() == MinecraftEarthModModBlocks.CHEST_TAPPABLE.get();
 	};
+	private static final float SAFE_TRAVEL_MAX_ENTITY_XY = 4.0F;
+	private static final double SAFE_TRAVEL_MAX_VERTICAL_DELTA = 1.0D;
 	private final LevelAccessor level;
 	private final Direction.Axis axis;
 	private final Direction rightDir;
@@ -189,19 +195,36 @@ public class MinecraftEarthDimensionPortalShape {
 		return new Vec3(d2, d4, d3);
 	}
 
-	public static PortalInfo createPortalInfo(ServerLevel p_77700_, BlockUtil.FoundRectangle p_77701_, Direction.Axis p_77702_, Vec3 p_77703_, EntityDimensions p_77704_, Vec3 p_77705_, float p_77706_, float p_77707_) {
-		BlockPos blockpos = p_77701_.minCorner;
-		BlockState blockstate = p_77700_.getBlockState(blockpos);
+	public static PortalInfo createPortalInfo(ServerLevel p_259301_, BlockUtil.FoundRectangle p_259931_, Direction.Axis p_259901_, Vec3 p_259630_, Entity p_259166_, Vec3 p_260043_, float p_259853_, float p_259667_) {
+		BlockPos blockpos = p_259931_.minCorner;
+		BlockState blockstate = p_259301_.getBlockState(blockpos);
 		Direction.Axis direction$axis = blockstate.getOptionalValue(BlockStateProperties.HORIZONTAL_AXIS).orElse(Direction.Axis.X);
-		double d0 = (double) p_77701_.axis1Size;
-		double d1 = (double) p_77701_.axis2Size;
-		int i = p_77702_ == direction$axis ? 0 : 90;
-		Vec3 vec3 = p_77702_ == direction$axis ? p_77705_ : new Vec3(p_77705_.z, p_77705_.y, -p_77705_.x);
-		double d2 = (double) p_77704_.width / 2.0D + (d0 - (double) p_77704_.width) * p_77703_.x();
-		double d3 = (d1 - (double) p_77704_.height) * p_77703_.y();
-		double d4 = 0.5D + p_77703_.z();
+		double d0 = (double) p_259931_.axis1Size;
+		double d1 = (double) p_259931_.axis2Size;
+		EntityDimensions entitydimensions = p_259166_.getDimensions(p_259166_.getPose());
+		int i = p_259901_ == direction$axis ? 0 : 90;
+		Vec3 vec3 = p_259901_ == direction$axis ? p_260043_ : new Vec3(p_260043_.z, p_260043_.y, -p_260043_.x);
+		double d2 = (double) entitydimensions.width / 2.0D + (d0 - (double) entitydimensions.width) * p_259630_.x();
+		double d3 = (d1 - (double) entitydimensions.height) * p_259630_.y();
+		double d4 = 0.5D + p_259630_.z();
 		boolean flag = direction$axis == Direction.Axis.X;
 		Vec3 vec31 = new Vec3((double) blockpos.getX() + (flag ? d2 : d4), (double) blockpos.getY() + d3, (double) blockpos.getZ() + (flag ? d4 : d2));
-		return new PortalInfo(vec31, vec3, p_77706_ + (float) i, p_77707_);
+		Vec3 vec32 = findCollisionFreePosition(vec31, p_259301_, p_259166_, entitydimensions);
+		return new PortalInfo(vec32, vec3, p_259853_ + (float) i, p_259667_);
+	}
+
+	private static Vec3 findCollisionFreePosition(Vec3 p_260315_, ServerLevel p_259704_, Entity p_259626_, EntityDimensions p_259816_) {
+		if (!(p_259816_.width > 4.0F) && !(p_259816_.height > 4.0F)) {
+			double d0 = (double) p_259816_.height / 2.0D;
+			Vec3 vec3 = p_260315_.add(0.0D, d0, 0.0D);
+			VoxelShape voxelshape = Shapes.create(AABB.ofSize(vec3, (double) p_259816_.width, 0.0D, (double) p_259816_.width).expandTowards(0.0D, 1.0D, 0.0D).inflate(1.0E-6D));
+			Optional<Vec3> optional = p_259704_.findFreePosition(p_259626_, voxelshape, vec3, (double) p_259816_.width, (double) p_259816_.height, (double) p_259816_.width);
+			Optional<Vec3> optional1 = optional.map((p_259019_) -> {
+				return p_259019_.subtract(0.0D, d0, 0.0D);
+			});
+			return optional1.orElse(p_260315_);
+		} else {
+			return p_260315_;
+		}
 	}
 }

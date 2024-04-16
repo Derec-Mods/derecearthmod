@@ -31,6 +31,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.BlockUtil;
 
 import java.util.function.Function;
@@ -102,9 +103,9 @@ public class MinecraftEarthDimensionTeleporter implements ITeleporter {
 				blockpos$mutableblockpos1.move(direction.getOpposite(), 1);
 				for (int l = j; l >= this.level.getMinBuildHeight(); --l) {
 					blockpos$mutableblockpos1.setY(l);
-					if (this.level.isEmptyBlock(blockpos$mutableblockpos1)) {
+					if (this.canPortalReplaceBlock(blockpos$mutableblockpos1)) {
 						int i1;
-						for (i1 = l; l > this.level.getMinBuildHeight() && this.level.isEmptyBlock(blockpos$mutableblockpos1.move(Direction.DOWN)); --l) {
+						for (i1 = l; l > this.level.getMinBuildHeight() && this.canPortalReplaceBlock(blockpos$mutableblockpos1.move(Direction.DOWN)); --l) {
 						}
 						if (l + 4 <= i) {
 							int j1 = i1 - l;
@@ -176,10 +177,10 @@ public class MinecraftEarthDimensionTeleporter implements ITeleporter {
 		for (int i = -1; i < 3; ++i) {
 			for (int j = -1; j < 4; ++j) {
 				p_77663_.setWithOffset(p_77662_, p_77664_.getStepX() * i + direction.getStepX() * p_77665_, j, p_77664_.getStepZ() * i + direction.getStepZ() * p_77665_);
-				if (j < 0 && !this.level.getBlockState(p_77663_).getMaterial().isSolid()) {
+				if (j < 0 && !this.level.getBlockState(p_77663_).isSolid()) {
 					return false;
 				}
-				if (j >= 0 && !this.level.isEmptyBlock(p_77663_)) {
+				if (j >= 0 && !this.canPortalReplaceBlock(p_77663_)) {
 					return false;
 				}
 			}
@@ -188,14 +189,14 @@ public class MinecraftEarthDimensionTeleporter implements ITeleporter {
 	}
 
 	@Override
-	public Entity placeEntity(Entity entity, ServerLevel ServerLevel, ServerLevel server, float yaw, Function<Boolean, Entity> repositionEntity) {
+	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel server, float yaw, Function<Boolean, Entity> repositionEntity) {
 		PortalInfo portalinfo = getPortalInfo(entity, server);
 		if (entity instanceof ServerPlayer player) {
-			player.setLevel(server);
+			player.setServerLevel(server);
 			server.addDuringPortalTeleport(player);
-			entity.setYRot(portalinfo.yRot % 360.0F);
-			entity.setXRot(portalinfo.xRot % 360.0F);
-			entity.moveTo(portalinfo.pos.x, portalinfo.pos.y, portalinfo.pos.z);
+			player.connection.teleport(portalinfo.pos.x, portalinfo.pos.y, portalinfo.pos.z, portalinfo.yRot, portalinfo.xRot);
+			player.connection.resetPosition();
+			CriteriaTriggers.CHANGED_DIMENSION.trigger(player, currentWorld.dimension(), server.dimension());
 			return entity;
 		} else {
 			Entity entityNew = entity.getType().create(server);
@@ -211,25 +212,21 @@ public class MinecraftEarthDimensionTeleporter implements ITeleporter {
 
 	private PortalInfo getPortalInfo(Entity entity, ServerLevel server) {
 		WorldBorder worldborder = server.getWorldBorder();
-		double d0 = Math.max(-2.9999872E7D, worldborder.getMinX() + 16.);
-		double d1 = Math.max(-2.9999872E7D, worldborder.getMinZ() + 16.);
-		double d2 = Math.min(2.9999872E7D, worldborder.getMaxX() - 16.);
-		double d3 = Math.min(2.9999872E7D, worldborder.getMaxZ() - 16.);
-		double d4 = DimensionType.getTeleportationScale(entity.level.dimensionType(), server.dimensionType());
-		BlockPos blockpos1 = new BlockPos(Mth.clamp(entity.getX() * d4, d0, d2), entity.getY(), Mth.clamp(entity.getZ() * d4, d1, d3));
+		double d0 = DimensionType.getTeleportationScale(entity.level().dimensionType(), server.dimensionType());
+		BlockPos blockpos1 = worldborder.clampToBounds(entity.getX() * d0, entity.getY(), entity.getZ() * d0);
 		return this.getExitPortal(entity, blockpos1, worldborder).map(repositioner -> {
-			BlockState blockstate = entity.level.getBlockState(this.entityEnterPos);
+			BlockState blockstate = entity.level().getBlockState(this.entityEnterPos);
 			Direction.Axis direction$axis;
 			Vec3 vector3d;
 			if (blockstate.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)) {
 				direction$axis = blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS);
-				BlockUtil.FoundRectangle teleportationrepositioner$result = BlockUtil.getLargestRectangleAround(this.entityEnterPos, direction$axis, 21, Direction.Axis.Y, 21, pos -> entity.level.getBlockState(pos) == blockstate);
+				BlockUtil.FoundRectangle teleportationrepositioner$result = BlockUtil.getLargestRectangleAround(this.entityEnterPos, direction$axis, 21, Direction.Axis.Y, 21, pos -> entity.level().getBlockState(pos) == blockstate);
 				vector3d = MinecraftEarthDimensionPortalShape.getRelativePosition(teleportationrepositioner$result, direction$axis, entity.position(), entity.getDimensions(entity.getPose()));
 			} else {
 				direction$axis = Direction.Axis.X;
 				vector3d = new Vec3(0.5, 0, 0);
 			}
-			return MinecraftEarthDimensionPortalShape.createPortalInfo(server, repositioner, direction$axis, vector3d, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+			return MinecraftEarthDimensionPortalShape.createPortalInfo(server, repositioner, direction$axis, vector3d, entity, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
 		}).orElse(new PortalInfo(entity.position(), Vec3.ZERO, entity.getYRot(), entity.getXRot()));
 	}
 
@@ -239,11 +236,16 @@ public class MinecraftEarthDimensionTeleporter implements ITeleporter {
 			if (optional.isPresent()) {
 				return optional;
 			} else {
-				Direction.Axis direction$axis = entity.level.getBlockState(this.entityEnterPos).getOptionalValue(NetherPortalBlock.AXIS).orElse(Direction.Axis.X);
+				Direction.Axis direction$axis = entity.level().getBlockState(this.entityEnterPos).getOptionalValue(NetherPortalBlock.AXIS).orElse(Direction.Axis.X);
 				return this.createPortal(pos, direction$axis);
 			}
 		} else {
 			return optional;
 		}
+	}
+
+	private boolean canPortalReplaceBlock(BlockPos.MutableBlockPos pos) {
+		BlockState blockstate = this.level.getBlockState(pos);
+		return blockstate.canBeReplaced() && blockstate.getFluidState().isEmpty();
 	}
 }

@@ -1,10 +1,12 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "item",
   "definition": {
     "renderType": 1,
     "texture": "mobofme",
     "customModelName": "mobofmeitem:default",
+    "customProperties": {},
+    "states": [],
     "name": "Mob of Me",
     "rarity": "UNCOMMON",
     "creativeTab": {
@@ -24,14 +26,20 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [],
-    "hasGlow": true,
+    "specialInformation": {
+      "fixedValue": []
+    },
+    "glowCondition": {
+      "fixedValue": true
+    },
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "onRightClickedOnBlock": {
       "name": "SpawnMobofMe"
     },
+    "enableRanged": false,
+    "shootConstantly": false,
     "isFood": false,
     "nutritionalValue": 0,
     "saturation": 0.30000001192092896,

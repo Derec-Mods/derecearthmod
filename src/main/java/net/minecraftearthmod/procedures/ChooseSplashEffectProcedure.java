@@ -24,7 +24,7 @@ public class ChooseSplashEffectProcedure {
 						"summon area_effect_cloud ~ ~1 ~ {Particle:mobSpell,Radius:3f,Duration:600,Potion:\"minecraft:harming\"}");
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1, false);
 				}
@@ -35,7 +35,7 @@ public class ChooseSplashEffectProcedure {
 						"summon area_effect_cloud ~ ~1 ~ {Particle:mobSpell,Radius:3f,Duration:600,Potion:\"minecraft:strong_poison\"}");
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1, false);
 				}
@@ -46,7 +46,7 @@ public class ChooseSplashEffectProcedure {
 						"summon area_effect_cloud ~ ~1 ~ {Particle:mobSpell,Radius:3f,Duration:600,Potion:\"minecraft:slowness\"}");
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("minecraft_earth_mod:bloww")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("minecraft_earth_mod:bloww")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("minecraft_earth_mod:bloww")), SoundSource.NEUTRAL, 1, 1, false);
 				}
@@ -57,7 +57,7 @@ public class ChooseSplashEffectProcedure {
 						"summon area_effect_cloud ~ ~1 ~ {Particle:mobSpell,Radius:3f,Duration:600,Potion:\"minecraft:weakness\"}");
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
+					_level.playSound(null, BlockPos.containing(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1);
 				} else {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.splash_potion.break")), SoundSource.NEUTRAL, 1, 1, false);
 				}

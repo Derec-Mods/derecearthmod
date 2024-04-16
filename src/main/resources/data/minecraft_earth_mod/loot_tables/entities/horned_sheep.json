@@ -62,5 +62,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "minecraft_earth_mod:entities/horned_sheep"
 }

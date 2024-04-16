@@ -1,8 +1,8 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "minecraft_earth_mod:blocks/ruby_ore",
-    "particle": "minecraft_earth_mod:blocks/ruby_ore"
+    "all": "minecraft_earth_mod:block/ruby_ore",
+    "particle": "minecraft_earth_mod:block/ruby_ore"
   },
   "render_type": "cutout_mipped"
 }

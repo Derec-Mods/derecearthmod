@@ -13,7 +13,7 @@ import net.minecraft.client.model.HumanoidModel;
 public class LobberZombieRenderer extends HumanoidMobRenderer<LobberZombieEntity, HumanoidModel<LobberZombieEntity>> {
 	public LobberZombieRenderer(EntityRendererProvider.Context context) {
 		super(context, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-		this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+		this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
 	}
 
 	@Override

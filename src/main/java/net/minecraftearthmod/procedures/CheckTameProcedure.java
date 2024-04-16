@@ -16,8 +16,8 @@ public class CheckTameProcedure {
 		if (entity == null)
 			return;
 		if (!(entity instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)) {
-			if (world instanceof Level _lvl && _lvl.isDay() && !world.getLevelData().isRaining() && !world.getLevelData().isThundering()) {
-				if (world.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
+			if (world instanceof Level _lvl1 && _lvl1.isDay() && !world.getLevelData().isRaining() && !world.getLevelData().isThundering()) {
+				if (world.canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
 					entity.setSecondsOnFire(10);
 				}
 			}
@@ -26,8 +26,8 @@ public class CheckTameProcedure {
 			entity.getPersistentData().putString("isTame", "yes");
 		}
 		if ((entity.getPersistentData().getString("sit")).equals("sitting")) {
-			if (entity instanceof LivingEntity _entity)
-				_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 696, 100, (false), (false)));
+			if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+				_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 696, 100, false, false));
 			if (Math.random() <= 0.01 && (entity instanceof TamableAnimal _tamEnt ? _tamEnt.isTame() : false)) {
 				if (world instanceof ServerLevel _level)
 					_level.sendParticles(ParticleTypes.ANGRY_VILLAGER, x, y, z, 2, 1, 1, 1, 0);

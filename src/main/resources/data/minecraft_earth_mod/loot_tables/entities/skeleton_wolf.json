@@ -24,5 +24,6 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "minecraft_earth_mod:entities/skeleton_wolf"
 }

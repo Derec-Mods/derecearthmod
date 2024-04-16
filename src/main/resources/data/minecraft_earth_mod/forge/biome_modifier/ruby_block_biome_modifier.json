@@ -1,8 +1,12 @@
 {
   "type": "forge:add_features",
-  "biomes": {
-    "type": "forge:any"
-  },
+  "biomes": [
+    "minecraft_earth_mod:plains_build_plate",
+    "minecraft_earth_mod:mountains_build_plate",
+    "minecraft_earth_mod:forest_build_plate",
+    "minecraft_earth_mod:icy_build_plate",
+    "minecraft_earth_mod:jungle_build_plate"
+  ],
   "features": "minecraft_earth_mod:ruby_block",
   "step": "underground_ores"
 }

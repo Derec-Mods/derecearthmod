@@ -10,9 +10,9 @@ import java.util.Map;
 
 public class ConvertToMudProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z) {
-		if ((world.getBlockState(new BlockPos(x, y - 1, z))).getBlock() == Blocks.WATER) {
+		if ((world.getBlockState(BlockPos.containing(x, y - 1, z))).getBlock() == Blocks.WATER) {
 			{
-				BlockPos _bp = new BlockPos(x, y - 1, z);
+				BlockPos _bp = BlockPos.containing(x, y - 1, z);
 				BlockState _bs = Blocks.MUD.defaultBlockState();
 				BlockState _bso = world.getBlockState(_bp);
 				for (Map.Entry<Property<?>, Comparable<?>> entry : _bso.getValues().entrySet()) {

@@ -1,5 +1,5 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "block",
   "definition": {
     "texture": "grasstappableside",
@@ -33,9 +33,11 @@
       }
     ],
     "name": "Grass Tappable",
-    "specialInfo": [
-      "Break me with a shovel!"
-    ],
+    "specialInformation": {
+      "fixedValue": [
+        "Break me with a shovel!"
+      ]
+    },
     "hardness": 0.5,
     "resistance": 50.0,
     "hasGravity": false,
@@ -100,11 +102,20 @@
     "isFluidTank": false,
     "fluidCapacity": 8000,
     "fluidRestrictions": [],
-    "spawnWorldTypes": [],
+    "generateFeature": false,
     "restrictionBiomes": [],
     "blocksToReplace": [
       {
-        "value": "Blocks.STONE"
+        "value": "Blocks.STONE#0"
+      },
+      {
+        "value": "Blocks.STONE#1"
+      },
+      {
+        "value": "Blocks.STONE#3"
+      },
+      {
+        "value": "Blocks.STONE#5"
       }
     ],
     "generationShape": "UNIFORM",

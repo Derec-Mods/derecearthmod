@@ -12,7 +12,7 @@ public class FurnaceGolemLightUpdateTickProcedure {
 		if (entity == null)
 			return;
 		if (!(entity instanceof FurnaceGolemEntity)) {
-			world.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+			world.setBlock(BlockPos.containing(x, y, z), Blocks.AIR.defaultBlockState(), 3);
 		}
 	}
 }

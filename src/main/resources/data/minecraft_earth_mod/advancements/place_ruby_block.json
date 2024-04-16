@@ -18,11 +18,12 @@
     "place_ruby_block": {
       "trigger": "minecraft:placed_block",
       "conditions": {
-        "item": {
-          "items": [
-            "minecraft_earth_mod:ruby_block"
-          ]
-        }
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "minecraft_earth_mod:ruby_block"
+          }
+        ]
       }
     }
   },

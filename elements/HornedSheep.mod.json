@@ -1,12 +1,12 @@
 {
-  "_fv": 39,
+  "_fv": 57,
   "_type": "livingentity",
   "definition": {
     "mobName": "Horned Sheep",
     "mobLabel": "",
     "mobModelName": "ModelhornedsheepNEW",
     "mobModelTexture": "hornedsheepnew.png",
-    "mobModelGlowTexture": "",
+    "modelLayers": [],
     "modelWidth": 0.9,
     "modelHeight": 1.3,
     "modelShadowSize": 0.5,
@@ -50,12 +50,16 @@
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
+    "stepHeight": 0.6,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
     "followRange": 16,
     "health": 8,
     "xpAmount": 4,
     "waterMob": false,
+    "pushedByFluids": {
+      "fixedValue": true
+    },
     "flyingMob": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
@@ -92,6 +96,7 @@
     "stepSound": {
       "value": "entity.goat.step"
     },
+    "entityDataEntries": [],
     "onRightClickedOn": {
       "name": "ShearWoolyCow"
     },

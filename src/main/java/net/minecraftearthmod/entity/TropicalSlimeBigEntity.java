@@ -22,10 +22,12 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.chat.Component;
 
@@ -36,6 +38,7 @@ public class TropicalSlimeBigEntity extends Monster {
 
 	public TropicalSlimeBigEntity(EntityType<TropicalSlimeBigEntity> type, Level world) {
 		super(type, world);
+		setMaxUpStep(0.6f);
 		xpReward = 5;
 		setNoAi(false);
 		setCustomName(Component.literal("Work in Progress!"));
@@ -43,7 +46,7 @@ public class TropicalSlimeBigEntity extends Monster {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -86,10 +89,10 @@ public class TropicalSlimeBigEntity extends Monster {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.FALL)
+	public boolean hurt(DamageSource damagesource, float amount) {
+		if (damagesource.is(DamageTypes.FALL))
 			return false;
-		return super.hurt(source, amount);
+		return super.hurt(damagesource, amount);
 	}
 
 	public static void init() {
