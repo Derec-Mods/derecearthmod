@@ -1,10 +1,10 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
-    "plains",
     "forest",
-    "jungle",
-    "savanna"
+    "plains",
+    "savanna",
+    "jungle"
   ],
   "spawners": {
     "type": "minecraft_earth_mod:bone_spider",

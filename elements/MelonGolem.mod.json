@@ -1,27 +1,15 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Melon Golem",
     "mobLabel": "",
     "mobModelName": "Modelmelongolem_NEW",
     "mobModelTexture": "melongolem.png",
-    "transparentModelCondition": {
-      "fixedValue": false
-    },
-    "isShakingCondition": {
-      "fixedValue": false
-    },
+    "mobModelGlowTexture": "",
     "solidBoundingBox": {
       "fixedValue": false
     },
-    "visualScale": {
-      "fixedValue": 1.0
-    },
-    "boundingBoxScale": {
-      "fixedValue": 1.0
-    },
-    "modelLayers": [],
     "modelWidth": 0.7,
     "modelHeight": 1.9000000000000001,
     "modelShadowSize": 0.5,
@@ -65,19 +53,12 @@
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
-    "stepHeight": 0.6,
     "armorBaseValue": 0.1,
     "trackingRange": 64,
     "followRange": 16,
     "health": 4,
     "xpAmount": 3,
     "waterMob": false,
-    "breatheUnderwater": {
-      "fixedValue": false
-    },
-    "pushedByFluids": {
-      "fixedValue": true
-    },
     "flyingMob": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
@@ -114,7 +95,6 @@
     "stepSound": {
       "value": "block.snow.step"
     },
-    "entityDataEntries": [],
     "hasAI": true,
     "aiBase": "(none)",
     "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityMonster</field><field name=\"condition\">null,null</field><next><block type=\"wander_avoid_water\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">null,null</field></block></next></block></next></block></next></block></next></block></xml>",
@@ -125,7 +105,7 @@
     "rangedAttackItem": {
       "value": "Items.MELON_SEEDS"
     },
-    "rangedItemType": "MelonGolemProjectileProjectile",
+    "rangedItemType": "MelonGolemProjectile",
     "rangedAttackInterval": 20,
     "rangedAttackRadius": 10.0,
     "spawnThisMob": true,
@@ -133,7 +113,7 @@
     "spawningCondition": {
       "name": "GetSpawnGolems"
     },
-    "spawningProbability": 2,
+    "spawningProbability": 3,
     "mobSpawningType": "creature",
     "minNumberOfMobsPerGroup": 1,
     "maxNumberOfMobsPerGroup": 1,

@@ -1,46 +1,43 @@
 {
-  "_fv": 57,
-  "_type": "item",
+  "_fv": 39,
+  "_type": "rangeditem",
   "definition": {
     "renderType": 0,
     "texture": "buttercupdrink",
-    "customModelName": "Ranged item",
-    "customProperties": {},
-    "states": [],
+    "customModelName": "Normal",
     "name": "Viller Witch Potion",
-    "rarity": "COMMON",
+    "specialInfo": [],
     "creativeTab": {
       "value": "No creative tab entry"
     },
     "stackSize": 1,
-    "enchantability": 0,
-    "useDuration": 72000,
-    "toolType": 0.0,
-    "damageCount": 100,
-    "destroyAnyBlock": false,
-    "immuneToFire": false,
-    "stayInGridWhenCrafting": false,
-    "damageOnCrafting": false,
+    "ammoItem": {
+      "value": ""
+    },
+    "shootConstantly": false,
+    "usageCount": 100,
+    "actionSound": {
+      "value": "entity.splash_potion.throw"
+    },
+    "hasGlow": false,
+    "animation": "none",
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInformation": {
-      "fixedValue": []
+    "bulletPower": 1.0,
+    "bulletDamage": 0.5,
+    "bulletKnockback": 0,
+    "bulletParticles": false,
+    "bulletIgnitesFire": false,
+    "bulletItemTexture": {
+      "value": "Items.GLASS_BOTTLE"
     },
-    "glowCondition": {
-      "fixedValue": false
+    "bulletModel": "Default",
+    "customBulletModelTexture": "",
+    "onBulletHitsBlock": {
+      "name": "ChooseSplashEffect"
     },
-    "inventorySize": 9,
-    "inventoryStackSize": 64,
-    "enableRanged": true,
-    "shootConstantly": false,
-    "projectile": {
-      "value": "CUSTOM:VillerWitchPotionProjectile"
-    },
-    "isFood": false,
-    "nutritionalValue": 0,
-    "saturation": 0.30000001192092896,
-    "isMeat": false,
-    "isAlwaysEdible": false,
-    "animation": "none"
+    "onBulletHitsEntity": {
+      "name": "ChooseSplashEffect"
+    }
   }
 }

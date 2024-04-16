@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "tag",
   "definition": {
     "type": "Items",
@@ -10,9 +10,6 @@
     ],
     "blocks": [],
     "functions": [],
-    "entities": [],
-    "biomes": [],
-    "damageTypes": [],
     "name": "gems/ruby",
     "namespace": "forge"
   }

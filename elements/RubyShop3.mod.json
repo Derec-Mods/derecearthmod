@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "gui",
   "definition": {
     "type": 0,
@@ -39,7 +39,6 @@
         "data": {
           "name": "button_purchase_32",
           "text": "Purchase (32)",
-          "isUndecorated": false,
           "onClick": {
             "name": "BuyKey"
           },
@@ -54,7 +53,6 @@
         "data": {
           "name": "button_empty",
           "text": "<-",
-          "isUndecorated": false,
           "onClick": {
             "name": "GotoPage2"
           },

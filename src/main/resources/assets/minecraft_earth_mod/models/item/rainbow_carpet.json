@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "minecraft_earth_mod:item/rainbowcool"
+    "layer0": "minecraft_earth_mod:items/rainbowcool"
   },
   "render_type": "translucent"
 }

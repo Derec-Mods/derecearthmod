@@ -1,6 +1,8 @@
 {
   "pack": {
-    "pack_format": 15,
-    "description": "Adds the unique and cool features from Minecraft Earth to normal Minecraft!"
+    "description": "minecraft_earth_mod mod resources",
+    "pack_format": 9,
+    "forge:resource_pack_format": 9,
+    "forge:data_pack_format": 10
   }
 }

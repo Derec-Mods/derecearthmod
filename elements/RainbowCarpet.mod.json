@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 43,
   "_type": "block",
   "definition": {
     "texture": "rainbowwoolbot",
@@ -33,9 +33,7 @@
       }
     ],
     "name": "Rainbow Carpet",
-    "specialInformation": {
-      "fixedValue": []
-    },
+    "specialInfo": [],
     "hardness": 0.1,
     "resistance": 0.1,
     "hasGravity": false,
@@ -100,7 +98,7 @@
     "isFluidTank": false,
     "fluidCapacity": 8000,
     "fluidRestrictions": [],
-    "generateFeature": false,
+    "spawnWorldTypes": [],
     "restrictionBiomes": [],
     "blocksToReplace": [
       {

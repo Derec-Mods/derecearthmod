@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 43,
   "_type": "block",
   "definition": {
     "texture": "furnacegolemlight",
@@ -33,11 +33,9 @@
       }
     ],
     "name": "Furnace Golem Light",
-    "specialInformation": {
-      "fixedValue": [
-        "You should not have this"
-      ]
-    },
+    "specialInfo": [
+      "You should not have this"
+    ],
     "hardness": 1.0,
     "resistance": 1.0,
     "hasGravity": false,
@@ -120,7 +118,7 @@
     "onEntityWalksOn": {
       "name": "RemoveLight"
     },
-    "generateFeature": false,
+    "spawnWorldTypes": [],
     "restrictionBiomes": [],
     "blocksToReplace": [
       {

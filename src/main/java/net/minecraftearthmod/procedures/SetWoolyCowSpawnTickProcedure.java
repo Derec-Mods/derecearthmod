@@ -1,11 +1,17 @@
 package net.minecraftearthmod.procedures;
 
-import net.minecraft.world.entity.Entity;
+import net.minecraftforge.eventbus.api.Event;
+
+import javax.annotation.Nullable;
+
 
 public class SetWoolyCowSpawnTickProcedure {
-	public static void execute(Entity entity) {
-		if (entity == null)
-			return;
-		entity.getPersistentData().putDouble("regrow", 9000);
-	}
+public static void execute(
+Entity entity
+) {
+if(
+entity == null
+) return ;
+entity.getPersistentData().putDouble("regrow", 9000);
+}
 }

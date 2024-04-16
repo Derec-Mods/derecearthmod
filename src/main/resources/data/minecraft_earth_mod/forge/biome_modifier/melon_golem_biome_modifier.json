@@ -1,18 +1,17 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
-    "windswept_hills",
-    "plains",
-    "taiga",
     "frozen_river",
+    "windswept_hills",
     "snowy_plains",
-    "snowy_beach",
+    "taiga",
+    "windswept_forest",
     "snowy_taiga",
-    "windswept_forest"
+    "snowy_beach"
   ],
   "spawners": {
     "type": "minecraft_earth_mod:melon_golem",
-    "weight": 2,
+    "weight": 3,
     "minCount": 1,
     "maxCount": 1
   }

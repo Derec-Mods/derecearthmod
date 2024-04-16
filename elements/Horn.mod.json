@@ -1,12 +1,10 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "horn",
     "customModelName": "Normal",
-    "customProperties": {},
-    "states": [],
     "name": "Horn",
     "rarity": "COMMON",
     "creativeTab": {
@@ -23,19 +21,16 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInformation": {
-      "fixedValue": [
-        "Now you can blow it!"
-      ]
-    },
+    "specialInfo": [
+      "Now you can blow it!"
+    ],
+    "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "onRightClickedInAir": {
       "name": "Blow"
     },
-    "enableRanged": false,
-    "shootConstantly": false,
     "isFood": false,
     "nutritionalValue": 0,
     "saturation": 0.30000001192092896,

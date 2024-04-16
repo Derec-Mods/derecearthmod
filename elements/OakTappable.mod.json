@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 43,
   "_type": "block",
   "definition": {
     "texture": "oak_log_top",
@@ -33,11 +33,9 @@
       }
     ],
     "name": "Oak Tappable",
-    "specialInformation": {
-      "fixedValue": [
-        "Break me with an axe!"
-      ]
-    },
+    "specialInfo": [
+      "Break me with an axe!"
+    ],
     "hardness": 0.5,
     "resistance": 50.0,
     "hasGravity": false,
@@ -102,7 +100,7 @@
     "isFluidTank": false,
     "fluidCapacity": 8000,
     "fluidRestrictions": [],
-    "generateFeature": false,
+    "spawnWorldTypes": [],
     "restrictionBiomes": [],
     "blocksToReplace": [
       {

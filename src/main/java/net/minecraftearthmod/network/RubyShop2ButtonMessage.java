@@ -1,28 +1,8 @@
 
 package net.minecraftearthmod.network;
 
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD) public class RubyShop2ButtonMessage {
 
-import net.minecraftearthmod.world.inventory.RubyShop2Menu;
-import net.minecraftearthmod.procedures.GotoPage3Procedure;
-import net.minecraftearthmod.procedures.GotoPage1Procedure;
-import net.minecraftearthmod.procedures.GiveAttackBoostProcedure;
-import net.minecraftearthmod.procedures.BuyTappableProcedure;
-import net.minecraftearthmod.MinecraftEarthModMod;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.core.BlockPos;
-
-import java.util.function.Supplier;
-import java.util.HashMap;
-
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class RubyShop2ButtonMessage {
 	private final int buttonID, x, y, z;
 
 	public RubyShop2ButtonMessage(FriendlyByteBuf buffer) {
@@ -54,37 +34,48 @@ public class RubyShop2ButtonMessage {
 			int x = message.x;
 			int y = message.y;
 			int z = message.z;
+
 			handleButtonAction(entity, buttonID, x, y, z);
 		});
 		context.setPacketHandled(true);
 	}
 
 	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-		Level world = entity.level();
+		Level world = entity.level;
 		HashMap guistate = RubyShop2Menu.guistate;
+
 		// security measure to prevent arbitrary chunk generation
 		if (!world.hasChunkAt(new BlockPos(x, y, z)))
 			return;
-		if (buttonID == 0) {
 
-			BuyTappableProcedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 1) {
+					if (buttonID == 0) {
+    
 
-			GotoPage1Procedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 2) {
+    BuyTappableProcedure.execute(world,x,y,z,entity)
+;
+					}
+					if (buttonID == 1) {
+    
 
-			GotoPage3Procedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 3) {
+    GotoPage1Procedure.execute(world,x,y,z,entity)
+;
+					}
+					if (buttonID == 2) {
+    
 
-			GiveAttackBoostProcedure.execute(world, x, y, z, entity);
-		}
+    GotoPage3Procedure.execute(world,x,y,z,entity)
+;
+					}
+					if (buttonID == 3) {
+    
+
+    GiveAttackBoostProcedure.execute(world,x,y,z,entity)
+;
+					}
 	}
 
-	@SubscribeEvent
-	public static void registerMessage(FMLCommonSetupEvent event) {
+	@SubscribeEvent public static void registerMessage(FMLCommonSetupEvent event) {
 		MinecraftEarthModMod.addNetworkMessage(RubyShop2ButtonMessage.class, RubyShop2ButtonMessage::buffer, RubyShop2ButtonMessage::new, RubyShop2ButtonMessage::handler);
 	}
+
 }

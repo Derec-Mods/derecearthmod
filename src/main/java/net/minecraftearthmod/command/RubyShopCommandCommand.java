@@ -1,71 +1,66 @@
 
 package net.minecraftearthmod.command;
 
-import org.checkerframework.checker.units.qual.s;
+@Mod.EventBusSubscriber public class RubyShopCommandCommand {
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.common.util.FakePlayerFactory;
+	@SubscribeEvent public static void registerCommand(RegisterCommandsEvent event) {
+		event.getDispatcher().register(Commands.literal("shop")
+			.requires(s -> s.hasPermission(3))
+			.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(arguments -> {
+    ServerLevel world = arguments.getSource().getLevel();
 
-import net.minecraftearthmod.procedures.RubyShopCommandCommandExecutedProcedure;
+    double x = arguments.getSource().getPosition().x();
+    double y = arguments.getSource().getPosition().y();
+    double z = arguments.getSource().getPosition().z();
 
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.core.Direction;
-import net.minecraft.commands.Commands;
+    Entity entity = arguments.getSource().getEntity();
+    if (entity == null)
+        entity = FakePlayerFactory.getMinecraft(world);
 
-import java.util.HashMap;
+    Direction direction = entity.getDirection();
 
-import com.mojang.brigadier.arguments.StringArgumentType;
+    HashMap<String, String> cmdparams = new HashMap<>();
+    int index = -1;
+    for (String param : arguments.getInput().split("\\s+")) {
+        if (index >= 0)
+            cmdparams.put(Integer.toString(index), param);
+        index++;
+    }
 
-@Mod.EventBusSubscriber
-public class RubyShopCommandCommand {
-	@SubscribeEvent
-	public static void registerCommand(RegisterCommandsEvent event) {
-		event.getDispatcher().register(Commands.literal("shop").requires(s -> s.hasPermission(3)).then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(arguments -> {
-			Level world = arguments.getSource().getUnsidedLevel();
-			double x = arguments.getSource().getPosition().x();
-			double y = arguments.getSource().getPosition().y();
-			double z = arguments.getSource().getPosition().z();
-			Entity entity = arguments.getSource().getEntity();
-			if (entity == null && world instanceof ServerLevel _servLevel)
-				entity = FakePlayerFactory.getMinecraft(_servLevel);
-			Direction direction = Direction.DOWN;
-			if (entity != null)
-				direction = entity.getDirection();
-			HashMap<String, String> cmdparams = new HashMap<>();
-			int index = -1;
-			for (String param : arguments.getInput().split("\\s+")) {
-				if (index >= 0)
-					cmdparams.put(Integer.toString(index), param);
-				index++;
-			}
+    
 
-			RubyShopCommandCommandExecutedProcedure.execute(world, x, y, z, entity);
-			return 0;
-		})).executes(arguments -> {
-			Level world = arguments.getSource().getUnsidedLevel();
-			double x = arguments.getSource().getPosition().x();
-			double y = arguments.getSource().getPosition().y();
-			double z = arguments.getSource().getPosition().z();
-			Entity entity = arguments.getSource().getEntity();
-			if (entity == null && world instanceof ServerLevel _servLevel)
-				entity = FakePlayerFactory.getMinecraft(_servLevel);
-			Direction direction = Direction.DOWN;
-			if (entity != null)
-				direction = entity.getDirection();
-			HashMap<String, String> cmdparams = new HashMap<>();
-			int index = -1;
-			for (String param : arguments.getInput().split("\\s+")) {
-				if (index >= 0)
-					cmdparams.put(Integer.toString(index), param);
-				index++;
-			}
+    RubyShopCommandCommandExecutedProcedure.execute(world,x,y,z,entity)
+;
+    return 0;
+}))
+.executes(arguments -> {
+    ServerLevel world = arguments.getSource().getLevel();
 
-			RubyShopCommandCommandExecutedProcedure.execute(world, x, y, z, entity);
-			return 0;
-		}));
+    double x = arguments.getSource().getPosition().x();
+    double y = arguments.getSource().getPosition().y();
+    double z = arguments.getSource().getPosition().z();
+
+    Entity entity = arguments.getSource().getEntity();
+    if (entity == null)
+        entity = FakePlayerFactory.getMinecraft(world);
+
+    Direction direction = entity.getDirection();
+
+    HashMap<String, String> cmdparams = new HashMap<>();
+    int index = -1;
+    for (String param : arguments.getInput().split("\\s+")) {
+        if (index >= 0)
+            cmdparams.put(Integer.toString(index), param);
+        index++;
+    }
+
+    
+
+    RubyShopCommandCommandExecutedProcedure.execute(world,x,y,z,entity)
+;
+    return 0;
+})
+		);
 	}
+
 }

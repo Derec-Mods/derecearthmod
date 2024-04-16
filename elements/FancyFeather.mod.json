@@ -1,12 +1,10 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "fancy_feather",
     "customModelName": "Normal",
-    "customProperties": {},
-    "states": [],
     "name": "Fancy Feather",
     "rarity": "UNCOMMON",
     "creativeTab": {
@@ -26,16 +24,13 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInformation": {
-      "fixedValue": [
-        "Maybe there's a use for it?"
-      ]
-    },
+    "specialInfo": [
+      "Maybe there's a use for it?"
+    ],
+    "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
-    "enableRanged": false,
-    "shootConstantly": false,
     "isFood": false,
     "nutritionalValue": 0,
     "saturation": 0.30000001192092896,

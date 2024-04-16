@@ -1,9 +1,8 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
-    "taiga",
     "windswept_hills",
-    "plains"
+    "taiga"
   ],
   "spawners": {
     "type": "minecraft_earth_mod:rocky_sheep",

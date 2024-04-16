@@ -1,12 +1,10 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "mudformula",
     "customModelName": "Normal",
-    "customProperties": {},
-    "states": [],
     "name": "Mud Formula",
     "rarity": "COMMON",
     "creativeTab": {
@@ -26,19 +24,16 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInformation": {
-      "fixedValue": [
-        "Everything in this bottle is edible."
-      ]
-    },
+    "specialInfo": [
+      "Everything in this bottle is edible."
+    ],
+    "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "onFinishUsingItem": {
       "name": "YouAteTheMudFormula"
     },
-    "enableRanged": false,
-    "shootConstantly": false,
     "isFood": true,
     "nutritionalValue": 2,
     "saturation": 0.1,

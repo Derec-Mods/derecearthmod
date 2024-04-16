@@ -1,14 +1,12 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "recipe",
   "definition": {
     "recipeType": "Stone cutting",
-    "recipeRetstackSize": 10,
-    "group": "",
-    "cookingBookCategory": "MISC",
     "xpReward": 0.0,
     "cookingTime": 200,
-    "craftingBookCategory": "MISC",
+    "recipeRetstackSize": 10,
+    "group": "",
     "recipeShapeless": false,
     "stoneCuttingInputStack": {
       "value": "CUSTOM:Horn"

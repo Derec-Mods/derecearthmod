@@ -5,7 +5,7 @@
   },
   "spawners": {
     "type": "minecraft_earth_mod:furnace_golem",
-    "weight": 1,
+    "weight": 3,
     "minCount": 1,
     "maxCount": 1
   }

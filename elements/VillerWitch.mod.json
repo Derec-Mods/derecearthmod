@@ -1,12 +1,12 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "livingentity",
   "definition": {
     "mobName": "Viller Witch",
     "mobLabel": "",
     "mobModelName": "Modelvilerwitch_NEW",
     "mobModelTexture": "villerwitch.png",
-    "modelLayers": [],
+    "mobModelGlowTexture": "",
     "modelWidth": 0.6,
     "modelHeight": 1.95,
     "modelShadowSize": 0.5,
@@ -50,16 +50,12 @@
     "attackKnockback": 0.0,
     "knockbackResistance": 0.0,
     "movementSpeed": 0.3,
-    "stepHeight": 0.6,
     "armorBaseValue": 0.0,
     "trackingRange": 64,
     "followRange": 16,
     "health": 30,
     "xpAmount": 10,
     "waterMob": false,
-    "pushedByFluids": {
-      "fixedValue": true
-    },
     "flyingMob": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
@@ -96,7 +92,6 @@
     "stepSound": {
       "value": ""
     },
-    "entityDataEntries": [],
     "whenMobIsHurt": {
       "name": "PassiveHeal"
     },
@@ -110,7 +105,7 @@
     "rangedAttackItem": {
       "value": ""
     },
-    "rangedItemType": "VillerWitchPotionProjectile",
+    "rangedItemType": "VillerWitchPotion",
     "rangedAttackInterval": 20,
     "rangedAttackRadius": 10.0,
     "spawnThisMob": true,

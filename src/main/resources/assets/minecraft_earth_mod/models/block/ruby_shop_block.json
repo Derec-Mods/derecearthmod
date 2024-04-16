@@ -1,13 +1,13 @@
 {
   "parent": "block/cube",
   "textures": {
-    "down": "minecraft_earth_mod:block/missingtexture",
-    "up": "minecraft_earth_mod:block/ruby_block",
-    "north": "minecraft_earth_mod:block/ruby_block",
-    "east": "minecraft_earth_mod:block/ruby_block",
-    "south": "minecraft_earth_mod:block/ruby_block",
-    "west": "minecraft_earth_mod:block/ruby_block",
-    "particle": "minecraft_earth_mod:block/missingtexture"
+    "down": "minecraft_earth_mod:blocks/missingtexture",
+    "up": "minecraft_earth_mod:blocks/ruby_block",
+    "north": "minecraft_earth_mod:blocks/ruby_block",
+    "east": "minecraft_earth_mod:blocks/ruby_block",
+    "south": "minecraft_earth_mod:blocks/ruby_block",
+    "west": "minecraft_earth_mod:blocks/ruby_block",
+    "particle": "minecraft_earth_mod:blocks/missingtexture"
   },
   "render_type": "solid"
 }

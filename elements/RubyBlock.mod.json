@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 43,
   "_type": "block",
   "definition": {
     "texture": "ruby_block",
@@ -34,9 +34,7 @@
       }
     ],
     "name": "Ruby Block",
-    "specialInformation": {
-      "fixedValue": []
-    },
+    "specialInfo": [],
     "hardness": 5.0,
     "resistance": 6.0,
     "hasGravity": false,
@@ -122,24 +120,10 @@
     "onRightClicked": {
       "name": "CheckShop"
     },
-    "generateFeature": true,
-    "restrictionBiomes": [
-      {
-        "value": "CUSTOM:PlainsBuildPlate"
-      },
-      {
-        "value": "CUSTOM:MountainsBuildPlate"
-      },
-      {
-        "value": "CUSTOM:ForestBuildPlate"
-      },
-      {
-        "value": "CUSTOM:IcyBuildPlate"
-      },
-      {
-        "value": "CUSTOM:JungleBuildPlate"
-      }
+    "spawnWorldTypes": [
+      "CUSTOM:MinecraftEarthDimension"
     ],
+    "restrictionBiomes": [],
     "blocksToReplace": [
       {
         "value": "Blocks.STONE#0"

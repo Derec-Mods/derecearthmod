@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "dimension",
   "definition": {
     "biomesInDimension": [
@@ -47,11 +47,7 @@
     "portalSound": {
       "value": "block.wet_grass.step"
     },
-    "enableIgniter": true,
     "igniterName": "Buildplate Key",
-    "specialInformation": {
-      "fixedValue": []
-    },
     "igniterTab": {
       "value": "TOOLS"
     },

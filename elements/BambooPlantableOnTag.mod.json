@@ -1,5 +1,5 @@
 {
-  "_fv": 57,
+  "_fv": 39,
   "_type": "tag",
   "definition": {
     "type": "Blocks",
@@ -10,9 +10,6 @@
       }
     ],
     "functions": [],
-    "entities": [],
-    "biomes": [],
-    "damageTypes": [],
     "name": "bamboo_plantable_on",
     "namespace": "minecraft"
   }

@@ -1,11 +1,11 @@
 {
   "type": "forge:add_features",
   "biomes": [
-    "plains",
-    "forest",
-    "flower_forest",
     "old_growth_birch_forest",
+    "forest",
     "sunflower_plains",
+    "plains",
+    "flower_forest",
     "birch_forest"
   ],
   "features": "minecraft_earth_mod:buttercup",

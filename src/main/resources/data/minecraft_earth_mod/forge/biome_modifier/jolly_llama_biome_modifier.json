@@ -1,9 +1,9 @@
 {
   "type": "forge:add_spawns",
   "biomes": [
+    "savanna_plateau",
     "windswept_hills",
-    "savanna",
-    "savanna_plateau"
+    "savanna"
   ],
   "spawners": {
     "type": "minecraft_earth_mod:jolly_llama",

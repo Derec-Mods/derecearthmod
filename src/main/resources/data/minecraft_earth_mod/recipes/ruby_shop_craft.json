@@ -1,20 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "pattern": [
-    " a ",
-    "bcb",
-    " a "
+    " 1 ",
+    "345",
+    " 7 "
   ],
   "key": {
-    "a": {
+    "1": {
       "item": "minecraft_earth_mod:ruby_block"
     },
-    "b": {
+    "3": {
       "item": "minecraft_earth_mod:ruby"
     },
-    "c": {
+    "4": {
       "item": "minecraft:dispenser"
+    },
+    "5": {
+      "item": "minecraft_earth_mod:ruby"
+    },
+    "7": {
+      "item": "minecraft_earth_mod:ruby_block"
     }
   },
   "result": {

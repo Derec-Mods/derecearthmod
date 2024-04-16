@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "minecraft_earth_mod:item/buttercupdrink"
+    "layer0": "minecraft_earth_mod:items/buttercupdrink"
   },
   "display": {
     "thirdperson_righthand": {

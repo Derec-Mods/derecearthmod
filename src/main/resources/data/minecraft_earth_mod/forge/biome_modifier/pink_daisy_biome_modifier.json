@@ -1,6 +1,8 @@
 {
   "type": "forge:add_features",
-  "biomes": "#is_overworld",
+  "biomes": {
+    "type": "forge:any"
+  },
   "features": "minecraft_earth_mod:pink_daisy",
   "step": "vegetal_decoration"
 }

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft_earth_mod:custom/mobofmeitem",
   "textures": {
-    "1": "minecraft_earth_mod:block/mobofme",
-    "particle": "minecraft_earth_mod:item/mobofme"
+    "1": "minecraft_earth_mod:blocks/mobofme",
+    "particle": "minecraft_earth_mod:items/mobofme"
   }
 }
