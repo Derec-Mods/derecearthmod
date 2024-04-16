@@ -1,8 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": {
-    "type": "forge:any"
-  },
-  "features": "minecraft_earth_mod:ruby_block",
-  "step": "underground_ores"
-}
